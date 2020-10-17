@@ -5,6 +5,8 @@ public class Ticket {
 
     private String message;
 
+    private String categoryName;
+
     public String getSubject() {
         return subject;
     }
@@ -19,5 +21,13 @@ public class Ticket {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }
