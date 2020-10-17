@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import hes.projet.ticketme.ui.*;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -19,11 +21,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void clickEcranAccueil(View view) {
-//        Intent intent = new Intent(this, DisplayMessageActivity.class);
-//        EditText editText = (EditText) findViewById(R.id.editText);
-//        String message = editText.getText().toString();
-//        intent.putExtra(EXTRA_MESSAGE, message);
-//        startActivity(intent);
+    public void clickTicketList(View view) {
+        Intent intent = new Intent(this, TicketListActivity.class);
+        startActivity(intent);
+    }
+
+    public void clickTicketView(View view) {
+        Intent intent = new Intent(this, TicketViewActivity.class);
+        startActivity(intent);
+    }
+
+    public void clickTicketEdit(View view) {
+        Intent intent = new Intent(this, TicketEditActivity.class);
+        startActivity(intent);
     }
 }
