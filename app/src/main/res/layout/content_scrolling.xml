@@ -8,10 +8,7 @@
     tools:context=".UserAdmin"
     tools:showIn="@layout/activity_user_admin">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:text="@string/large_text" />
-
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </androidx.core.widget.NestedScrollView>
