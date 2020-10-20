@@ -124,4 +124,9 @@
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="liste_des_tickets">Liste des Tickets</string>
     <string name="tickets_en_cours">Tickets en cours</string>
+    <string name="enregister">Enregister</string>
+    <string name="ajouter_un_ticket">Ajouter un ticket</string>
+    <string name="cat_gorie">Catégorie</string>
+    <string name="votre_message">Votre message</string>
+    <string name="sujet">Sujet</string>
 </resources>

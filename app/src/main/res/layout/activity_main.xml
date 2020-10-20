@@ -22,13 +22,13 @@
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="174dp"
-        android:layout_height="44dp"
+        android:layout_width="163dp"
+        android:layout_height="52dp"
         android:onClick="clickTicketEdit"
-        android:text="@string/creation_ticket"
+        android:text="Modifier un ticket"
         app:layout_constraintBottom_toTopOf="@+id/button4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button2" />
 

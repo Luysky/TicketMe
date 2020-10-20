@@ -3,11 +3,14 @@ package hes.projet.ticketme.data;
 public class Ticket {
 
     private int ticketNumber;
+    private String category;
     private String subject;
     private String message;
 
-    public Ticket(int ticketNumber,String subject,String message){
+
+    public Ticket(int ticketNumber, String category, String subject, String message){
         this.ticketNumber=ticketNumber;
+        this.category=category;
         this.subject=subject;
         this.message=message;
     }
@@ -26,6 +29,22 @@ public class Ticket {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public int getTicketNumber() {
+        return ticketNumber;
+    }
+
+    public void setTicketNumber(int ticketNumber) {
+        this.ticketNumber = ticketNumber;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String ticketToString(){
