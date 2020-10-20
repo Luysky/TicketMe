@@ -123,4 +123,5 @@
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="liste_des_tickets">Liste des Tickets</string>
+    <string name="tickets_en_cours">Tickets en cours</string>
 </resources>

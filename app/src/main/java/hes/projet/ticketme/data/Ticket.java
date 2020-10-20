@@ -1,9 +1,16 @@
 package hes.projet.ticketme.data;
 
 public class Ticket {
-    private String subject;
 
+    private int ticketNumber;
+    private String subject;
     private String message;
+
+    public Ticket(int ticketNumber,String subject,String message){
+        this.ticketNumber=ticketNumber;
+        this.subject=subject;
+        this.message=message;
+    }
 
     public String getSubject() {
         return subject;
@@ -19,5 +26,10 @@ public class Ticket {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String ticketToString(){
+
+        return "Ticket n°"+ticketNumber+" - "+subject;
     }
 }
