@@ -18,21 +18,20 @@ import hes.projet.ticketme.data.Ticket;
 
 public class TicketListActivity extends AppCompatActivity {
 
-    ListView listView;
-    List<String> listString = new ArrayList();
-    List<Ticket> listTicket = new ArrayList<>();
-
-    ArrayAdapter adapter;
+    private ListView listView;
+    private List<String> listString = new ArrayList();
+    private List<Ticket> listTicket = new ArrayList<>();
+    private ArrayAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ticket_list);
-
         listView  = findViewById(R.id.list_view);
 
-        Ticket ticket1 = new Ticket(1,"Bug affichage","J'ai un écran noir","Bla bla bla");
-        Ticket ticket2 = new Ticket(2,"Bug affichage","File not found","Bla bla bla");
+        //Creation manuelle de Ticket pour les tests
+        Ticket ticket1 = new Ticket(1,"Bug","J'ai un écran noir","Bla bla bla");
+        Ticket ticket2 = new Ticket(2,"Bug","File not found","Bla bla bla");
         Ticket ticket3 = new Ticket(3,"Crash","Application crash au démarrage","Bla bla bla");
         Ticket ticket4 = new Ticket(4,"Crash","Application se fige après 5 min","Bla bla bla");
         Ticket ticket5 = new Ticket(5,"Help","Comment changer la langue?","Bla bla bla");
@@ -59,28 +58,26 @@ public class TicketListActivity extends AppCompatActivity {
         listTicket.add(ticket12);
         listTicket.add(ticket13);
 
-
+        //On recupere l idTicket et le subjet pour l affichage dans la liste de message.
         for(int i=0; i<listTicket.size();i++){
             listString.add(listTicket.get(i).ticketToString());
         }
 
-
-        //1 = le contexte, 2 layout, 3 list
+        //Ces lignes servent a la mise en place d une liste deroulante.
         adapter = new ArrayAdapter(TicketListActivity.this, android.R.layout.simple_list_item_1, listString);
         listView.setAdapter(adapter);
 
+        //Action lorsque l on click sur un objet de la liste.
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Ici on definit ce qui va se passer lorsqu on click sur un objet de la liste
-                //Exemple de toast
+                //Pour l instant un toast
                 Toast.makeText(TicketListActivity.this,listTicket.get(position).getSubject(),Toast.LENGTH_SHORT).show();
             }
         });
 
     }
-
+        //Bouton ajouter un nouveau Ticket
     public void clickAddTicket(View view){
         Intent intent = new Intent(this, TicketCreateActivity.class);
         startActivity(intent);
