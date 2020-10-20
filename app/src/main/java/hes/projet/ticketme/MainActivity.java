@@ -35,4 +35,19 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, TicketEditActivity.class);
         startActivity(intent);
     }
+
+    public void clickLoginHomepage(View view){
+        Intent intent = new Intent(this, LoginHomepageActivity.class);
+        startActivity(intent);
+    }
+
+    public void clickUserInterface(View view){
+        Intent intent = new Intent(this, UserInterfaceActivity.class);
+        startActivity(intent);
+    }
+
+    public void clickUserManagement(View view){
+        Intent intent = new Intent(this, UserManagementActivity.class);
+        startActivity(intent);
+    }
 }
