@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -72,7 +73,8 @@ public class TicketListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Pour l instant un toast
-                Toast.makeText(TicketListActivity.this,listTicket.get(position).getSubject(),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(TicketListActivity.this,listTicket.get(position).getSubject(),Toast.LENGTH_SHORT).show();
+                clickOnTicket(view);
             }
         });
 
@@ -80,6 +82,11 @@ public class TicketListActivity extends AppCompatActivity {
         //Bouton ajouter un nouveau Ticket
     public void clickAddTicket(View view){
         Intent intent = new Intent(this, TicketCreateActivity.class);
+        startActivity(intent);
+    }
+
+    public void clickOnTicket(View view){
+        Intent intent = new Intent(this, TicketReadActivity.class);
         startActivity(intent);
     }
 }
