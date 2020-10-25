@@ -7,17 +7,31 @@ import androidx.annotation.NonNull;
 import androidx.room.PrimaryKey;
 
 
-@Entity(tableName = "tickets", primaryKeys = {"id"})
+@Entity(tableName = "tickets")
 public class TicketEntity {
 
     @PrimaryKey(autoGenerate = true)
     private Long id;
+
+    private String category;
 
     private String subject;
 
     private String message;
 
 
+    @Ignore
+    public TicketEntity() {
+    }
+
+    public TicketEntity(@NonNull String category,
+                        @NonNull String subject,
+                        @NonNull String message) {
+
+        this.category = category;
+        this.subject = subject;
+        this.message = message;
+    }
     public Long getId() {
         return id;
     }
@@ -40,5 +54,13 @@ public class TicketEntity {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }
