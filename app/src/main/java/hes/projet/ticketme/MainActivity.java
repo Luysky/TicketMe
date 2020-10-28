@@ -1,10 +1,13 @@
 package hes.projet.ticketme;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import android.app.ActionBar;
 import android.widget.EditText;
 
 import java.util.ArrayList;
@@ -15,12 +18,17 @@ import hes.projet.ticketme.ui.*;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Toolbar menuToolBar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Utilisation de l action bar
+        menuToolBar = (Toolbar) findViewById(R.id.toolbar);
+         setSupportActionBar(menuToolBar);
     }
 
     private void onCLick() {

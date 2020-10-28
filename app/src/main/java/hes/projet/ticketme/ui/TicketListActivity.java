@@ -1,6 +1,7 @@
 package hes.projet.ticketme.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,12 +24,17 @@ public class TicketListActivity extends AppCompatActivity {
     private List<String> listString = new ArrayList();
     private List<Ticket> listTicket = new ArrayList<>();
     private ArrayAdapter adapter;
+    private Toolbar menuToolBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ticket_list);
         listView  = findViewById(R.id.list_view);
+
+        //Utilisation de l action bar
+        menuToolBar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(menuToolBar);
 
         //Creation manuelle de Ticket pour les tests
         Ticket ticket1 = new Ticket(1,"Bug","J'ai un écran noir","Bla bla bla");

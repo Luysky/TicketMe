@@ -1,6 +1,7 @@
 package hes.projet.ticketme.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ public class TicketCreateActivity extends AppCompatActivity {
     private String category;
     private String subject;
     private String message;
+    private Toolbar menuToolBar;
 
     //Il va falloir gerer la generation auto des id des Tickets actuellement le prochain chiffre serait le 14.
     private int idTicket = 14;
@@ -29,6 +31,10 @@ public class TicketCreateActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ticket_create);
+
+        //Utilisation de l action bar
+        menuToolBar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(menuToolBar);
 
         //Utilisation d un spinner pour le choix de la categorie.
         spinner = findViewById(R.id.spinnerCategory);
