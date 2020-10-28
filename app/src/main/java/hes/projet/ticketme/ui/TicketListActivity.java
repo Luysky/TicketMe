@@ -18,7 +18,7 @@ import java.util.List;
 import hes.projet.ticketme.R;
 import hes.projet.ticketme.data.Ticket;
 
-public class TicketListActivity extends AppCompatActivity {
+public class TicketListActivity extends OptionsMenuActivity {
 
     private ListView listView;
     private List<String> listString = new ArrayList();
@@ -33,8 +33,18 @@ public class TicketListActivity extends AppCompatActivity {
         listView  = findViewById(R.id.list_view);
 
         //Utilisation de l action bar
-        menuToolBar = (Toolbar) findViewById(R.id.toolbar);
+        menuToolBar = findViewById(R.id.toolbar);
+        setTitle(null);
         setSupportActionBar(menuToolBar);
+
+        //Afficher et utiliser le bouton retour
+        menuToolBar.setNavigationIcon(R.drawable.ic_return);
+        menuToolBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"return home",Toast.LENGTH_SHORT).show();
+            }
+        });
 
         //Creation manuelle de Ticket pour les tests
         Ticket ticket1 = new Ticket(1,"Bug","J'ai un écran noir","Bla bla bla");

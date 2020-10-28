@@ -3,6 +3,7 @@ package hes.projet.ticketme.ui;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,7 +17,7 @@ import hes.projet.ticketme.R;
 import hes.projet.ticketme.data.Ticket;
 
 
-public class TicketCreateActivity extends AppCompatActivity {
+public class TicketCreateActivity extends OptionsMenuActivity {
 
     private Spinner spinner;
     private String category;
@@ -33,8 +34,18 @@ public class TicketCreateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ticket_create);
 
         //Utilisation de l action bar
-        menuToolBar = (Toolbar) findViewById(R.id.toolbar);
+        menuToolBar = findViewById(R.id.toolbar);
+        setTitle(null);
         setSupportActionBar(menuToolBar);
+
+        //Afficher et utiliser le bouton retour
+        menuToolBar.setNavigationIcon(R.drawable.ic_return);
+        menuToolBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"return home",Toast.LENGTH_SHORT).show();
+            }
+        });
 
         //Utilisation d un spinner pour le choix de la categorie.
         spinner = findViewById(R.id.spinnerCategory);

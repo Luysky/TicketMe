@@ -16,7 +16,7 @@ import java.util.List;
 import hes.projet.ticketme.data.Ticket;
 import hes.projet.ticketme.ui.*;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends OptionsMenuActivity {
 
     private Toolbar menuToolBar;
 
@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Utilisation de l action bar
         menuToolBar = (Toolbar) findViewById(R.id.toolbar);
+         setTitle(null);
          setSupportActionBar(menuToolBar);
     }
 
