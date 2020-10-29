@@ -55,5 +55,8 @@
     <string name="messageAffichage">Message</string>
     <string name="sujetAffichage">Sujet</string>
     <string name="modifier_un_ticket">Modifier un ticket</string>
+    <string name="textview">TextView</string>
+    <string name="liste_users">Liste Users</string>
+    <string name="liste_des_users">Liste des Users</string>
 
 </resources>
