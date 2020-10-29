@@ -54,5 +54,6 @@
     <string name="cat_gorieAffichage">Catégorie</string>
     <string name="messageAffichage">Message</string>
     <string name="sujetAffichage">Sujet</string>
+    <string name="modifier_un_ticket">Modifier un ticket</string>
 
 </resources>

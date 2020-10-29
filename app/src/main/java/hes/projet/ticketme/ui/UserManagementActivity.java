@@ -28,7 +28,7 @@ public class UserManagementActivity extends OptionsMenuActivity {
         menuToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"return home",Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
     }

@@ -5,6 +5,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -42,7 +44,7 @@ public class TicketListActivity extends OptionsMenuActivity {
         menuToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"return home",Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
 
@@ -88,13 +90,22 @@ public class TicketListActivity extends OptionsMenuActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Pour l instant un toast
-                //Toast.makeText(TicketListActivity.this,listTicket.get(position).getSubject(),Toast.LENGTH_SHORT).show();
                 clickOnTicket(view);
             }
         });
 
     }
+
+    //Methode servant a rajouter une option (Manager) dans l action bar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        super.onCreateOptionsMenu(menu);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.manager_menu,menu);
+        return true;
+    }
+
+
         //Bouton ajouter un nouveau Ticket
     public void clickAddTicket(View view){
         Intent intent = new Intent(this, TicketCreateActivity.class);
