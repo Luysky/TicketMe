@@ -1,6 +1,7 @@
 package hes.projet.ticketme.ui;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,12 +16,22 @@ import hes.projet.ticketme.R;
 
 
 public class OptionsMenuActivity extends AppCompatActivity {
+    public static final String TAG = "OptionsMenuActivity";
 
     private Toolbar menuToolBar;
 
-    @Override
+//    public OptionsMenuActivity() {
+//        //Utilisation de l action bar
+//        menuToolBar = findViewById(R.id.toolbar);
+//        setTitle(null);
+//        setSupportActionBar(menuToolBar);
+//    }
+
+    // @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Log.i(TAG, "onCreate");
 
         //Utilisation de l action bar
         menuToolBar = findViewById(R.id.toolbar);
@@ -28,21 +39,39 @@ public class OptionsMenuActivity extends AppCompatActivity {
         setSupportActionBar(menuToolBar);
 
         //Afficher et utiliser le bouton retour
-        menuToolBar.setNavigationIcon(R.drawable.ic_return);
-        menuToolBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+//        menuToolBar.setNavigationIcon(R.drawable.ic_return);
+//        menuToolBar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
     }
 
+    @Override
     public boolean onCreateOptionsMenu(Menu menu){
+        super.onCreateOptionsMenu(menu);
 
+        Log.i(TAG, "onCreateOptionsMenu");
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.appbar_menu,menu);
 
         return true;
+    }
+
+    public void initMenu() {
+        menuToolBar = findViewById(R.id.toolbar);
+        setTitle(null);
+        setSupportActionBar(menuToolBar);
+
+        //Afficher et utiliser le bouton retour
+//        menuToolBar.setNavigationIcon(R.drawable.ic_return);
+//        menuToolBar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
     }
 
     @Override

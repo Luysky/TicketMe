@@ -7,29 +7,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import android.app.ActionBar;
-import android.widget.EditText;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import hes.projet.ticketme.data.Ticket;
 import hes.projet.ticketme.ui.*;
 
-public class MainActivity extends OptionsMenuActivity {
-
-    private Toolbar menuToolBar;
+public class MainActivity extends AppCompatActivity {
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //Utilisation de l action bar
-        menuToolBar = (Toolbar) findViewById(R.id.toolbar);
-         setTitle(null);
-         setSupportActionBar(menuToolBar);
     }
 
     private void onCLick() {

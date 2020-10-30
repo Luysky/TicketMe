@@ -1,12 +1,9 @@
 package hes.projet.ticketme.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,7 +13,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import hes.projet.ticketme.R;
-import hes.projet.ticketme.data.Ticket;
 
 
 public class TicketCreateActivity extends OptionsMenuActivity {
@@ -109,8 +105,8 @@ public class TicketCreateActivity extends OptionsMenuActivity {
             return;
         }
         else{
-            Ticket brandNew = new Ticket(idTicket,category,subject,message);
-            Toast.makeText(TicketCreateActivity.this,"Nouveau ticket créé!",Toast.LENGTH_SHORT).show();
+//            TicketEnt brandNew = new Ticket(idTicket,category,subject,message);
+//            Toast.makeText(TicketCreateActivity.this,"Nouveau ticket créé!",Toast.LENGTH_SHORT).show();
 
             //Ici il faudra rajouter le nouveau ticket a la listTicket et penser a actualiser la liste dans TicketListActivity
         }

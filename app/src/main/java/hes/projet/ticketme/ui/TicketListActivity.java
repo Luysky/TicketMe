@@ -44,10 +44,15 @@ public class TicketListActivity extends OptionsMenuActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_ticket_list);
+
+        initMenu();
+
 
         listView  = findViewById(R.id.list_view);
 
+        Log.i(TAG, "onCreate");
 
 
 
@@ -103,9 +108,10 @@ public class TicketListActivity extends OptionsMenuActivity {
     }
 
     //Methode servant a rajouter une option (Manager) dans l action bar
-    @Override
+    // @Override
     public boolean onCreateOptionsMenu(Menu menu){
         super.onCreateOptionsMenu(menu);
+        Log.i(TAG, "onCreateOptionsMenu");
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.manager_menu,menu);
         return true;
