@@ -7,9 +7,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import hes.projet.ticketme.data.Ticket;
 import hes.projet.ticketme.ui.*;
 
 public class MainActivity extends AppCompatActivity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,4 +41,21 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, TicketEditActivity.class);
         startActivity(intent);
     }
+
+    public void clickLoginHomepage(View view){
+        Intent intent = new Intent(this, LoginHomepageActivity.class);
+        startActivity(intent);
+    }
+
+    public void clickUserInterface(View view){
+        Intent intent = new Intent(this, UserInterfaceActivity.class);
+        startActivity(intent);
+    }
+
+    public void clickUserManagement(View view){
+        Intent intent = new Intent(this, UserManagementActivity.class);
+        startActivity(intent);
+    }
+
+
 }

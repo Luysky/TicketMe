@@ -9,6 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TicketMe">
+        <activity android:name=".ui.TicketReadActivity"></activity>
+        <activity android:name=".ui.TicketCreateActivity" />
+        <activity android:name=".ui.LoginHomepageActivity" />
+        <activity android:name=".ui.UserManagementActivity" />
+        <activity android:name=".ui.UserInterfaceActivity" />
         <activity android:name=".ui.TicketEditActivity" />
         <activity android:name=".ui.TicketViewActivity" />
         <activity android:name=".ui.TicketListActivity" />
