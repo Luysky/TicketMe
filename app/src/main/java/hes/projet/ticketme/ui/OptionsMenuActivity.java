@@ -4,16 +4,38 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import hes.projet.ticketme.R;
 
 
 public class OptionsMenuActivity extends AppCompatActivity {
 
+    private Toolbar menuToolBar;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        //Utilisation de l action bar
+        menuToolBar = findViewById(R.id.toolbar);
+        setTitle(null);
+        setSupportActionBar(menuToolBar);
+
+        //Afficher et utiliser le bouton retour
+        menuToolBar.setNavigationIcon(R.drawable.ic_return);
+        menuToolBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
 
     public boolean onCreateOptionsMenu(Menu menu){
 

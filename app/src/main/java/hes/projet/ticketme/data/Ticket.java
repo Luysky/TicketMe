@@ -31,6 +31,14 @@ public class Ticket {
         this.message = message;
     }
 
+<<<<<<< HEAD
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+=======
     public int getTicketNumber() {
         return ticketNumber;
     }
@@ -50,5 +58,6 @@ public class Ticket {
     public String ticketToString(){
 
         return "Ticket n°"+ticketNumber+" - "+subject;
+>>>>>>> ben
     }
 }
