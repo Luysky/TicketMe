@@ -7,6 +7,8 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
+import java.util.List;
+
 import hes.projet.ticketme.data.entity.TicketEntity;
 
 @Dao
@@ -14,6 +16,9 @@ public interface TicketDao {
 
     @Query("SELECT * FROM tickets WHERE id = :id")
     LiveData<TicketEntity> getById(Long id);
+
+    @Query("SELECT * FROM tickets")
+    LiveData<List<TicketEntity>> getAll();
 
     @Delete
     void delete(TicketEntity ticket);

@@ -37,13 +37,13 @@ public class TicketRepository {
     }
 
 
-    /*public LiveData<TicketEntity> getClient(final String email, Context context) {
-        return AppDatabase.getInstance(context).ticketDao().getByEmail(email);
-    }*/
+    public LiveData<TicketEntity> getTicket(final Long id, Context context) {
+        return AppDatabase.getInstance(context).ticketDao().getById(id);
+    }
 
-    /*public LiveData<List<TicketEntity>> getAllClients(Context context) {
-        return AppDatabase.getInstance(context).clientDao().getAll();
-    }*/
+    public LiveData<List<TicketEntity>> getAllTickets(Context context) {
+        return AppDatabase.getInstance(context).ticketDao().getAll();
+    }
 
     public void insert(final TicketEntity client, OnAsyncEventListener callback, Context context) {
         new CreateTicket(context, callback).execute(client);

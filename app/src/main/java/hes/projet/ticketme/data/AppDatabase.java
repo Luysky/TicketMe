@@ -13,19 +13,23 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import hes.projet.ticketme.data.dao.CategoryDao;
 import hes.projet.ticketme.data.dao.TicketDao;
+import hes.projet.ticketme.data.entity.CategoryEntity;
 import hes.projet.ticketme.data.entity.TicketEntity;
 
-@Database(entities = {TicketEntity.class}, version = 1)
+@Database(entities = {TicketEntity.class, CategoryEntity.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static final String TAG = "TicketMeDatabase";
 
     private static AppDatabase instance;
 
-    private static final String DATABASE_NAME = "intro-database";
+    private static final String DATABASE_NAME = "ticket-me";
 
     public abstract TicketDao ticketDao();
+
+    public abstract CategoryDao categoryDao();
 
     private final MutableLiveData<Boolean> isDatabaseCreated = new MutableLiveData<>();
 
@@ -60,6 +64,7 @@ public abstract class AppDatabase extends RoomDatabase {
                         super.onCreate(db);
                         Executors.newSingleThreadExecutor().execute(() -> {
                             AppDatabase database = AppDatabase.getInstance(appContext);
+                            Log.i(TAG, "Launching DatabaseInitializer.populateDatabase");
                             DatabaseInitializer.populateDatabase(database);
                             // notify that the database was created and it's ready to be used
                             database.setDatabaseCreated();
