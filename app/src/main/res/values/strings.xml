@@ -7,6 +7,7 @@
         <item>Help</item>
     </string-array>
 
+    <string name="textView_content">Bienvenue sur TicketMe</string>
 
     <string name="app_name">TicketMe</string>
     <string name="ecran_d_accueil">Ecran d\'accueil</string>
@@ -58,5 +59,6 @@
     <string name="textview">TextView</string>
     <string name="liste_users">Liste Users</string>
     <string name="liste_des_users">Liste des Users</string>
+    <string name="ticketme">TicketMe</string>
 
 </resources>

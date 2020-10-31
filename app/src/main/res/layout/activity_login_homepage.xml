@@ -1,9 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/login"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="26dp"
     tools:context=".ui.LoginHomepageActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="TicketMe"
+        android:layout_marginBottom="16dp"
+        android:textSize="38sp" />
+
+    <EditText
+        android:id="@+id/etEmail"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="28dp"
+        android:layout_marginBottom="16dp"
+        android:hint="Votre adresse email"
+        android:textSize="22sp" />
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="28dp"
+        android:hint="Votre mot de passe"
+        android:textSize="22sp" />
+
+    <Button
+
+        android:id="@+id/btnLogin"
+        android:text="Se connecter"
+        android:layout_width="128dp"
+        android:background="#fff"
+        android:textColor="#1495d7"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="26dp"
+            android:text="Vous n'avez pas de compte?" />
+
+        <Button
+            android:id="@+id/btnSignIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:layout_margin="26dp"
+            android:text="S'enregister"
+            android:textAllCaps="false" />
+
+    </LinearLayout>
+
+        <Button
+            android:id="@+id/btnOubliMdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mot de passse oublié"
+            android:background="@null"
+            android:textStyle="normal"
+            android:textAllCaps="false" />
+
+
+    </LinearLayout>
