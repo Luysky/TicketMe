@@ -2,18 +2,29 @@ package hes.projet.ticketme.data.entity;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.annotation.NonNull;
 import androidx.room.PrimaryKey;
 
 
-@Entity(tableName = "tickets")
+@Entity(tableName = "tickets",
+        foreignKeys = @ForeignKey(
+                entity = CategoryEntity.class,
+                parentColumns = "id",
+                childColumns = "category",
+                onDelete = ForeignKey.CASCADE
+        ))
 public class TicketEntity {
 
     @PrimaryKey(autoGenerate = true)
     private Long id;
 
-    private String category;
+    @ColumnInfo(name = "category")
+    private Long categoryId;
+
+    @Ignore
+    private String categoryName;
 
     private String subject;
 
@@ -24,11 +35,11 @@ public class TicketEntity {
     public TicketEntity() {
     }
 
-    public TicketEntity(@NonNull String category,
+    public TicketEntity(@NonNull Long categoryId,
                         @NonNull String subject,
                         @NonNull String message) {
 
-        this.category = category;
+        this.categoryId = categoryId;
         this.subject = subject;
         this.message = message;
     }
@@ -56,12 +67,12 @@ public class TicketEntity {
         this.message = message;
     }
 
-    public String getCategory() {
-        return category;
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCategoryId(Long category) {
+        this.categoryId = categoryId;
     }
 
     public String toString() {

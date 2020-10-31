@@ -8,6 +8,8 @@ import java.util.List;
 
 import hes.projet.ticketme.data.AppDatabase;
 import hes.projet.ticketme.data.async.ticket.CreateTicket;
+import hes.projet.ticketme.data.async.ticket.DeleteTicket;
+import hes.projet.ticketme.data.async.ticket.UpdateTicket;
 import hes.projet.ticketme.data.entity.TicketEntity;
 import hes.projet.ticketme.util.OnAsyncEventListener;
 
@@ -45,15 +47,15 @@ public class TicketRepository {
         return AppDatabase.getInstance(context).ticketDao().getAll();
     }
 
-    public void insert(final TicketEntity client, OnAsyncEventListener callback, Context context) {
-        new CreateTicket(context, callback).execute(client);
-    }
-/*
-    public void update(final ClientEntity client, OnAsyncEventListener callback, Context context) {
-        new UpdateClient(context, callback).execute(client);
+    public void insert(final TicketEntity ticket, OnAsyncEventListener callback, Context context) {
+        new CreateTicket(context, callback).execute(ticket);
     }
 
-    public void delete(final ClientEntity client, OnAsyncEventListener callback, Context context) {
-        new DeleteClient(context, callback).execute(client);
-    }*/
+    public void update(final TicketEntity ticket, OnAsyncEventListener callback, Context context) {
+        new UpdateTicket(context, callback).execute(ticket);
+    }
+
+    public void delete(final TicketEntity ticket, OnAsyncEventListener callback, Context context) {
+        new DeleteTicket(context, callback).execute(ticket);
+    }
 }

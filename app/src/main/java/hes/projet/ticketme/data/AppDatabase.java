@@ -15,10 +15,12 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import hes.projet.ticketme.data.dao.CategoryDao;
 import hes.projet.ticketme.data.dao.TicketDao;
+import hes.projet.ticketme.data.dao.UserDao;
 import hes.projet.ticketme.data.entity.CategoryEntity;
 import hes.projet.ticketme.data.entity.TicketEntity;
+import hes.projet.ticketme.data.entity.UserEntity;
 
-@Database(entities = {TicketEntity.class, CategoryEntity.class}, version = 1)
+@Database(entities = {TicketEntity.class, CategoryEntity.class, UserEntity.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static final String TAG = "TicketMeDatabase";
@@ -26,6 +28,8 @@ public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase instance;
 
     private static final String DATABASE_NAME = "ticket-me";
+
+    public abstract UserDao userDao();
 
     public abstract TicketDao ticketDao();
 

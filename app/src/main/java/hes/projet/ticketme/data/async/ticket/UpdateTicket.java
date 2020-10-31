@@ -22,7 +22,7 @@ public class UpdateTicket extends AsyncTask<TicketEntity, Void, Void> {
     protected Void doInBackground(TicketEntity... params) {
         try {
             for (TicketEntity ticket : params)
-                database.ticketDao().delete(ticket);
+                database.ticketDao().update(ticket);
         } catch (Exception e) {
             exception = e;
         }

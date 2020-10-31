@@ -60,7 +60,7 @@ public class TicketViewActivity extends OptionsMenuActivity {
 
                 Log.i(TAG, "loaded ticket " + ticket.toString());
                 //On recupere l idTicket et le subjet pour l affichage dans la liste de message.
-                category.setText(ticket.getCategory());
+                category.setText(ticket.getCategoryId().toString());
                 subject.setText(ticket.getSubject());
                 message.setText(ticket.getMessage());
             }

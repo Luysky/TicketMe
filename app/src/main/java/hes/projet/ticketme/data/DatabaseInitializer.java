@@ -5,6 +5,7 @@ import android.util.Log;
 
 import hes.projet.ticketme.data.entity.CategoryEntity;
 import hes.projet.ticketme.data.entity.TicketEntity;
+import hes.projet.ticketme.data.entity.UserEntity;
 
 
 public class DatabaseInitializer {
@@ -21,28 +22,43 @@ public class DatabaseInitializer {
         db.categoryDao().insert(category);
     }
 
-    private static void addTicket(final AppDatabase db, final String category, final String subject,
+    private static void addTicket(final AppDatabase db, final Long category, final String subject,
                                   final String message) {
         TicketEntity ticket = new TicketEntity(category, subject, message);
         db.ticketDao().insert(ticket);
     }
 
+
+    private static void addUser(final AppDatabase db, final String username, final String password,
+                                  final boolean admin) {
+        UserEntity user = new UserEntity(username, password, admin);
+        db.userDao().insert(user);
+    }
+
     private static void populateWithTestData(AppDatabase db) {
         db.ticketDao().deleteAll();
 
-        addTicket(db, "Bug","J'ai un écran noir","Bla bla bla");
-        addTicket(db, "Bug","File not found","Bla bla bla");
-        addTicket(db, "Crash","Application crash au démarrage","Bla bla bla");
-        addTicket(db, "Crash","Application se fige après 5 min","Bla bla bla");
-        addTicket(db, "Help","Comment changer la langue?","Bla bla bla");
-        addTicket(db, "Help","Comment changer la couleur?","Bla bla bla");
-        addTicket(db, "Password","Mon password est bloqué","Bla bla bla");
-        addTicket(db, "Password","Je n'arrive pas à changer mon password","Bla bla bla");
-        addTicket(db, "Password","Acces denied pourquoi?","Bla bla bla");
-        addTicket(db, "Help","Comment changer mon Username?","Bla bla bla");
-        addTicket(db, "Help","Connection failed?","Bla bla bla");
-        addTicket(db, "Bug","Affichage de symboles étranges","Bla bla bla");
-        addTicket(db, "Bug","Mes fichiers ont disparus","Bla bla bla");
+        addTicket(db, (long) 1,"J'ai un écran noir","Bla bla bla");
+        addTicket(db, (long) 1,"File not found","Bla bla bla");
+        addTicket(db, (long) 2,"Application crash au démarrage","Bla bla bla");
+        addTicket(db, (long) 2,"Application se fige après 5 min","Bla bla bla");
+        addTicket(db, (long) 3,"Comment changer la langue?","Bla bla bla");
+        addTicket(db, (long) 3,"Comment changer la couleur?","Bla bla bla");
+        addTicket(db, (long) 4,"Mon password est bloqué","Bla bla bla");
+        addTicket(db, (long) 4,"Je n'arrive pas à changer mon password","Bla bla bla");
+        addTicket(db, (long) 4,"Acces denied pourquoi?","Bla bla bla");
+        addTicket(db, (long) 3,"Comment changer mon Username?","Bla bla bla");
+        addTicket(db, (long) 3,"Connection failed?","Bla bla bla");
+        addTicket(db, (long) 1,"Affichage de symboles étranges","Bla bla bla");
+        addTicket(db, (long) 1,"Mes fichiers ont disparus","Bla bla bla");
+
+        addUser(db,"tom@gmail.com","1234",true);
+        addUser(db,"ben@gmail.com","1234",true);
+        addUser(db, "toto@gmail.com","123",false);
+        addUser(db, "tata@gmail.com","123",false);
+        addUser(db, "titi@gmail.com","123",false);
+        addUser(db,"tutu@gmail.com","123",false);
+
     }
 
     private static void populateWithBaseData(AppDatabase db) {
@@ -65,8 +81,8 @@ public class DatabaseInitializer {
         @Override
         protected Void doInBackground(final Void... params) {
 
-            populateWithTestData(database);
             populateWithBaseData(database);
+            populateWithTestData(database);
             return null;
         }
 

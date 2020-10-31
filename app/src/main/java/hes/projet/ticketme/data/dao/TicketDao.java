@@ -6,10 +6,18 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
 import hes.projet.ticketme.data.entity.TicketEntity;
+import hes.projet.ticketme.data.entity.UserEntity;
+
+
+/**
+ * TODO Find a way to bind foreign keys
+ */
+
 
 @Dao
 public interface TicketDao {
@@ -23,14 +31,11 @@ public interface TicketDao {
     @Delete
     void delete(TicketEntity ticket);
 
-    /**
-     * TODO Clarify why using SQLSQLiteConstraintException
-     *
-     * @param ticket
-     * @throws SQLiteConstraintException
-     */
+    @Update
+    void update(TicketEntity ticket);
+
     @Insert
-    void insert(TicketEntity ticket) throws SQLiteConstraintException;
+    void insert(TicketEntity ticket);
 
 
     @Query("delete from `tickets`")
