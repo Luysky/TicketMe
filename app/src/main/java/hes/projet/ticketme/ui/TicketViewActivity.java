@@ -16,13 +16,14 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import hes.projet.ticketme.R;
+import hes.projet.ticketme.data.entity.CategoryEntity;
 import hes.projet.ticketme.data.entity.TicketEntity;
 import hes.projet.ticketme.viewmodel.TicketListViewModel;
 import hes.projet.ticketme.viewmodel.TicketViewModel;
 
 public class TicketViewActivity extends OptionsMenuActivity {
 
-    private Toolbar menuToolBar;
+//    private Toolbar menuToolBar;
 
     private static final String TAG = "TicketView";
 
@@ -31,6 +32,7 @@ public class TicketViewActivity extends OptionsMenuActivity {
     private TextView message;
 
     private TicketEntity ticket;
+    private CategoryEntity categoryEntity;
     private TicketViewModel viewModel;
 
     @Override
@@ -50,8 +52,17 @@ public class TicketViewActivity extends OptionsMenuActivity {
         /**
          * Get the viewModel
          */
+        showTicket(ticketId);
+
+
+
+    }
+
+    private void showTicket(Long ticketId) {
         TicketViewModel.Factory factory = new TicketViewModel.Factory(getApplication(), ticketId);
         ViewModelProvider provider = new ViewModelProvider(this, factory);
+
+
         viewModel = provider.get(TicketViewModel.class);
 
         viewModel.getTicket().observe(this, ticketEntity -> {

@@ -11,25 +11,29 @@ import hes.projet.ticketme.R;
 
 public class TicketEditActivity extends OptionsMenuActivity {
 
-    private Toolbar menuToolBar;
+//    private Toolbar menuToolBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ticket_edit);
 
-        //Utilisation de l action bar
-        menuToolBar = findViewById(R.id.toolbar);
-        setTitle(null);
-        setSupportActionBar(menuToolBar);
+        initMenu();
 
-        //Afficher et utiliser le bouton retour
-        menuToolBar.setNavigationIcon(R.drawable.ic_return);
-        menuToolBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+
+
+//        //Utilisation de l action bar
+//        menuToolBar = findViewById(R.id.toolbar);
+//        setTitle(null);
+//        setSupportActionBar(menuToolBar);
+//
+//        //Afficher et utiliser le bouton retour
+//        menuToolBar.setNavigationIcon(R.drawable.ic_return);
+//        menuToolBar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
     }
 }

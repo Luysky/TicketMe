@@ -33,7 +33,6 @@ public class TicketListActivity extends OptionsMenuActivity {
     private static final String TAG = "TicketListActivity";
 
     private ListView listView;
-    private List<String> listString = new ArrayList();
     private List<TicketEntity> tickets = new ArrayList<>();
     private List<CategoryEntity> categories = new ArrayList<>();
     private ArrayAdapter adapter;
@@ -63,13 +62,8 @@ public class TicketListActivity extends OptionsMenuActivity {
             if (ticketEntities != null) {
                 tickets = ticketEntities;
 
-                //On recupere l idTicket et le subjet pour l affichage dans la liste de message.
-                for(int i = 0; i < tickets.size(); i++){
-                    listString.add(tickets.get(i).toString());
-                }
-
                 //Ces lignes servent a la mise en place d une liste deroulante.
-                adapter = new ArrayAdapter(TicketListActivity.this, android.R.layout.simple_list_item_1, listString);
+                adapter = new ArrayAdapter(TicketListActivity.this, android.R.layout.simple_list_item_1, tickets);
                 listView.setAdapter(adapter);
             }
         });
@@ -98,10 +92,6 @@ public class TicketListActivity extends OptionsMenuActivity {
                 Log.i(TAG, "clicked on  " + t.toString());
                 intent.putExtra("ticketId", t.getId());
                 startActivity(intent);
-
-                //Pour l instant un toast
-                //Toast.makeText(TicketListActivity.this,listTicket.get(position).getSubject(),Toast.LENGTH_SHORT).show();
-                // clickOnTicket(view);
             }
         });
 
@@ -109,13 +99,13 @@ public class TicketListActivity extends OptionsMenuActivity {
 
     //Methode servant a rajouter une option (Manager) dans l action bar
     // @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        super.onCreateOptionsMenu(menu);
-        Log.i(TAG, "onCreateOptionsMenu");
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.manager_menu,menu);
-        return true;
-    }
+//    public boolean onCreateOptionsMenu(Menu menu){
+//        super.onCreateOptionsMenu(menu);
+//        Log.i(TAG, "onCreateOptionsMenu");
+//        MenuInflater menuInflater = getMenuInflater();
+//        menuInflater.inflate(R.menu.manager_menu,menu);
+//        return true;
+//    }
 
 
         //Bouton ajouter un nouveau Ticket

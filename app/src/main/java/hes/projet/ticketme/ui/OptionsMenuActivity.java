@@ -20,34 +20,6 @@ public class OptionsMenuActivity extends AppCompatActivity {
 
     private Toolbar menuToolBar;
 
-//    public OptionsMenuActivity() {
-//        //Utilisation de l action bar
-//        menuToolBar = findViewById(R.id.toolbar);
-//        setTitle(null);
-//        setSupportActionBar(menuToolBar);
-//    }
-
-    // @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        Log.i(TAG, "onCreate");
-
-        //Utilisation de l action bar
-        menuToolBar = findViewById(R.id.toolbar);
-        setTitle(null);
-        setSupportActionBar(menuToolBar);
-
-        //Afficher et utiliser le bouton retour
-//        menuToolBar.setNavigationIcon(R.drawable.ic_return);
-//        menuToolBar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                finish();
-//            }
-//        });
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         super.onCreateOptionsMenu(menu);
@@ -65,13 +37,13 @@ public class OptionsMenuActivity extends AppCompatActivity {
         setSupportActionBar(menuToolBar);
 
         //Afficher et utiliser le bouton retour
-//        menuToolBar.setNavigationIcon(R.drawable.ic_return);
-//        menuToolBar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                finish();
-//            }
-//        });
+        menuToolBar.setNavigationIcon(R.drawable.ic_manager);
+        menuToolBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
