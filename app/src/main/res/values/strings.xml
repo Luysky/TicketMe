@@ -57,6 +57,20 @@
     <string name="textview">TextView</string>
     <string name="liste_users">Liste Users</string>
     <string name="liste_des_users">Liste des Users</string>
+    <string name="cr_er_un_compte">Créer un compte</string>
+    <string name="n_attendez_plus_rejoignez_nous">N\'attendez plus, rejoignez nous !</string>
+    <string name="votre_adresse_email">Votre adresse email</string>
+    <string name="votre_mot_de_passe">Votre mot de passe</string>
+    <string name="valider">Valider</string>
+    <string name="s_enregister">S\'enregister</string>
     <string name="ticketme">TicketMe</string>
+    <string name="mot_de_passse_oubli">Mot de passse oublié</string>
+    <string name="vous_n_avez_pas_de_compte">Vous n\'avez pas de compte?</string>
+    <string name="se_connecter">Se connecter</string>
+    <string name="cette_application_a_t_cr_e_dans_le_cadre_du_cours_644_1_mobile_and_cloud">Cette application a été crée dans le cadre du cours 644-1 Mobile and Cloud</string>
+    <string name="benjamin_keller">Benjamin Keller</string>
+    <string name="thomas_luyet">Thomas Luyet</string>
+    <string name="liste_des_d_veloppeurs_et_administrateurs">Liste des développeurs et administrateurs:</string>
+
 
 </resources>

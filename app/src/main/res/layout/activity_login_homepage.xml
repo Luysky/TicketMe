@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="TicketMe"
+        android:text="@string/ticketme"
         android:layout_marginBottom="16dp"
         android:textSize="38sp" />
 
@@ -24,7 +24,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="28dp"
         android:layout_marginBottom="16dp"
-        android:hint="Votre adresse email"
+        android:autofillHints=""
+        android:hint="@string/votre_adresse_email"
+        android:inputType="textEmailAddress"
         android:textSize="22sp" />
 
     <EditText
@@ -33,13 +35,15 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="28dp"
-        android:hint="Votre mot de passe"
+        android:autofillHints=""
+        android:hint="@string/votre_mot_de_passe"
+        android:inputType="textPassword"
         android:textSize="22sp" />
 
     <Button
 
         android:id="@+id/btnLogin"
-        android:text="Se connecter"
+        android:text="@string/se_connecter"
         android:layout_width="128dp"
         android:background="#fff"
         android:textColor="#1495d7"
@@ -55,16 +59,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="26dp"
-            android:text="Vous n'avez pas de compte?" />
+            android:layout_margin="12dp"
+            android:text="@string/vous_n_avez_pas_de_compte" />
 
         <Button
             android:id="@+id/btnSignIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="12dp"
             android:background="@null"
-            android:layout_margin="26dp"
-            android:text="S'enregister"
+            android:onClick="clickNewUser"
+            android:text="S'enregistrer"
             android:textAllCaps="false" />
 
     </LinearLayout>
@@ -73,7 +78,8 @@
             android:id="@+id/btnOubliMdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mot de passse oublié"
+            android:text="@string/mot_de_passse_oubli"
+            android:onClick="clickForgotPassword"
             android:background="@null"
             android:textStyle="normal"
             android:textAllCaps="false" />

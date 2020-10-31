@@ -1,5 +1,6 @@
 package hes.projet.ticketme.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -56,7 +57,9 @@ public class OptionsMenuActivity extends AppCompatActivity {
                     return true;
 
             case R.id.action_info:
-                    displayMessage("Info option selected");
+
+                    Intent intent = new Intent(this,InfoActivity.class);
+                    startActivity(intent);
                     return true;
 
             default:

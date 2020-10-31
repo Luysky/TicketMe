@@ -5,6 +5,8 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import hes.projet.ticketme.data.dao.UserDao;
+
 //@Entity(tableName = "users")
 @Entity(tableName = "users", indices = {@Index(value = {"username"}, unique = true)})
 public class UserEntity {
