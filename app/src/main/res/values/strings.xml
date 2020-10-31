@@ -7,8 +7,6 @@
         <item>Help</item>
     </string-array>
 
-    <string name="textView_content">Bienvenue sur TicketMe</string>
-
     <string name="app_name">TicketMe</string>
     <string name="ecran_d_accueil">Ecran d\'accueil</string>
     <string name="page_user_admin">Page User/Admin</string>
