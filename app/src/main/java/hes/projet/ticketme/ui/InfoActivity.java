@@ -12,7 +12,8 @@ public class InfoActivity extends OptionsMenuActivity  {
 
         setContentView(R.layout.activity_info);
 
-        //initMenu();
+        initMenu();
+        initReturn();
     }
 
 }
