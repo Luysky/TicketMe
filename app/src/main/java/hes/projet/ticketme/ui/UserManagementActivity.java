@@ -33,20 +33,8 @@ public class UserManagementActivity extends OptionsMenuActivity {
         listView = findViewById(R.id.list_viewUser);
 
 
-        //Utilisation de l action bar
-        menuToolBar = findViewById(R.id.toolbar);
-        setTitle(null);
-        setSupportActionBar(menuToolBar);
-
-
-        //Afficher et utiliser le bouton retour
-        menuToolBar.setNavigationIcon(R.drawable.ic_return);
-        menuToolBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        initMenu();
+        initReturn();
 
         UserListViewModel.Factory factory = new UserListViewModel.Factory(getApplication());
         ViewModelProvider provider = new ViewModelProvider(this, factory);

@@ -71,6 +71,8 @@
     <string name="benjamin_keller">Benjamin Keller</string>
     <string name="thomas_luyet">Thomas Luyet</string>
     <string name="liste_des_d_veloppeurs_et_administrateurs">Liste des développeurs et administrateurs:</string>
+    <string name="todo">TODO</string>
+    <string name="createticket">createTicket</string>
 
 
 </resources>

@@ -40,6 +40,8 @@ public class TicketViewActivity extends OptionsMenuActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ticket_view);
 
+        initMenu();
+        initReturn();
 
         category = findViewById(R.id.category);
         subject = findViewById(R.id.subject);

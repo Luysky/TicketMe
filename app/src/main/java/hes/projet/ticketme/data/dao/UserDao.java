@@ -19,6 +19,9 @@ public interface UserDao {
     @Query("SELECT * FROM users WHERE id = :id")
     LiveData<UserEntity> getById(Long id);
 
+    @Query("SELECT * FROM users WHERE username = :username")
+    LiveData<UserEntity> getByUsername(String username);
+
     @Query("SELECT * FROM users")
     LiveData<List<UserEntity>> getAll();
 

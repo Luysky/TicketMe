@@ -1,5 +1,7 @@
 package hes.projet.ticketme.ui;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,7 +21,7 @@ import hes.projet.ticketme.R;
 public class OptionsMenuActivity extends AppCompatActivity {
     public static final String TAG = "OptionsMenuActivity";
 
-    private Toolbar menuToolBar;
+    protected Toolbar menuToolBar;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -37,6 +39,10 @@ public class OptionsMenuActivity extends AppCompatActivity {
         setTitle(null);
         setSupportActionBar(menuToolBar);
 
+    }
+
+    public void initManager(){
+
         //Afficher et utiliser le bouton retour
         menuToolBar.setNavigationIcon(R.drawable.ic_manager);
         menuToolBar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -46,6 +52,18 @@ public class OptionsMenuActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void initReturn(){
+        //Afficher et utiliser le bouton retour
+        menuToolBar.setNavigationIcon(R.drawable.ic_return);
+        menuToolBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

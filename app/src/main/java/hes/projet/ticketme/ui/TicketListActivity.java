@@ -9,12 +9,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,10 +50,14 @@ public class TicketListActivity extends OptionsMenuActivity {
 
         setContentView(R.layout.activity_ticket_list);
 
+        //initMenu = toolbar
+        //initManager = Manager en plus
         initMenu();
-
+        initManager();
 
         listView  = findViewById(R.id.list_view);
+
+
 
         Log.i(TAG, "onCreate");
 

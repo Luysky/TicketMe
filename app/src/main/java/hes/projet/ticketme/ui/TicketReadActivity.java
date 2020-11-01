@@ -13,6 +13,9 @@ import hes.projet.ticketme.R;
 
 public class TicketReadActivity extends OptionsMenuActivity {
 
+    //CLASSE NE SERVANT A RIEN
+
+
     private String category;
     private String subject;
     private String message;
@@ -23,19 +26,8 @@ public class TicketReadActivity extends OptionsMenuActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ticket_read);
 
-        //Utilisation de l action bar
-        menuToolBar = findViewById(R.id.toolbar);
-        setTitle(null);
-        setSupportActionBar(menuToolBar);
-
-        //Afficher et utiliser le bouton retour
-        menuToolBar.setNavigationIcon(R.drawable.ic_return);
-        menuToolBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        initMenu();
+        initReturn();
 
 
         Intent intent = getIntent();

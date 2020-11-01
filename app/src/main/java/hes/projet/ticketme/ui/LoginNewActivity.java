@@ -12,8 +12,6 @@ public class LoginNewActivity extends OptionsMenuActivity {
 
         setContentView(R.layout.activity_login_new);
 
-        //initMenu();
-
 
     }
 }

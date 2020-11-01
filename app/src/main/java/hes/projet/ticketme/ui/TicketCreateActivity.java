@@ -21,7 +21,6 @@ public class TicketCreateActivity extends OptionsMenuActivity {
     private String category;
     private String subject;
     private String message;
-    private Toolbar menuToolBar;
 
     //Il va falloir gerer la generation auto des id des Tickets actuellement le prochain chiffre serait le 14.
     private int idTicket = 14;
@@ -31,11 +30,36 @@ public class TicketCreateActivity extends OptionsMenuActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ticket_create);
 
-        //Utilisation de l action bar
-        menuToolBar = findViewById(R.id.toolbar);
-        setTitle(null);
-        setSupportActionBar(menuToolBar);
 
+        initMenu();
+        initReturnControled();
+        spinner();
+
+    }
+
+    public void spinner(){
+        //Utilisation d un spinner pour le choix de la categorie.
+        spinner = findViewById(R.id.spinnerCategory);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.listCategory, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        //On va recuperer la selection du spinner. Si l utilisateur ne choisit rien on definit la rubrique category avec Help
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                category = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                category = "Help";
+            }
+        });
+    }
+
+    //Methode specifique pour un check lors du retour
+    public void initReturnControled(){
         //Afficher et utiliser le bouton retour
         menuToolBar.setNavigationIcon(R.drawable.ic_return);
         menuToolBar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -64,25 +88,6 @@ public class TicketCreateActivity extends OptionsMenuActivity {
                 });
                 builder.show();
 
-            }
-        });
-
-        //Utilisation d un spinner pour le choix de la categorie.
-        spinner = findViewById(R.id.spinnerCategory);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.listCategory, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-
-        //On va recuperer la selection du spinner. Si l utilisateur ne choisit rien on definit la rubrique category avec Help
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                category = parent.getItemAtPosition(position).toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                category = "Help";
             }
         });
     }
