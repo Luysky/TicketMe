@@ -73,7 +73,7 @@
     <string name="liste_des_d_veloppeurs_et_administrateurs">Liste des développeurs et administrateurs:</string>
     <string name="todo">TODO</string>
     <string name="createticket">createTicket</string>
-    <string name="error_invalid_password">Le mot de passe est trop court!(&lt;5 characters)</string>
+    <string name="error_invalid_password">Le mot de passe est trop court!(&lt;3 characters)</string>
     <string name="error_field_required">Champs obligatoire</string>
     <string name="error_invalid_email">Email non valide</string>
     <string name="error_incorrect_password">Mot de passe non valide</string>
