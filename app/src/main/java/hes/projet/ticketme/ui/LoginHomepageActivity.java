@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import hes.projet.ticketme.MainActivity;
 import hes.projet.ticketme.R;
+import hes.projet.ticketme.data.AppDatabase;
 import hes.projet.ticketme.data.entity.UserEntity;
 import hes.projet.ticketme.data.repository.UserRepository;
 import hes.projet.ticketme.viewmodel.LoginViewModel;
@@ -24,6 +25,8 @@ import hes.projet.ticketme.viewmodel.UserViewModel;
 
 
 public class LoginHomepageActivity extends OptionsMenuActivity {
+
+    private static final String TAG = "LoginHomepageActivity";
 
     private Button login;
     private EditText mail,password;
@@ -37,11 +40,13 @@ public class LoginHomepageActivity extends OptionsMenuActivity {
 
     private UserRepository repository;
 
-    private final static String TAG = "Login";
+    // private final static String TAG = "Login";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_homepage);
+        //AppDatabase.getInstance(getApplication())
+        repository = UserRepository.getInstance();
 
         /*
 
@@ -110,9 +115,11 @@ public class LoginHomepageActivity extends OptionsMenuActivity {
             // form field with an error.
             focusView.requestFocus();
         } else {
-            progressBar.setVisibility(View.VISIBLE);
+            // progressBar.setVisibility(View.VISIBLE);
             repository.getUserByUsername(email, getApplication()).observe(LoginHomepageActivity.this, UserEntity -> {
                 if (UserEntity != null) {
+                    Log.i(TAG, "loaded user " + UserEntity.toString());
+
                     if (UserEntity.getPassword().equals(password)) {
 
                         //Toast.makeText(LoginHomepageActivity.this,"Check email et password ok",Toast.LENGTH_LONG).show();
@@ -138,12 +145,12 @@ public class LoginHomepageActivity extends OptionsMenuActivity {
                         passwordView.requestFocus();
                         passwordView.setText("");
                     }
-                    progressBar.setVisibility(View.GONE);
+                    // progressBar.setVisibility(View.GONE);
                 } else {
                     emailView.setError(getString(R.string.error_invalid_email));
                     emailView.requestFocus();
                     passwordView.setText("");
-                    progressBar.setVisibility(View.GONE);
+                    // progressBar.setVisibility(View.GONE);
                 }
             });
         }
