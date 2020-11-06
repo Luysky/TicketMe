@@ -18,7 +18,7 @@ import hes.projet.ticketme.R;
 public class OptionsMenuActivity extends AppCompatActivity {
     public static final String TAG = "OptionsMenuActivity";
 
-    private Toolbar menuToolBar;
+    protected Toolbar menuToolBar;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){

@@ -110,12 +110,12 @@ public class TicketListActivity extends OptionsMenuActivity {
 
         //Bouton ajouter un nouveau Ticket
     public void clickAddTicket(View view){
-        Intent intent = new Intent(this, TicketCreateActivity.class);
+        Intent intent = new Intent(this, TicketEditActivity.class);
         startActivity(intent);
     }
 
-    public void clickOnTicket(View view){
-        Intent intent = new Intent(this, TicketReadActivity.class);
-        startActivity(intent);
-    }
+//    public void clickOnTicket(View view){
+//        Intent intent = new Intent(this, TicketReadActivity.class);
+//        startActivity(intent);
+//    }
 }
