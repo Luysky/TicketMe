@@ -64,6 +64,7 @@ public class TicketCreateActivity extends OptionsMenuActivity {
         menuToolBar.setNavigationIcon(R.drawable.ic_return);
         menuToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
+
             public void onClick(View v) {
 
                 //Creation d un message d alerte en cas d utilisation du bouton retour
