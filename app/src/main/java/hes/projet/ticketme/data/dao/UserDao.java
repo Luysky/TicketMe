@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -32,7 +33,7 @@ public interface UserDao {
      * An SQLiteConstraintException could be thrown if username already exists
      */
     @Insert
-    void insert(UserEntity user) throws SQLiteConstraintException;
+    void insert(UserEntity user);
 
     @Update
     void update(UserEntity user);

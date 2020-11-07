@@ -59,13 +59,13 @@
         android:ems="10"
         android:hint="@string/votre_mot_de_passe"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/button9"
+        app:layout_constraintBottom_toTopOf="@+id/btnValider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:autofillHints="" />
 
     <Button
-        android:id="@+id/button9"
+        android:id="@+id/btnValider"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="176dp"

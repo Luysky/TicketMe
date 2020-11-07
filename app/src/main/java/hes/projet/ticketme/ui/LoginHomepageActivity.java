@@ -95,6 +95,13 @@ public class LoginHomepageActivity extends OptionsMenuActivity {
                 passwordView.requestFocus();
                 passwordView.setText("");
             }
+            else{
+                Intent intent = new Intent(this, TicketListActivity.class);
+                startActivity(intent);
+
+                emailView.setText("");
+                passwordView.setText("");
+            }
 
             /**
              * TODO Store logged in user as global var in application
@@ -108,11 +115,7 @@ public class LoginHomepageActivity extends OptionsMenuActivity {
              */
 
 
-            Intent intent = new Intent(this, TicketListActivity.class);
-            startActivity(intent);
 
-            emailView.setText("");
-            passwordView.setText("");
         });
     }
 

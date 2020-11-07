@@ -51,8 +51,8 @@ public class UserRepository {
         return AppDatabase.getInstance(context).userDao().getAll();
     }
 
-    public void insert(final UserEntity ticket, OnAsyncEventListener callback, Context context) {
-        new CreateUser(context, callback).execute(ticket);
+    public void insert(final UserEntity userEntity, OnAsyncEventListener callback, Context context) {
+        new CreateUser(context, callback).execute(userEntity);
     }
 
     public void update(final UserEntity user, OnAsyncEventListener callback, Context context) {
