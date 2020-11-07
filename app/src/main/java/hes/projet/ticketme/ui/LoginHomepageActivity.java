@@ -28,54 +28,24 @@ public class LoginHomepageActivity extends OptionsMenuActivity {
 
     private static final String TAG = "LoginHomepageActivity";
 
-    private Button login;
-    private EditText mail,password;
-    private LoginViewModel viewModel;
-    private boolean check = false;
-
-
     private EditText emailView;
     private EditText passwordView;
-    private ProgressBar progressBar;
 
     private UserRepository repository;
 
-    // private final static String TAG = "Login";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_homepage);
-        //AppDatabase.getInstance(getApplication())
+
         repository = UserRepository.getInstance();
-
-        /*
-
-        mail =  findViewById(R.id.etEmail);
-        password = findViewById(R.id.etPassword);
-        login = findViewById(R.id.btnLogin);
-
-
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            checkEmail();
-
-            }
-        });
-
-         */
 
         // Set up the login form.
         emailView = findViewById(R.id.etEmail);
-
         passwordView = findViewById(R.id.etPassword);
 
         Button emailSignInButton = findViewById(R.id.btnLogin);
         emailSignInButton.setOnClickListener(view -> attemptLogin());
-
-
-
     }
 
     private void attemptLogin() {
@@ -88,116 +58,78 @@ public class LoginHomepageActivity extends OptionsMenuActivity {
         String email = emailView.getText().toString();
         String password = passwordView.getText().toString();
 
-        boolean cancel = false;
-        View focusView = null;
-
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             passwordView.setError(getString(R.string.error_invalid_password));
             passwordView.setText("");
-            focusView = passwordView;
-            cancel = true;
+            passwordView.requestFocus();
+            return;
         }
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
             emailView.setError(getString(R.string.error_field_required));
-            focusView = emailView;
-            cancel = true;
-        } else if (!isEmailValid(email)) {
+            emailView.requestFocus();
+            return;
+        }
+
+        if (!isEmailValid(email)) {
             emailView.setError(getString(R.string.error_invalid_email));
-            focusView = emailView;
-            cancel = true;
+            emailView.requestFocus();
+            return;
         }
 
-        if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
-            focusView.requestFocus();
-        } else {
-            // progressBar.setVisibility(View.VISIBLE);
-            repository.getUserByUsername(email, getApplication()).observe(LoginHomepageActivity.this, UserEntity -> {
-                if (UserEntity != null) {
-                    Log.i(TAG, "loaded user " + UserEntity.toString());
 
-                    if (UserEntity.getPassword().equals(password)) {
+        repository.getUserByUsername(email, getApplication()).observe(LoginHomepageActivity.this, UserEntity -> {
 
-                        //Toast.makeText(LoginHomepageActivity.this,"Check email et password ok",Toast.LENGTH_LONG).show();
-                        /*
-                        LA FAMEUSE CLASSE EN PLUS QU IL UTILISE.
+            if (UserEntity == null) {
+                emailView.setError(getString(R.string.error_invalid_email));
+                emailView.requestFocus();
+                passwordView.setText("");
+            }
 
-                        SharedPreferences.Editor editor = getSharedPreferences(BaseActivity.PREFS_NAME, 0).edit();
-                        editor.putString(BaseActivity.PREFS_USER, clientEntity.getEmail());
-                        editor.apply();
-                         */
+            Log.i(TAG, "loaded user " + UserEntity.toString());
+
+            if (!UserEntity.getPassword().equals(password)) {
+                passwordView.setError(getString(R.string.error_incorrect_password));
+                passwordView.requestFocus();
+                passwordView.setText("");
+            }
+
+            /**
+             * TODO Store logged in user as global var in application
+             */
+            /*
+            LA FAMEUSE CLASSE EN PLUS QU IL UTILISE.
+
+            SharedPreferences.Editor editor = getSharedPreferences(BaseActivity.PREFS_NAME, 0).edit();
+            editor.putString(BaseActivity.PREFS_USER, clientEntity.getEmail());
+            editor.apply();
+             */
 
 
-                        Intent intent = new Intent(this, UserManagementActivity.class);
-                        startActivity(intent);
+            Intent intent = new Intent(this, TicketListActivity.class);
+            startActivity(intent);
 
-                        emailView.setText("");
-                        passwordView.setText("");
-
-
-
-                    } else {
-                        passwordView.setError(getString(R.string.error_incorrect_password));
-                        passwordView.requestFocus();
-                        passwordView.setText("");
-                    }
-                    // progressBar.setVisibility(View.GONE);
-                } else {
-                    emailView.setError(getString(R.string.error_invalid_email));
-                    emailView.requestFocus();
-                    passwordView.setText("");
-                    // progressBar.setVisibility(View.GONE);
-                }
-            });
-        }
+            emailView.setText("");
+            passwordView.setText("");
+        });
     }
 
     private boolean isPasswordValid(String password) {
         return password.length() > 2;
     }
 
+
     private boolean isEmailValid(String email) {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
-    public boolean checkEmail(){
 
-
-        LoginViewModel.Factory factory = new LoginViewModel.Factory(getApplication(), mail.getText().toString());
-        ViewModelProvider provider = new ViewModelProvider(LoginHomepageActivity.this, factory);
-
-        viewModel = provider.get(LoginViewModel.class);
-
-        viewModel.getUser().observe(LoginHomepageActivity.this, userEntity -> {
-            if (userEntity != null) {
-                UserEntity user = userEntity;
-
-                Log.i(TAG, "loaded user " + user.toString());
-                //On recupere l idTicket et le subjet pour l affichage dans la liste de message.
-
-                check=true;
-            }
-            else {
-                Log.i(TAG, "User is null");
-                check=false;
-            }
-        });
-
-        return check;
-    }
-
-
-
-    public void clickNewUser(View view){
-
+    public void clickNewUser(View view) {
         Intent intent = new Intent(this,LoginNewActivity.class);
         startActivity(intent);
     }
-
 
 
     public void clickForgotPassword(View view) {
