@@ -71,11 +71,11 @@ public class TicketEntity {
         return categoryId;
     }
 
-    public void setCategoryId(Long category) {
+    public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
     }
 
     public String toString() {
-        return "Ticket #" + id + " - " + subject;
+        return subject;
     }
 }

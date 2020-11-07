@@ -114,4 +114,11 @@ public class TicketViewActivity extends OptionsMenuActivity {
     }
 
 
+    public void clickTicketEdit(View view) {
+        Log.i(TAG, "clicked on  " + ticket.toString());
+
+        Intent intent = new Intent(this, TicketEditActivity.class);
+        intent.putExtra("ticketId", ticket.getId());
+        startActivity(intent);
+    }
 }
