@@ -36,6 +36,9 @@ public class TicketEditActivity extends OptionsMenuActivity {
 
     private static final String TAG = "TicketEditActivity";
 
+
+    private long userId;
+
     /**
      * TicketEntity handled by the form.
      *
@@ -65,6 +68,14 @@ public class TicketEditActivity extends OptionsMenuActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        userId = getLoggedInUserId();
+
+        if (userId == 0) {
+            Intent intent = new Intent(this, LoginHomepageActivity.class);
+            startActivity(intent);
+        }
+
 
         /*
          * Initialize view and elements
@@ -121,8 +132,11 @@ public class TicketEditActivity extends OptionsMenuActivity {
 
             ticket = new TicketEntity();
 
+            ticket.setUserId(userId);
+
             // Set a default category for new tickets
             ticket.setCategoryId((long) 1);
+
         }
         else {
             Log.i(TAG, "loading ticket");
@@ -193,7 +207,7 @@ public class TicketEditActivity extends OptionsMenuActivity {
             new CreateTicket(getApplication(), new OnAsyncEventListener() {
                 @Override
                 public void onSuccess() {
-
+                    finish();
                 }
 
                 @Override
@@ -208,7 +222,7 @@ public class TicketEditActivity extends OptionsMenuActivity {
             new UpdateTicket(getApplication(), new OnAsyncEventListener() {
                 @Override
                 public void onSuccess() {
-
+                    finish();
                 }
 
                 @Override

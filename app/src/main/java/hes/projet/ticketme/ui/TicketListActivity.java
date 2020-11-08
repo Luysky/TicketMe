@@ -53,9 +53,8 @@ public class TicketListActivity extends OptionsMenuActivity {
         userId = getLoggedInUserId();
 
         if (userId == 0) {
-            /**
-             * TODO Redirect to login.
-             */
+            Intent intent = new Intent(this, LoginHomepageActivity.class);
+            startActivity(intent);
         }
 
         if (isAdministrator())
