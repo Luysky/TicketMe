@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import hes.projet.ticketme.R;
 import hes.projet.ticketme.util.Constants;
@@ -50,7 +52,9 @@ public class OptionsMenuActivity extends AppCompatActivity {
         menuToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.navigation_view).getParent();
+                mDrawerLayout.openDrawer(Gravity.LEFT);
+//                finish();
             }
         });
     }
