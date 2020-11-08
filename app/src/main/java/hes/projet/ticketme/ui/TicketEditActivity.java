@@ -75,38 +75,6 @@ public class TicketEditActivity extends OptionsMenuActivity {
         initMenu();
         initReturn();
 
-        //Afficher et utiliser le bouton retour
-        menuToolBar.setNavigationIcon(R.drawable.ic_return);
-        menuToolBar.setNavigationOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                //Creation d un message d alerte en cas d utilisation du bouton retour
-                AlertDialog.Builder builder = new AlertDialog.Builder(TicketEditActivity.this);
-
-                builder.setCancelable(true);
-                builder.setTitle("Attention!");
-                builder.setMessage("Les modifications ne seront pas enregistrées. Voulez-vous quitter la création de ticket?");
-
-                builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                });
-                builder.show();
-
-            }
-        });
-
 
         /*
          * Initialize form controls
@@ -183,33 +151,8 @@ public class TicketEditActivity extends OptionsMenuActivity {
         }
     }
 
-    public void clickNewTicket(View view){
-
-        EditText editTextSub = findViewById(R.id.editTextSubject);
-        EditText editTextMes = findViewById(R.id.editTextTextMultiLine);
-
-        subject = editTextSub.getText().toString();
-        message = editTextMes.getText().toString();
-
-        if(subject.equals("")){
-            Toast.makeText(TicketEditActivity.this,"Veuillez remplir le sujet!",Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if(message.equals("")){
-            Toast.makeText(TicketEditActivity.this,"Veuillez remplir le message!",Toast.LENGTH_SHORT).show();
-            return;
-        }
-        else{
-//            TicketEntity brandNew = new TicketEntity(idTicket,category,subject,message);
-//            Toast.makeText(TicketCreateActivity.this,"Nouveau ticket créé!",Toast.LENGTH_SHORT).show();
-
-            //Ici il faudra rajouter le nouveau ticket a la listTicket et penser a actualiser la liste dans TicketListActivity
-        }
-    }
 
     public void clickSaveTicket(View view) {
-
-        Log.i(TAG, "Click sur sauver le ticket");
 
         /*
          * Curernt form values
@@ -238,9 +181,7 @@ public class TicketEditActivity extends OptionsMenuActivity {
 
         //
         CategoryEntity category = (CategoryEntity) spinner.getSelectedItem();
-        Log.i(TAG, "category: " + category.toString());
         ticket.setCategoryId(category.getId());
-        Log.i(TAG, "ticket category: " + category.getId());
 
 
         /*
@@ -248,7 +189,7 @@ public class TicketEditActivity extends OptionsMenuActivity {
          */
 
         if (ticket.getId() == null) {
-            Log.i(TAG, "Sauver le nouveau ticket: " + ticket.toString());
+            Log.i(TAG, "Sauver le nouveau ticket: " + ticket.getSubject());
             new CreateTicket(getApplication(), new OnAsyncEventListener() {
                 @Override
                 public void onSuccess() {
@@ -276,6 +217,33 @@ public class TicketEditActivity extends OptionsMenuActivity {
                 }
             }).execute(ticket);
         }
+    }
+
+    @Override
+    public void onReturn(View view){
+
+        //Creation d un message d alerte en cas d utilisation du bouton retour
+        AlertDialog.Builder builder = new AlertDialog.Builder(TicketEditActivity.this);
+
+        builder.setCancelable(true);
+        builder.setTitle("Attention!");
+        builder.setMessage("Les modifications ne seront pas enregistrées. Voulez-vous quitter la création de ticket?");
+
+        builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        builder.show();
+
     }
 
     private void loadTicket(long ticketId) {

@@ -19,6 +19,7 @@ import hes.projet.ticketme.R;
 import hes.projet.ticketme.data.AppDatabase;
 import hes.projet.ticketme.data.entity.UserEntity;
 import hes.projet.ticketme.data.repository.UserRepository;
+import hes.projet.ticketme.util.Constants;
 import hes.projet.ticketme.viewmodel.LoginViewModel;
 import hes.projet.ticketme.viewmodel.TicketViewModel;
 import hes.projet.ticketme.viewmodel.UserViewModel;
@@ -80,39 +81,48 @@ public class LoginHomepageActivity extends OptionsMenuActivity {
         }
 
 
-        repository.getUserByUsername(email, getApplication()).observe(LoginHomepageActivity.this, UserEntity -> {
+        repository.getUserByUsername(email, getApplication()).observe(LoginHomepageActivity.this, user -> {
 
-            if (UserEntity == null) {
+            if (user == null) {
                 emailView.setError(getString(R.string.error_invalid_email));
                 emailView.requestFocus();
                 passwordView.setText("");
             }
 
-            Log.i(TAG, "loaded user " + UserEntity.toString());
+            Log.i(TAG, "loaded user " + user.toString());
 
-            if (!UserEntity.getPassword().equals(password)) {
+            if (!user.getPassword().equals(password)) {
                 passwordView.setError(getString(R.string.error_incorrect_password));
                 passwordView.requestFocus();
                 passwordView.setText("");
             }
 
-            /**
-             * TODO Store logged in user as global var in application
-             */
+
             /*
-            LA FAMEUSE CLASSE EN PLUS QU IL UTILISE.
-
-            SharedPreferences.Editor editor = getSharedPreferences(BaseActivity.PREFS_NAME, 0).edit();
-            editor.putString(BaseActivity.PREFS_USER, clientEntity.getEmail());
-            editor.apply();
+             * Store logged in user as global var in application
              */
 
+            SharedPreferences.Editor editor = getSharedPreferences(Constants.PREF_FILE, 0).edit();
+
+            editor.putLong(Constants.PREF_USER_ID, user.getId());
+            editor.putBoolean(Constants.PREF_USER_ISADMIN, user.getAdmin());
+            editor.apply();
+
+
+            /*
+             * Should not be necessary, but  just in case for security let's clear values in form
+             */
+
+            emailView.setText("");
+            passwordView.setText("");
+
+            /*
+             * Go to ticket list
+             */
 
             Intent intent = new Intent(this, TicketListActivity.class);
             startActivity(intent);
 
-            emailView.setText("");
-            passwordView.setText("");
         });
     }
 

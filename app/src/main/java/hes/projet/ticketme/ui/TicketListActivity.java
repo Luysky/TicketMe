@@ -36,6 +36,8 @@ public class TicketListActivity extends OptionsMenuActivity {
 
     private static final String TAG = "TicketListActivity";
 
+    private long userId;
+
     private ListView listView;
     private List<TicketEntity> tickets = new ArrayList<>();
     private List<CategoryEntity> categories = new ArrayList<>();
@@ -48,10 +50,21 @@ public class TicketListActivity extends OptionsMenuActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        userId = getLoggedInUserId();
+
+        if (userId == 0) {
+            /**
+             * TODO Redirect to login.
+             */
+        }
+
+        if (isAdministrator())
+            userId = 0;
+
+
         setContentView(R.layout.activity_ticket_list);
 
-        //initMenu = toolbar
-        //initManager = Manager en plus
+
         initMenu();
         initManager();
 
@@ -63,7 +76,7 @@ public class TicketListActivity extends OptionsMenuActivity {
 
 
 
-        TicketListViewModel.Factory factory = new TicketListViewModel.Factory(getApplication());
+        TicketListViewModel.Factory factory = new TicketListViewModel.Factory(getApplication(), userId, 0, (long) 0);
         ViewModelProvider provider = new ViewModelProvider(this, factory);
         viewModel = provider.get(TicketListViewModel.class);
         viewModel.getTickets().observe(this, ticketEntities -> {

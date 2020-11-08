@@ -69,7 +69,7 @@
             android:onClick="clickAddTicket"
             app:layout_constraintBottom_toTopOf="@+id/container_layout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:icon="@drawable/ic_pen" />
+            app:icon="@drawable/ic_add" />
 
 
         <!-- <com.google.android.material.floatingactionbutton.FloatingActionButton
