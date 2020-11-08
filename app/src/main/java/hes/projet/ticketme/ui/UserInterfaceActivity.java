@@ -1,7 +1,5 @@
 package hes.projet.ticketme.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.AlertDialog;
@@ -16,19 +14,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import hes.projet.ticketme.R;
-import hes.projet.ticketme.data.entity.TicketEntity;
+import hes.projet.ticketme.data.async.ticket.UpdateTicket;
+import hes.projet.ticketme.data.async.user.UpdateUser;
 import hes.projet.ticketme.data.entity.UserEntity;
-import hes.projet.ticketme.viewmodel.CategoryViewModel;
-import hes.projet.ticketme.viewmodel.TicketViewModel;
+import hes.projet.ticketme.util.OnAsyncEventListener;
 import hes.projet.ticketme.viewmodel.UserViewModel;
 
 public class UserInterfaceActivity extends OptionsMenuActivity {
 
     private TextView username;
-    private EditText password;
-    private CheckBox admin;
+    private EditText editTextPassword;
+    private CheckBox checkBoxAdmin;
     private UserViewModel viewModel;
     private UserEntity user;
+    private String password;
+    private boolean admin;
 
 
     @Override
@@ -40,8 +40,8 @@ public class UserInterfaceActivity extends OptionsMenuActivity {
        initReturn();
 
        username = findViewById(R.id.editTextTextPersonName);
-       password = findViewById(R.id.editTextTextPassword2);
-       admin = findViewById(R.id.checkBox);
+       editTextPassword = findViewById(R.id.editTextTextPassword2);
+       checkBoxAdmin = findViewById(R.id.checkBox);
 
         Intent intent = getIntent();
 
@@ -65,8 +65,8 @@ public class UserInterfaceActivity extends OptionsMenuActivity {
                 Log.i(TAG, "loaded ticket " + user.toString());
 
                 username.setText(user.getUsername());
-                password.setText(user.getPassword());
-                admin.setChecked(user.getAdmin());
+                editTextPassword.setText(user.getPassword());
+                checkBoxAdmin.setChecked(user.getAdmin());
             }
             else {
                 Log.i(TAG, "User is null");
@@ -74,6 +74,34 @@ public class UserInterfaceActivity extends OptionsMenuActivity {
         });
 
 
+    }
+
+    public void clickSaveUser(View viev){
+
+        password = editTextPassword.getText().toString();
+        admin = checkBoxAdmin.isChecked();
+
+        user.setAdmin(admin);
+
+        if(password.equals("")){
+            Toast.makeText(UserInterfaceActivity.this,"Mot de passe non valide",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        user.setPassword(password);
+
+        Log.i(TAG, "Modifier user: " + user.toString());
+
+        new UpdateUser(getApplication(), new OnAsyncEventListener() {
+            @Override
+            public void onSuccess() {
+                finish();
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+
+            }
+        }).execute(user);
     }
 
 

@@ -112,16 +112,16 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/saveTicket"
+            android:id="@+id/saveUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:clickable="true"
-            android:contentDescription="saveticket"
+            android:contentDescription="@string/saveUser"
             android:focusable="true"
-            android:onClick="clickSaveTicket"
+            android:onClick="clickSaveUser"
             app:layout_constraintBottom_toTopOf="@+id/container_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_save" />
