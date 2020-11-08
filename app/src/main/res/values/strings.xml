@@ -77,6 +77,7 @@
     <string name="error_field_required">Champs obligatoire</string>
     <string name="error_invalid_email">Email non valide</string>
     <string name="error_incorrect_password">Mot de passe non valide</string>
+    <string name="add_to_group">Add to Group</string>
 
 
 </resources>
