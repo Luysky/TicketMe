@@ -22,7 +22,7 @@ public class TicketListViewModel extends AndroidViewModel {
     // MediatorLiveData can observe other LiveData objects and react on their emissions.
     private final MediatorLiveData<List<TicketEntity>> observableTickets;
 
-    public TicketListViewModel(@NonNull Application application, TicketRepository ticketRepository) {
+    public TicketListViewModel(@NonNull Application application, Long userId, int status, Long categoryId, TicketRepository ticketRepository) {
         super(application);
 
         Context applicationContext = application.getApplicationContext();
@@ -31,8 +31,7 @@ public class TicketListViewModel extends AndroidViewModel {
 
         // set by default null, until we get data from the database.
         observableTickets.setValue(null);
-
-        LiveData<List<TicketEntity>> tickets = ticketRepository.getAllTickets(applicationContext);
+        LiveData<List<TicketEntity>> tickets = ticketRepository.getAllTickets(applicationContext, userId, status, categoryId);
 
         // observe the changes of the entities from the database and forward them
         observableTickets.addSource(tickets, observableTickets::setValue);
@@ -49,8 +48,19 @@ public class TicketListViewModel extends AndroidViewModel {
 
         private final TicketRepository ticketRepository;
 
-        public Factory(@NonNull Application application) {
+        private final Long userId;
+
+        private int status;
+
+        private Long categoryId;
+
+        public Factory(@NonNull Application application, Long userId, int status, Long categoryId) {
             this.application = application;
+
+            this.userId = userId;
+            this.status = status;
+            this.categoryId = categoryId;
+
             ticketRepository = TicketRepository.getInstance();
         }
 
@@ -58,7 +68,7 @@ public class TicketListViewModel extends AndroidViewModel {
         @Override
         public <T extends ViewModel> T create(@NotNull Class<T> modelClass) {
             //noinspection unchecked
-            return (T) new TicketListViewModel(application, ticketRepository);
+            return (T) new TicketListViewModel(application, userId, status, categoryId, ticketRepository);
         }
     }
 

@@ -3,6 +3,7 @@ package hes.projet.ticketme.ui;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -16,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import hes.projet.ticketme.R;
+import hes.projet.ticketme.util.Constants;
 
 
 public class OptionsMenuActivity extends AppCompatActivity {
@@ -59,9 +61,24 @@ public class OptionsMenuActivity extends AppCompatActivity {
         menuToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                onReturn(v);
             }
         });
+    }
+
+    public long getLoggedInUserId() {
+        SharedPreferences settings = getSharedPreferences(Constants.PREF_FILE, 0);
+        return settings.getLong(Constants.PREF_USER_ID, 0);
+    }
+
+    public boolean isAdministrator() {
+        SharedPreferences settings = getSharedPreferences(Constants.PREF_FILE, 0);
+        return settings.getBoolean(Constants.PREF_USER_ISADMIN, false);
+    }
+
+
+    public void onReturn(View v) {
+        finish();
     }
 
 

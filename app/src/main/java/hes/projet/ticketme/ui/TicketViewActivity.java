@@ -16,8 +16,11 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import hes.projet.ticketme.R;
+import hes.projet.ticketme.data.async.ticket.DeleteTicket;
+import hes.projet.ticketme.data.async.ticket.UpdateTicket;
 import hes.projet.ticketme.data.entity.CategoryEntity;
 import hes.projet.ticketme.data.entity.TicketEntity;
+import hes.projet.ticketme.util.OnAsyncEventListener;
 import hes.projet.ticketme.viewmodel.CategoryViewModel;
 import hes.projet.ticketme.viewmodel.TicketListViewModel;
 import hes.projet.ticketme.viewmodel.TicketViewModel;
@@ -40,6 +43,17 @@ public class TicketViewActivity extends OptionsMenuActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        long userId = getLoggedInUserId();
+
+        if (userId == 0) {
+            Intent intent = new Intent(this, LoginHomepageActivity.class);
+            startActivity(intent);
+        }
+
+        if (isAdministrator())
+            userId = 0;
+
         setContentView(R.layout.activity_ticket_view);
 
         initMenu();
@@ -114,4 +128,47 @@ public class TicketViewActivity extends OptionsMenuActivity {
     }
 
 
+    public void clickTicketEdit(View view) {
+        Log.i(TAG, "clicked on  " + ticket.toString());
+
+        Intent intent = new Intent(this, TicketEditActivity.class);
+        intent.putExtra("ticketId", ticket.getId());
+        startActivity(intent);
+    }
+
+    public void clickTicketDelete(View view) {
+
+        new DeleteTicket(getApplication(), new OnAsyncEventListener() {
+            @Override
+            public void onSuccess() {
+                finish();
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                /**
+                 * TODO alert in case of an error
+                 */
+            }
+        }).execute(ticket);
+    }
+
+    public void clickTicketClose(View view) {
+
+        ticket.setStatus(1);
+
+        new UpdateTicket(getApplication(), new OnAsyncEventListener() {
+            @Override
+            public void onSuccess() {
+                finish();
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                /**
+                 * TODO alert in case of an error
+                 */
+            }
+        }).execute(ticket);
+    }
 }

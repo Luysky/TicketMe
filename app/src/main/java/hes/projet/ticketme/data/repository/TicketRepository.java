@@ -10,6 +10,7 @@ import hes.projet.ticketme.data.AppDatabase;
 import hes.projet.ticketme.data.async.ticket.CreateTicket;
 import hes.projet.ticketme.data.async.ticket.DeleteTicket;
 import hes.projet.ticketme.data.async.ticket.UpdateTicket;
+import hes.projet.ticketme.data.dao.TicketDao;
 import hes.projet.ticketme.data.entity.TicketEntity;
 import hes.projet.ticketme.util.OnAsyncEventListener;
 
@@ -43,8 +44,26 @@ public class TicketRepository {
         return AppDatabase.getInstance(context).ticketDao().getById(id);
     }
 
-    public LiveData<List<TicketEntity>> getAllTickets(Context context) {
-        return AppDatabase.getInstance(context).ticketDao().getAll();
+    public LiveData<List<TicketEntity>> getAllTickets(Context context, Long userId, int status, Long categoryId) {
+        TicketDao ticketDao = AppDatabase.getInstance(context).ticketDao();
+
+        if (userId == 0) {
+            if (categoryId == 0) {
+                return ticketDao.getAllByStatus(status);
+            }
+
+            return ticketDao.getAllInCategoryByStatus(categoryId, status);
+        }
+
+        if (categoryId == 0) {
+            return ticketDao.getAllOfUserByStatus(userId, status);
+        }
+
+        return ticketDao.getAllOfUserInCategoryByStatus(userId, categoryId, status);
+    }
+
+    public LiveData<List<TicketEntity>> getAllTicketsOfUserByStatus(Context context, long userId, int status) {
+        return AppDatabase.getInstance(context).ticketDao().getAllOfUserByStatus(userId, status);
     }
 
     public void insert(final TicketEntity ticket, OnAsyncEventListener callback, Context context) {

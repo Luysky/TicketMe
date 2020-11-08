@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,169 +17,288 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 import hes.projet.ticketme.R;
+import hes.projet.ticketme.adapter.ListAdapter;
+import hes.projet.ticketme.data.async.ticket.CreateTicket;
+import hes.projet.ticketme.data.async.ticket.UpdateTicket;
+import hes.projet.ticketme.data.entity.CategoryEntity;
 import hes.projet.ticketme.data.entity.TicketEntity;
+import hes.projet.ticketme.util.OnAsyncEventListener;
+import hes.projet.ticketme.viewmodel.CategoryListViewModel;
 import hes.projet.ticketme.viewmodel.CategoryViewModel;
 import hes.projet.ticketme.viewmodel.TicketViewModel;
 
 public class TicketEditActivity extends OptionsMenuActivity {
 
-//    private Toolbar menuToolBar;
+    private static final String TAG = "TicketEditActivity";
 
-    private Spinner spinner;
-    private String category;
-    private String subject;
-    private String message;
 
+    private long userId;
+
+    /**
+     * TicketEntity handled by the form.
+     *
+     * It can be a new TicketEntity to create or an existing to edit
+     */
     private TicketEntity ticket;
 
     /*
-     * ViewModels
+     * Form controls
      */
-    private TicketViewModel ticketViewModel;
-    private CategoryViewModel categoryViewModel;
-
+    private Spinner spinner;
     private EditText editTextSubject;
     private EditText editTextMessage;
 
-//    private Toolbar menuToolBar;
 
-    //Il va falloir gerer la generation auto des id des Tickets actuellement le prochain chiffre serait le 14.
-//    private int idTicket = 14;
+
+    private String subject;
+    private String message;
+
+
+    /*
+     * Category list to show in the spinner
+     */
+    private List<CategoryEntity> categories;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        userId = getLoggedInUserId();
+
+        if (userId == 0) {
+            Intent intent = new Intent(this, LoginHomepageActivity.class);
+            startActivity(intent);
+        }
+
+
+        /*
+         * Initialize view and elements
+         */
+
         setContentView(R.layout.activity_ticket_edit);
 
         initMenu();
         initReturn();
 
 
+        /*
+         * Initialize form controls
+         */
 
-        //Utilisation de l action bar
-//        menuToolBar = findViewById(R.id.toolbar);
-//        setTitle(null);
-//        setSupportActionBar(menuToolBar);
+        //
+        editTextSubject = findViewById(R.id.editTextSubject);
 
-        //Afficher et utiliser le bouton retour
-        menuToolBar.setNavigationIcon(R.drawable.ic_return);
-        menuToolBar.setNavigationOnClickListener(new View.OnClickListener() {
+        //
+        editTextMessage = findViewById(R.id.editTextTextMultiLine);
 
+        //
+        spinner = findViewById(R.id.spinnerCategory);
+
+        ListAdapter<CategoryEntity> adapter = new ListAdapter<>(this, android.R.layout.simple_spinner_item, new ArrayList<>());
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        adapter.registerDataSetObserver(new DataSetObserver() {
             @Override
-            public void onClick(View v) {
-
-                //Creation d un message d alerte en cas d utilisation du bouton retour
-                AlertDialog.Builder builder = new AlertDialog.Builder(TicketEditActivity.this);
-
-                builder.setCancelable(true);
-                builder.setTitle("Attention!");
-                builder.setMessage("Les modifications ne seront pas enregistrées. Voulez-vous quitter la création de ticket?");
-
-                builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                });
-                builder.show();
-
+            public void onChanged() {
+                showTicketCategory();
             }
         });
 
-        editTextSubject = findViewById(R.id.editTextSubject);
-        editTextMessage = findViewById(R.id.editTextTextMultiLine);
+        loadCategories(adapter);
 
 
+        /*
+         * Load ticketId if transmitted in intent. If not it is a new ticket.
+         */
 
         Intent intent = getIntent();
         Long ticketId = intent.getLongExtra("ticketId", 0);
 
-
-        // Get TicketViewModel
-        TicketViewModel.Factory factory = new TicketViewModel.Factory(getApplication(), ticketId);
-        ViewModelProvider provider = new ViewModelProvider(this, factory);
-        ticketViewModel = provider.get(TicketViewModel.class);
+        Log.i(TAG, "Ticket id as extra: " + ticketId);
 
 
-        if (ticketId.equals(0)) {
+        /*
+         * Load ticket or set new ticket depending on mode
+         */
+
+        if (ticketId == 0) {
+            Log.i(TAG, "New ticket");
+
             ticket = new TicketEntity();
+
+            ticket.setUserId(userId);
+
+            // Set a default category for new tickets
+            ticket.setCategoryId((long) 1);
+
         }
         else {
-            ticketViewModel.getTicket().observe(this, ticketEntity -> {
-                if (ticketEntity != null) {
-                    ticket = ticketEntity;
+            Log.i(TAG, "loading ticket");
 
-                    Log.i(TAG, "loaded ticket " + ticket.toString());
-                    //On recupere l idTicket et le subjet pour l affichage dans la liste de message.
-//                category.setText(ticket.getCategoryId().toString());
-                    editTextSubject.setText(ticket.getSubject());
-                    editTextMessage.setText(ticket.getMessage());
-
-//                    showCategory(ticket.getCategoryId());
-                }
-                else {
-                    Log.i(TAG, "Ticket is null");
-                }
-            });
-
+            // Load existing ticket to edit.
+            loadTicket(ticketId);
         }
 
-
-
-
-
-
-        //Utilisation d un spinner pour le choix de la categorie.
-        spinner = findViewById(R.id.spinnerCategory);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.listCategory, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-
-        //On va recuperer la selection du spinner. Si l utilisateur ne choisit rien on definit la rubrique category avec Help
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                category = parent.getItemAtPosition(position).toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                category = "Help";
-            }
-        });
     }
 
 
-    public void clickNewTicket(View view){
+    private void showTicketCategory() {
 
-        EditText editTextSub = findViewById(R.id.editTextSubject);
-        EditText editTextMes = findViewById(R.id.editTextTextMultiLine);
+        if (ticket == null)
+            return;
 
-        subject = editTextSub.getText().toString();
-        message = editTextMes.getText().toString();
+        if (categories == null)
+            return;
 
+        for(CategoryEntity category : categories) {
+            if(category.getId().equals(ticket.getCategoryId())) {
+                int pos = categories.indexOf(category);
+                spinner.setSelection(pos);
+                return;
+            }
+        }
+    }
+
+
+    public void clickSaveTicket(View view) {
+
+        /*
+         * Curernt form values
+         */
+
+        subject = editTextSubject.getText().toString();
+        message = editTextMessage.getText().toString();
+
+        /*
+         * Check values in form
+         */
+
+        //
         if(subject.equals("")){
             Toast.makeText(TicketEditActivity.this,"Veuillez remplir le sujet!",Toast.LENGTH_SHORT).show();
             return;
         }
+        ticket.setSubject(subject);
+
+        //
         if(message.equals("")){
             Toast.makeText(TicketEditActivity.this,"Veuillez remplir le message!",Toast.LENGTH_SHORT).show();
             return;
         }
-        else{
-//            TicketEntity brandNew = new TicketEntity(idTicket,category,subject,message);
-//            Toast.makeText(TicketCreateActivity.this,"Nouveau ticket créé!",Toast.LENGTH_SHORT).show();
+        ticket.setMessage(message);
 
-            //Ici il faudra rajouter le nouveau ticket a la listTicket et penser a actualiser la liste dans TicketListActivity
+        //
+        CategoryEntity category = (CategoryEntity) spinner.getSelectedItem();
+        ticket.setCategoryId(category.getId());
+
+
+        /*
+         * Save new or existing ticket
+         */
+
+        if (ticket.getId() == null) {
+            Log.i(TAG, "Sauver le nouveau ticket: " + ticket.getSubject());
+            new CreateTicket(getApplication(), new OnAsyncEventListener() {
+                @Override
+                public void onSuccess() {
+                    finish();
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+
+                }
+            }).execute(ticket);
         }
+        else {
+            Log.i(TAG, "Modifier ticket: " + ticket.toString());
+
+            new UpdateTicket(getApplication(), new OnAsyncEventListener() {
+                @Override
+                public void onSuccess() {
+                    finish();
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+
+                }
+            }).execute(ticket);
+        }
+    }
+
+    @Override
+    public void onReturn(View view){
+
+        //Creation d un message d alerte en cas d utilisation du bouton retour
+        AlertDialog.Builder builder = new AlertDialog.Builder(TicketEditActivity.this);
+
+        builder.setCancelable(true);
+        builder.setTitle("Attention!");
+        builder.setMessage("Les modifications ne seront pas enregistrées. Voulez-vous quitter la création de ticket?");
+
+        builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        builder.show();
+
+    }
+
+    private void loadTicket(long ticketId) {
+        // Get TicketViewModel
+        TicketViewModel ticketViewModel;
+
+        TicketViewModel.Factory factory = new TicketViewModel.Factory(getApplication(), ticketId);
+        ViewModelProvider provider = new ViewModelProvider(this, factory);
+        ticketViewModel = provider.get(TicketViewModel.class);
+        ticketViewModel.getTicket().observe(this, ticketEntity -> {
+            if (ticketEntity != null) {
+
+                Log.i(TAG, "loaded ticket " + ticketEntity.toString());
+
+                ticket = ticketEntity;
+
+
+                editTextSubject.setText(ticket.getSubject());
+                editTextMessage.setText(ticket.getMessage());
+
+                showTicketCategory();
+            }
+        });
+
+    }
+
+    private void loadCategories(ListAdapter<CategoryEntity> adapter) {
+
+        // Get CategoryViewModel
+        CategoryListViewModel categoriesViewModel;
+
+        CategoryListViewModel.Factory categoryFactory = new CategoryListViewModel.Factory(getApplication());
+        ViewModelProvider categoryProvider = new ViewModelProvider(this, categoryFactory);
+        categoriesViewModel = categoryProvider.get(CategoryListViewModel.class);
+        categoriesViewModel.getCategories().observe(this, categories -> {
+            if (categories != null) {
+                this.categories = categories;
+                adapter.updateData(categories);
+            }
+        });
+
     }
 
 }

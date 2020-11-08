@@ -23,22 +23,25 @@ public class TicketEntity {
     @ColumnInfo(name = "category")
     private Long categoryId;
 
-    @Ignore
-    private String categoryName;
-
     private String subject;
 
     private String message;
 
+    @ColumnInfo(name = "user")
+    private Long userId;
+
+    private int status;
 
     @Ignore
     public TicketEntity() {
     }
 
-    public TicketEntity(@NonNull Long categoryId,
+    public TicketEntity(@NonNull Long userId,
+                        @NonNull Long categoryId,
                         @NonNull String subject,
                         @NonNull String message) {
 
+        this.userId = userId;
         this.categoryId = categoryId;
         this.subject = subject;
         this.message = message;
@@ -71,11 +74,27 @@ public class TicketEntity {
         return categoryId;
     }
 
-    public void setCategoryId(Long category) {
+    public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
     }
 
     public String toString() {
-        return "Ticket #" + id + " - " + subject;
+        return subject;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }
