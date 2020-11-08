@@ -26,7 +26,7 @@
     <Space
         android:id="@+id/space2"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="20dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
@@ -37,57 +37,50 @@
     <ListView
         android:id="@+id/list_view"
         android:layout_width="match_parent"
-        android:layout_height="473dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="42dp"
-        app:layout_constraintBottom_toTopOf="@+id/container_layout"
+        android:layout_height="588dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/space2" />
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/container_layout"
-        android:layout_width="match_parent"
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/addTicket"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:clickable="true"
+        android:contentDescription="@string/createticket"
+        android:focusable="true"
+        android:onClick="clickAddTicket"
+        app:icon="@drawable/ic_pen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/addTicket"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:clickable="true"
-            android:contentDescription="@string/createticket"
-            android:focusable="true"
-            android:onClick="clickAddTicket"
-            app:layout_constraintBottom_toTopOf="@+id/container_layout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:icon="@drawable/ic_pen" />
+        app:layout_constraintHorizontal_bias="0.921"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/space2"
+        app:layout_constraintVertical_bias="0.948" />
 
 
-        <!-- <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/extended_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="24dp"
-            android:layout_gravity="bottom|end"
-            android:clickable="true"
-            app:srcCompat="@drawable/ic_add"
-            app:backgroundTint="@color/purple_500"
-            app:icon="@drawable/ic_add"
-            app:fabSize="normal"
-            app:rippleColor=''
-            android:contentDescription="extended_fab_content"
-            />-->
+    <!-- <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/extended_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:layout_gravity="bottom|end"
+        android:clickable="true"
+        app:srcCompat="@drawable/ic_add"
+        app:backgroundTint="@color/purple_500"
+        app:icon="@drawable/ic_add"
+        app:fabSize="normal"
+        app:rippleColor=''
+        android:contentDescription="extended_fab_content"
+        />-->
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

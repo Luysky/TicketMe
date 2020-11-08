@@ -43,46 +43,55 @@
     <Button
 
         android:id="@+id/btnLogin"
-        android:text="@string/se_connecter"
-        android:layout_width="128dp"
-        android:background="#fff"
-        android:textColor="#1495d7"
-        android:textStyle="bold"
+        android:layout_width="162dp"
         android:layout_height="wrap_content"
-        />
+        android:background="@color/white"
+        android:text="@string/se_connecter"
+        android:textColor="@color/black"
+        android:textSize="12dp"
+        android:textStyle="bold"
+        app:backgroundTint="#FFFFFF" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="3">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:text="@string/vous_n_avez_pas_de_compte" />
+            android:layout_margin="20dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="Pas de compte?"
+            android:textSize="12dp" />
 
         <Button
             android:id="@+id/btnSignIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp"
+            android:layout_margin="20dp"
+            android:layout_weight="2"
             android:background="@null"
             android:onClick="clickNewUser"
             android:text="S'enregistrer"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:textSize="10dp" />
 
     </LinearLayout>
 
-        <Button
-            android:id="@+id/btnOubliMdp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/mot_de_passse_oubli"
-            android:onClick="clickForgotPassword"
-            android:background="@null"
-            android:textStyle="normal"
-            android:textAllCaps="false" />
+    <Button
+        android:id="@+id/btnOubliMdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:onClick="clickForgotPassword"
+        android:text="@string/mot_de_passse_oubli"
+        android:textAllCaps="false"
+        android:textSize="10dp"
+        android:textStyle="normal" />
 
 
-    </LinearLayout>
+</LinearLayout>
