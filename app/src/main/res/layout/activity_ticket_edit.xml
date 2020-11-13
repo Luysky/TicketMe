@@ -41,12 +41,12 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextSubject" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/editUserTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:layout_marginBottom="50dp"
-        android:text="@string/ajouter_un_ticket"
+        android:text="@string/gestion_user"
         android:textColor="#673AB7"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/spinnerCategory"
@@ -67,7 +67,7 @@
         app:layout_constraintBottom_toTopOf="@+id/editTextSubject"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/editUserTitle" />
 
     <!--
     <Button

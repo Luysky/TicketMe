@@ -37,6 +37,8 @@
     <string name="reply_title">Default reply action</string>
 
     <!-- Sync Preferences -->
+    <string name="username">Nom utilisateur</string>
+    <string name="password">Mot de passe</string>
     <string name="sync_title">Sync email periodically</string>
     <string name="attachment_title">Download incoming attachments</string>
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
@@ -45,7 +47,7 @@
     <string name="liste_des_tickets">Liste des Tickets</string>
     <string name="tickets_en_cours">Tickets en cours</string>
     <string name="enregister">Enregister</string>
-    <string name="ajouter_un_ticket">Ajouter un ticket</string>
+    <string name="gestion_user">Ajouter un ticket</string>
     <string name="cat_gorie">Catégorie</string>
     <string name="votre_message">Votre message</string>
     <string name="sujet">Sujet</string>
@@ -80,6 +82,10 @@
 
 
     <string name="add_to_group">Add to Group</string>
+    <string name="nom_de_l_utilisateur">Nom de l\'utilisateur</string>
+    <string name="mot_de_passe">Mot de passe</string>
+    <string name="administrateur">Administrateur</string>
+    <string name="saveUser">saveUser</string>
 
 
 </resources>

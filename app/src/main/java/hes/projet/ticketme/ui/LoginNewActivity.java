@@ -27,7 +27,7 @@ public class LoginNewActivity extends BaseActivity {
         setContentView(R.layout.activity_login_new);
 
         email = findViewById(R.id.editTextTextEmailAddress);
-        password = findViewById(R.id.editTextTextPassword);
+        password = findViewById(R.id.editTextTextPassword2);
         button = findViewById(R.id.btnValider);
 
 
