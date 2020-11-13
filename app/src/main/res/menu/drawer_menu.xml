@@ -4,25 +4,25 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:id="@+id/home_id"
-            android:title="Home"
-            android:icon="@drawable/ic_manager">
+            android:id="@+id/menu_ticket_list_open"
+            android:title="Tickets ouverts"
+            android:icon="@drawable/ic_sort">
         </item>
+
         <item
-            android:id="@+id/sort_id"
-            android:title="Sort"
+            android:id="@+id/menu_ticket_list_closed"
+            android:title="Tickets fermés"
             android:icon="@drawable/ic_sort">
         </item>
 
     </group>
 
-    <item android:title="Liste">
+    <item android:title="Administration">
         <menu>
             <item
-                android:title="@string/add_to_group"
-                android:id="@+id/add_to_group"
+                android:title="Gestion des utilisateurs"
+                android:id="@+id/menu_user_list"
                 android:icon="@drawable/ic_add">
-
             </item>
         </menu>
     </item>

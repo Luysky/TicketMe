@@ -1,8 +1,11 @@
 package hes.projet.ticketme.ui;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +21,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.material.navigation.NavigationView;
+
 import hes.projet.ticketme.R;
 import hes.projet.ticketme.util.Constants;
 
@@ -26,14 +31,23 @@ public class OptionsMenuActivity extends AppCompatActivity {
     public static final String TAG = "OptionsMenuActivity";
 
     protected Toolbar menuToolBar;
+    DrawerLayout drawer;
+
+    public void initView(OptionsMenuActivity currActivity, int viewId)
+    {
+        setContentView(viewId);
+
+        initMainMenu(currActivity);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         super.onCreateOptionsMenu(menu);
 
         Log.i(TAG, "onCreateOptionsMenu");
+
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.appbar_menu,menu);
+        menuInflater.inflate(R.menu.appbar_menu, menu);
 
         return true;
     }
@@ -70,6 +84,63 @@ public class OptionsMenuActivity extends AppCompatActivity {
         });
     }
 
+    public void initMenuListener(){
+        //Afficher et utiliser le bouton retour
+        menuToolBar.setNavigationIcon(R.drawable.ic_return);
+        menuToolBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onReturn(v);
+            }
+        });
+    }
+
+    protected void requireLoggedInUser() {
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("com.package.ACTION_LOGOUT");
+        registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Log.d("onReceive","Logout in progress");
+                //At this point you should start the login activity and finish this one
+
+                Intent navIntent = new Intent(OptionsMenuActivity.this, LoginHomepageActivity.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                finish();
+                startActivity(navIntent);
+            }
+        }, intentFilter);
+    }
+
+    public void initMainMenu(OptionsMenuActivity currActivity) {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+
+        if (navigationView == null)
+            return;
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                int id = menuItem.getItemId();
+                if(id == R.id.menu_user_list) {
+                    Intent intent = new Intent(currActivity, UserManagementActivity.class);
+                    startActivity(intent);
+                } else if(id == R.id.menu_ticket_list_open) {
+                    Intent intent = new Intent(currActivity, TicketListActivity.class);
+                    startActivity(intent);
+                } else if(id == R.id.menu_ticket_list_closed) {
+                    Intent intent = new Intent(currActivity, TicketListActivity.class);
+                    intent.putExtra("statusFilter", 1);
+                    startActivity(intent);
+                }
+
+                //drawer.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
+    }
+
     public long getLoggedInUserId() {
         SharedPreferences settings = getSharedPreferences(Constants.PREF_FILE, 0);
         return settings.getLong(Constants.PREF_USER_ID, 0);
@@ -89,17 +160,24 @@ public class OptionsMenuActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
+        Intent intent;
+
         switch (item.getItemId()){
 
             case R.id.action_settings:
-                    displayMessage("Settings option selected");
-                    return true;
+                displayMessage("Settings option selected");
+                return true;
 
             case R.id.action_info:
 
-                    Intent intent = new Intent(this,InfoActivity.class);
-                    startActivity(intent);
-                    return true;
+                intent = new Intent(this, InfoActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.action_logout:
+
+                logout();
+                return true;
 
             default:
                     return super.onOptionsItemSelected(item);
@@ -112,5 +190,18 @@ public class OptionsMenuActivity extends AppCompatActivity {
     private void displayMessage(String message){
 
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    }
+
+
+    private void logout() {
+        SharedPreferences.Editor editor = getSharedPreferences(Constants.PREF_FILE, 0).edit();
+        editor.remove(Constants.PREF_USER_ID);
+        editor.remove(Constants.PREF_USER_ISADMIN);
+        editor.apply();
+
+
+        Intent broadcastIntent = new Intent();
+        broadcastIntent.setAction("com.package.ACTION_LOGOUT");
+        sendBroadcast(broadcastIntent);
     }
 }

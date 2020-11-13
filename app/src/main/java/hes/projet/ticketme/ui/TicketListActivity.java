@@ -50,6 +50,14 @@ public class TicketListActivity extends OptionsMenuActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+        initView(this, R.layout.activity_ticket_list);
+        initMenu();
+        initManager();
+
+
+        requireLoggedInUser();
+
         userId = getLoggedInUserId();
 
         if (userId == 0) {
@@ -61,21 +69,19 @@ public class TicketListActivity extends OptionsMenuActivity {
             userId = 0;
 
 
-        setContentView(R.layout.activity_ticket_list);
 
 
-        initMenu();
-        initManager();
 
         listView  = findViewById(R.id.list_view);
 
 
 
-        Log.i(TAG, "onCreate");
+
+        Intent intent = getIntent();
+        int statusFilter = intent.getIntExtra("statusFilter", 0);
 
 
-
-        TicketListViewModel.Factory factory = new TicketListViewModel.Factory(getApplication(), userId, 0, (long) 0);
+        TicketListViewModel.Factory factory = new TicketListViewModel.Factory(getApplication(), userId, statusFilter, (long) 0);
         ViewModelProvider provider = new ViewModelProvider(this, factory);
         viewModel = provider.get(TicketListViewModel.class);
         viewModel.getTickets().observe(this, ticketEntities -> {

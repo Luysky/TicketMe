@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -145,6 +147,14 @@ public class TicketEditActivity extends OptionsMenuActivity {
             loadTicket(ticketId);
         }
 
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.ticket_edit_menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
     }
 
 
