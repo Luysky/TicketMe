@@ -9,13 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import hes.projet.ticketme.R;
 import hes.projet.ticketme.data.async.user.CreateUser;
 import hes.projet.ticketme.data.entity.UserEntity;
-import hes.projet.ticketme.data.repository.UserRepository;
 import hes.projet.ticketme.util.OnAsyncEventListener;
 
 public class LoginNewActivity extends OptionsMenuActivity {
@@ -31,7 +27,7 @@ public class LoginNewActivity extends OptionsMenuActivity {
         setContentView(R.layout.activity_login_new);
 
         email = findViewById(R.id.editTextTextEmailAddress);
-        password = findViewById(R.id.editTextTextPassword);
+        password = findViewById(R.id.editTextTextPassword2);
         button = findViewById(R.id.btnValider);
 
 

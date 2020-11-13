@@ -5,7 +5,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -13,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hes.projet.ticketme.R;
+import hes.projet.ticketme.data.entity.TicketEntity;
 import hes.projet.ticketme.data.entity.UserEntity;
 import hes.projet.ticketme.viewmodel.UserListViewModel;
 
@@ -51,6 +54,20 @@ public class UserManagementActivity extends OptionsMenuActivity {
                 //Ces lignes servent a la mise en place d une liste deroulante.
                 adapter = new ArrayAdapter(UserManagementActivity.this, android.R.layout.simple_list_item_1, listString);
                 listView.setAdapter(adapter);
+            }
+        });
+
+        //Action lorsque l on click sur un objet de la liste.
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                UserEntity u = users.get(position);
+                Intent intent = new Intent(UserManagementActivity.this, UserInterfaceActivity.class);
+
+                Log.i(TAG, "clicked on  " + u.toString());
+                intent.putExtra("userId", u.getId());
+                startActivity(intent);
             }
         });
 
