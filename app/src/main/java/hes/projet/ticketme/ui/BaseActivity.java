@@ -1,13 +1,10 @@
 package hes.projet.ticketme.ui;
 
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -27,13 +24,13 @@ import hes.projet.ticketme.R;
 import hes.projet.ticketme.util.Constants;
 
 
-public class OptionsMenuActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity {
     public static final String TAG = "OptionsMenuActivity";
 
     protected Toolbar menuToolBar;
     DrawerLayout drawer;
 
-    public void initView(OptionsMenuActivity currActivity, int viewId)
+    public void initView(BaseActivity currActivity, int viewId)
     {
         setContentView(viewId);
 
@@ -104,7 +101,7 @@ public class OptionsMenuActivity extends AppCompatActivity {
                 Log.d("onReceive","Logout in progress");
                 //At this point you should start the login activity and finish this one
 
-                Intent navIntent = new Intent(OptionsMenuActivity.this, LoginHomepageActivity.class);
+                Intent navIntent = new Intent(BaseActivity.this, LoginHomepageActivity.class);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 finish();
@@ -113,7 +110,7 @@ public class OptionsMenuActivity extends AppCompatActivity {
         }, intentFilter);
     }
 
-    public void initMainMenu(OptionsMenuActivity currActivity) {
+    public void initMainMenu(BaseActivity currActivity) {
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
 
         if (navigationView == null)

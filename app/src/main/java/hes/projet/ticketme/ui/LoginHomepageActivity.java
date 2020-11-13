@@ -6,26 +6,16 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import androidx.lifecycle.ViewModelProvider;
-
-import hes.projet.ticketme.MainActivity;
 import hes.projet.ticketme.R;
-import hes.projet.ticketme.data.AppDatabase;
-import hes.projet.ticketme.data.entity.UserEntity;
 import hes.projet.ticketme.data.repository.UserRepository;
 import hes.projet.ticketme.util.Constants;
-import hes.projet.ticketme.viewmodel.LoginViewModel;
-import hes.projet.ticketme.viewmodel.TicketViewModel;
-import hes.projet.ticketme.viewmodel.UserViewModel;
 
 
-public class LoginHomepageActivity extends OptionsMenuActivity {
+public class LoginHomepageActivity extends BaseActivity {
 
     private static final String TAG = "LoginHomepageActivity";
 

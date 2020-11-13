@@ -1,15 +1,12 @@
 package hes.projet.ticketme.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
 
 import hes.projet.ticketme.R;
 
-public class UserInterfaceActivity extends OptionsMenuActivity {
+public class UserInterfaceActivity extends BaseActivity {
 
     private Toolbar menuToolBar;
 

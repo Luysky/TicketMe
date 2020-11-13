@@ -1,7 +1,5 @@
 package hes.projet.ticketme.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.AlertDialog;
@@ -13,15 +11,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import hes.projet.ticketme.R;
 import hes.projet.ticketme.adapter.ListAdapter;
@@ -31,10 +26,9 @@ import hes.projet.ticketme.data.entity.CategoryEntity;
 import hes.projet.ticketme.data.entity.TicketEntity;
 import hes.projet.ticketme.util.OnAsyncEventListener;
 import hes.projet.ticketme.viewmodel.CategoryListViewModel;
-import hes.projet.ticketme.viewmodel.CategoryViewModel;
 import hes.projet.ticketme.viewmodel.TicketViewModel;
 
-public class TicketEditActivity extends OptionsMenuActivity {
+public class TicketEditActivity extends BaseActivity {
 
     private static final String TAG = "TicketEditActivity";
 

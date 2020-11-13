@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import hes.projet.ticketme.R;
 
-public class InfoActivity extends OptionsMenuActivity  {
+public class InfoActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

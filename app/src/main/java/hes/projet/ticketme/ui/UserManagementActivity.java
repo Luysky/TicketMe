@@ -16,7 +16,7 @@ import hes.projet.ticketme.R;
 import hes.projet.ticketme.data.entity.UserEntity;
 import hes.projet.ticketme.viewmodel.UserListViewModel;
 
-public class UserManagementActivity extends OptionsMenuActivity {
+public class UserManagementActivity extends BaseActivity {
 
     private Toolbar menuToolBar;
     private List<UserEntity> users = new ArrayList<>();

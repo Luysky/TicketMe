@@ -1,29 +1,17 @@
 package hes.projet.ticketme.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import java.util.ArrayList;
 
 import hes.projet.ticketme.R;
 
@@ -32,7 +20,7 @@ import hes.projet.ticketme.data.entity.TicketEntity;
 import hes.projet.ticketme.viewmodel.CategoryListViewModel;
 import hes.projet.ticketme.viewmodel.TicketListViewModel;
 
-public class TicketListActivity extends OptionsMenuActivity {
+public class TicketListActivity extends BaseActivity {
 
     private static final String TAG = "TicketListActivity";
 

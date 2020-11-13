@@ -1,18 +1,12 @@
 package hes.projet.ticketme.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.graphics.Path;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
+
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import hes.projet.ticketme.R;
@@ -22,10 +16,9 @@ import hes.projet.ticketme.data.entity.CategoryEntity;
 import hes.projet.ticketme.data.entity.TicketEntity;
 import hes.projet.ticketme.util.OnAsyncEventListener;
 import hes.projet.ticketme.viewmodel.CategoryViewModel;
-import hes.projet.ticketme.viewmodel.TicketListViewModel;
 import hes.projet.ticketme.viewmodel.TicketViewModel;
 
-public class TicketViewActivity extends OptionsMenuActivity {
+public class TicketViewActivity extends BaseActivity {
 
 //    private Toolbar menuToolBar;
 
