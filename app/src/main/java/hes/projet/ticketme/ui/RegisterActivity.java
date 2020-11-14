@@ -70,10 +70,10 @@ public class RegisterActivity extends BaseActivity {
             String emailInput = email.getText().toString();
 
             if(!emailInput.isEmpty()&& Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()){
-                Toast.makeText(this,"Adresse email valide",Toast.LENGTH_SHORT).show();
+                toastGen(RegisterActivity.this,"Adresse email valide",0);
                 return true;
             }else {
-                Toast.makeText(this,"Adresse email invalide",Toast.LENGTH_SHORT).show();
+                toastGen(RegisterActivity.this,"Adresse email invalide",0);
                 return false;
             }
         }
@@ -82,11 +82,11 @@ public class RegisterActivity extends BaseActivity {
             String pass = password.getText().toString();
 
             if(pass.length()<8){
-                Toast.makeText(this,"Mot de passe trop court",Toast.LENGTH_SHORT).show();
+                toastGen(RegisterActivity.this,"Mot de passe trop court",0);
                 return false;
             }
             if(!pass.matches(".*[!@#$%^&*+?-]*")){
-                Toast.makeText(this,"Un caractère spécial minimum obligatoire",Toast.LENGTH_SHORT).show();
+                toastGen(RegisterActivity.this,"Un caractère spécial minimum obligatoire",0);
                 return false;
             }
             return true;

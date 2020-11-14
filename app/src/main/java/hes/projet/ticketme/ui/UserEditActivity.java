@@ -110,7 +110,7 @@ public class UserEditActivity extends BaseActivity {
         user.setAdmin(admin);
 
         if(password.equals("")){
-            Toast.makeText(UserEditActivity.this,"Mot de passe non valide",Toast.LENGTH_SHORT).show();
+            toastGen(UserEditActivity.this,"Mot de passe non valide",0);
             return;
         }
         user.setPassword(password);

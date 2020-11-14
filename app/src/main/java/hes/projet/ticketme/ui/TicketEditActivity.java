@@ -271,14 +271,14 @@ public class TicketEditActivity extends BaseActivity {
 
         //
         if(subject.equals("")){
-            Toast.makeText(TicketEditActivity.this,"Veuillez remplir le sujet!", Toast.LENGTH_SHORT).show();
+            toastGen(TicketEditActivity.this,"Veuillez remplir le sujet!",0);
             return;
         }
         ticket.setSubject(subject);
 
         //
         if(message.equals("")){
-            Toast.makeText(TicketEditActivity.this,"Veuillez remplir le message!", Toast.LENGTH_SHORT).show();
+            toastGen(TicketEditActivity.this,"Veuillez remplir le message!",0);
             return;
         }
         ticket.setMessage(message);
@@ -320,9 +320,7 @@ public class TicketEditActivity extends BaseActivity {
 
                 @Override
                 public void onFailure(Exception e) {
-                    /**
-                     * TODO Display a message for unexpected error
-                     */
+                    toastGen(TicketEditActivity.this,"Problème lors de la modification",1);
                 }
             }).execute(ticket);
         }

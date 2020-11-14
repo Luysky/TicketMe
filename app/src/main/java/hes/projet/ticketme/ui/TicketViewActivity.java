@@ -244,9 +244,7 @@ public class TicketViewActivity extends BaseActivity {
 
             @Override
             public void onFailure(Exception e) {
-                /**
-                 * TODO alert in case of an error
-                 */
+                toastGen(TicketViewActivity.this,"Problème lors de la modification",1);
             }
         }).execute(ticket);
     }

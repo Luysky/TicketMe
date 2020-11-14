@@ -264,4 +264,16 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
+    public void toastGen(Context cont,String message,int size){
+
+        if(size==0) {
+            int toast = Toast.LENGTH_SHORT;
+            Toast.makeText(cont, message, toast).show();
+        }
+        else {
+            Toast.makeText(cont,message,Toast.LENGTH_LONG).show();
+        }
+
+    }
+
 }
