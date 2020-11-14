@@ -15,11 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hes.projet.ticketme.R;
-import hes.projet.ticketme.data.entity.TicketEntity;
 import hes.projet.ticketme.data.entity.UserEntity;
 import hes.projet.ticketme.viewmodel.UserListViewModel;
 
-public class UserManagementActivity extends BaseActivity {
+public class UserListActivity extends BaseActivity {
 
     private Toolbar menuToolBar;
     private List<UserEntity> users = new ArrayList<>();
@@ -32,12 +31,12 @@ public class UserManagementActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_management);
+
+        initView(this, R.layout.activity_user_management, "Liste des utilisateurs");
+        initDrawer();
+
         listView = findViewById(R.id.list_viewUser);
 
-
-        initMenu();
-        initReturn();
 
         UserListViewModel.Factory factory = new UserListViewModel.Factory(getApplication());
         ViewModelProvider provider = new ViewModelProvider(this, factory);
@@ -52,7 +51,7 @@ public class UserManagementActivity extends BaseActivity {
                 }
 
                 //Ces lignes servent a la mise en place d une liste deroulante.
-                adapter = new ArrayAdapter(UserManagementActivity.this, android.R.layout.simple_list_item_1, listString);
+                adapter = new ArrayAdapter(UserListActivity.this, android.R.layout.simple_list_item_1, listString);
                 listView.setAdapter(adapter);
             }
         });
@@ -61,48 +60,13 @@ public class UserManagementActivity extends BaseActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 UserEntity u = users.get(position);
-                Intent intent = new Intent(UserManagementActivity.this, UserInterfaceActivity.class);
-
-                Log.i(TAG, "clicked on  " + u.toString());
+                Intent intent = new Intent(UserListActivity.this, UserEditActivity.class);
                 intent.putExtra("userId", u.getId());
                 startActivity(intent);
             }
         });
 
-
-/*
-        User user1 = new User(1,"tom@gmail.com","1234",true);
-        User user2 = new User (2,"ben@gmail.com","1234",true);
-        User user3 = new User (3, "toto@gmail.com","123",false);
-        User user4 = new User (4, "tata@gmail.com","123",false);
-        User user5 = new User (5, "titi@gmail.com","123",false);
-        User user6 = new User (6, "tutu@gmail.com","123",false);
-
-        listUser.add(user1);
-        listUser.add(user2);
-        listUser.add(user3);
-        listUser.add(user4);
-        listUser.add(user5);
-        listUser.add(user6);*/
-
-        //On recupere l idUser et le username pour l affichage dans la liste de message.
-//        for(int i=0; i<listUser.size();i++){
-//            listString.add(listUser.get(i).toString());
-//        }
-//
-//        //Ces lignes servent a la mise en place d une liste deroulante.
-//        adapter = new ArrayAdapter(UserManagementActivity.this, android.R.layout.simple_list_item_1, listString);
-//        listView.setAdapter(adapter);
-
-
-    }
-
-    //Bouton ajouter confirm
-    public void clickConfirm(View view){
-        Intent intent = new Intent(this, UserManagementActivity.class);
-        startActivity(intent);
     }
 
 }

@@ -1,6 +1,8 @@
-package hes.projet.ticketme.ui;
+/**
+ * Last review by BK on 14.11.2020
+ */
 
-import androidx.lifecycle.ViewModelProvider;
+package hes.projet.ticketme.ui;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -10,10 +12,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +34,11 @@ import hes.projet.ticketme.util.OnAsyncEventListener;
 import hes.projet.ticketme.viewmodel.CategoryListViewModel;
 import hes.projet.ticketme.viewmodel.TicketViewModel;
 
+
 public class TicketEditActivity extends BaseActivity {
 
     private static final String TAG = "TicketEditActivity";
 
-
-    private long userId;
 
     /**
      * TicketEntity handled by the form.
@@ -42,22 +47,29 @@ public class TicketEditActivity extends BaseActivity {
      */
     private TicketEntity ticket;
 
+
     /*
      * Form controls
      */
-    private Spinner spinner;
+
+    private Spinner spinnerCategory;
     private EditText editTextSubject;
     private EditText editTextMessage;
 
 
+    /*
+     * Initial values of new or loaded ticket
+     */
 
     private String subject;
     private String message;
+    private long categoryId;
 
 
     /*
      * Category list to show in the spinner
      */
+
     private List<CategoryEntity> categories;
 
 
@@ -65,21 +77,17 @@ public class TicketEditActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        userId = getLoggedInUserId();
-
-        if (userId == 0) {
-            Intent intent = new Intent(this, LoginHomepageActivity.class);
-            startActivity(intent);
-        }
+        long userId = requireLoggedInUser();
 
 
         /*
          * Initialize view and elements
          */
 
-        setContentView(R.layout.activity_ticket_edit);
-
-        initMenu();
+        /**
+         * TODO Use string from xml file
+         */
+        initView(this, R.layout.activity_ticket_edit, "Edit a ticket");
         initReturn();
 
 
@@ -94,11 +102,11 @@ public class TicketEditActivity extends BaseActivity {
         editTextMessage = findViewById(R.id.editTextTextMultiLine);
 
         //
-        spinner = findViewById(R.id.spinnerCategory);
+        spinnerCategory = findViewById(R.id.spinnerCategory);
 
         ListAdapter<CategoryEntity> adapter = new ListAdapter<>(this, android.R.layout.simple_spinner_item, new ArrayList<>());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        spinnerCategory.setAdapter(adapter);
         adapter.registerDataSetObserver(new DataSetObserver() {
             @Override
             public void onChanged() {
@@ -114,7 +122,7 @@ public class TicketEditActivity extends BaseActivity {
          */
 
         Intent intent = getIntent();
-        Long ticketId = intent.getLongExtra("ticketId", 0);
+        long ticketId = intent.getLongExtra("ticketId", 0);
 
         Log.i(TAG, "Ticket id as extra: " + ticketId);
 
@@ -133,6 +141,10 @@ public class TicketEditActivity extends BaseActivity {
             // Set a default category for new tickets
             ticket.setCategoryId((long) 1);
 
+            subject = "";
+            message = "";
+            categoryId = (long) 1;
+
         }
         else {
             Log.i(TAG, "loading ticket");
@@ -140,9 +152,13 @@ public class TicketEditActivity extends BaseActivity {
             // Load existing ticket to edit.
             loadTicket(ticketId);
         }
-
     }
 
+
+    /**
+     * Add activity specific menu to actionBar
+     */
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
         MenuInflater menuInflater = getMenuInflater();
@@ -152,95 +168,56 @@ public class TicketEditActivity extends BaseActivity {
     }
 
 
-    private void showTicketCategory() {
+    /**
+     * Detect click on custom activity menu items
+     *
+     * @param item Clicked item in menu
+     */
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        if (ticket == null)
-            return;
-
-        if (categories == null)
-            return;
-
-        for(CategoryEntity category : categories) {
-            if(category.getId().equals(ticket.getCategoryId())) {
-                int pos = categories.indexOf(category);
-                spinner.setSelection(pos);
-                return;
-            }
+        if (item.getItemId() == R.id.action_save_ticket) {
+            clickSaveTicket();
+        } else {
+            return super.onOptionsItemSelected(item);
         }
+
+        return true;
     }
 
 
-    public void clickSaveTicket(View view) {
-
-        /*
-         * Curernt form values
-         */
-
-        subject = editTextSubject.getText().toString();
-        message = editTextMessage.getText().toString();
-
-        /*
-         * Check values in form
-         */
-
-        //
-        if(subject.equals("")){
-            Toast.makeText(TicketEditActivity.this,"Veuillez remplir le sujet!",Toast.LENGTH_SHORT).show();
-            return;
-        }
-        ticket.setSubject(subject);
-
-        //
-        if(message.equals("")){
-            Toast.makeText(TicketEditActivity.this,"Veuillez remplir le message!",Toast.LENGTH_SHORT).show();
-            return;
-        }
-        ticket.setMessage(message);
-
-        //
-        CategoryEntity category = (CategoryEntity) spinner.getSelectedItem();
-        ticket.setCategoryId(category.getId());
-
-
-        /*
-         * Save new or existing ticket
-         */
-
-        if (ticket.getId() == null) {
-            Log.i(TAG, "Sauver le nouveau ticket: " + ticket.getSubject());
-            new CreateTicket(getApplication(), new OnAsyncEventListener() {
-                @Override
-                public void onSuccess() {
-                    finish();
-                }
-
-                @Override
-                public void onFailure(Exception e) {
-
-                }
-            }).execute(ticket);
-        }
-        else {
-            Log.i(TAG, "Modifier ticket: " + ticket.toString());
-
-            new UpdateTicket(getApplication(), new OnAsyncEventListener() {
-                @Override
-                public void onSuccess() {
-                    finish();
-                }
-
-                @Override
-                public void onFailure(Exception e) {
-
-                }
-            }).execute(ticket);
-        }
-    }
-
+    /**
+     * Triggered when user clicks on back button
+     */
     @Override
     public void onReturn(View view){
 
-        //Creation d un message d alerte en cas d utilisation du bouton retour
+        /*
+         * Check if form values have changed
+         */
+
+        boolean changedSubject = !subject.equals(editTextSubject.getText().toString());
+        boolean changedMessage = !message.equals(editTextMessage.getText().toString());
+        boolean changedCategory = categoryId != ((CategoryEntity) spinnerCategory.getSelectedItem()).getId();
+
+
+        /*
+         * If changes detected, let user go back
+         */
+
+        if (!changedCategory && !changedMessage && !changedSubject) {
+            finish();
+            return;
+        }
+
+
+        /*
+         * There are changed values, alert user about loosing changes
+         */
+
+        /**
+         * TODO Use strings from xml file
+         */
         AlertDialog.Builder builder = new AlertDialog.Builder(TicketEditActivity.this);
 
         builder.setCancelable(true);
@@ -260,11 +237,117 @@ public class TicketEditActivity extends BaseActivity {
                 finish();
             }
         });
-        builder.show();
 
+        builder.show();
     }
 
+
+    /**
+     * Show right category in spinner when both ticket and category list are loaded
+     */
+    private void showTicketCategory() {
+
+        if (ticket == null)
+            return;
+
+        if (categories == null)
+            return;
+
+        for(CategoryEntity category : categories) {
+            if(category.getId().equals(ticket.getCategoryId())) {
+                int pos = categories.indexOf(category);
+                spinnerCategory.setSelection(pos);
+                return;
+            }
+        }
+    }
+
+
+    /**
+     * Triggered when user clicks on save button
+     *
+     * TODO Use strings from xml file
+     */
+    public void clickSaveTicket() {
+
+        /*
+         * Curernt form values
+         */
+
+        subject = editTextSubject.getText().toString();
+        message = editTextMessage.getText().toString();
+
+        /*
+         * Check values in form
+         */
+
+        //
+        if(subject.equals("")){
+            Toast.makeText(TicketEditActivity.this,"Veuillez remplir le sujet!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        ticket.setSubject(subject);
+
+        //
+        if(message.equals("")){
+            Toast.makeText(TicketEditActivity.this,"Veuillez remplir le message!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        ticket.setMessage(message);
+
+        //
+        CategoryEntity category = (CategoryEntity) spinnerCategory.getSelectedItem();
+        ticket.setCategoryId(category.getId());
+
+
+        /*
+         * Save new or existing ticket
+         */
+
+        if (ticket.getId() == null) {
+            Log.i(TAG, "Sauver le nouveau ticket: " + ticket.getSubject());
+
+            new CreateTicket(getApplication(), new OnAsyncEventListener() {
+                @Override
+                public void onSuccess() {
+                    finish();
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+                    /**
+                     * TODO Display a message for unexpected error
+                     */
+                }
+            }).execute(ticket);
+        }
+        else {
+            Log.i(TAG, "Modifier ticket: " + ticket.toString());
+
+            new UpdateTicket(getApplication(), new OnAsyncEventListener() {
+                @Override
+                public void onSuccess() {
+                    finish();
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+                    /**
+                     * TODO Display a message for unexpected error
+                     */
+                }
+            }).execute(ticket);
+        }
+    }
+
+
+    /**
+     * Load ticket to display from database
+     *
+     * @param ticketId Id of the ticket to display
+     */
     private void loadTicket(long ticketId) {
+
         // Get TicketViewModel
         TicketViewModel ticketViewModel;
 
@@ -278,9 +361,12 @@ public class TicketEditActivity extends BaseActivity {
 
                 ticket = ticketEntity;
 
+                subject = ticket.getSubject();
+                message = ticket.getMessage();
+                categoryId = ticket.getCategoryId();;
 
-                editTextSubject.setText(ticket.getSubject());
-                editTextMessage.setText(ticket.getMessage());
+                editTextSubject.setText(subject);
+                editTextMessage.setText(message);
 
                 showTicketCategory();
             }
@@ -288,6 +374,12 @@ public class TicketEditActivity extends BaseActivity {
 
     }
 
+
+    /**
+     * Load categories and update values in adapter
+     *
+     * @param adapter ListAdapter for categories spinner
+     */
     private void loadCategories(ListAdapter<CategoryEntity> adapter) {
 
         // Get CategoryViewModel

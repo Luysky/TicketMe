@@ -38,36 +38,23 @@ public class TicketListActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        initView(this, R.layout.activity_ticket_list);
-        initMenu();
-        initManager();
-
-
-        requireLoggedInUser();
-
-        userId = getLoggedInUserId();
-
-        if (userId == 0) {
-            Intent intent = new Intent(this, LoginHomepageActivity.class);
-            startActivity(intent);
-        }
+        userId = requireLoggedInUser();
 
         if (isAdministrator())
             userId = 0;
 
 
 
-
-
-        listView  = findViewById(R.id.list_view);
-
-
-
-
         Intent intent = getIntent();
         int statusFilter = intent.getIntExtra("statusFilter", 0);
 
+        String title = statusFilter == 0 ? "Tickets ouverts" : "Tickets fermés";
+
+        initView(this, R.layout.activity_ticket_list, title);
+        initDrawer();
+
+
+        listView  = findViewById(R.id.list_view);
 
         TicketListViewModel.Factory factory = new TicketListViewModel.Factory(getApplication(), userId, statusFilter, (long) 0);
         ViewModelProvider provider = new ViewModelProvider(this, factory);
@@ -101,35 +88,23 @@ public class TicketListActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 TicketEntity t = tickets.get(position);
-                Intent intent = new Intent(TicketListActivity.this, TicketViewActivity.class);
 
                 Log.i(TAG, "clicked on  " + t.toString());
+
+                //
+                Intent intent = new Intent(TicketListActivity.this, TicketViewActivity.class);
                 intent.putExtra("ticketId", t.getId());
                 startActivity(intent);
             }
         });
-
     }
 
-    //Methode servant a rajouter une option (Manager) dans l action bar
-    // @Override
-//    public boolean onCreateOptionsMenu(Menu menu){
-//        super.onCreateOptionsMenu(menu);
-//        Log.i(TAG, "onCreateOptionsMenu");
-//        MenuInflater menuInflater = getMenuInflater();
-//        menuInflater.inflate(R.menu.manager_menu,menu);
-//        return true;
-//    }
 
 
-        //Bouton ajouter un nouveau Ticket
+    //Bouton ajouter un nouveau Ticket
     public void clickAddTicket(View view){
         Intent intent = new Intent(this, TicketEditActivity.class);
         startActivity(intent);
     }
 
-//    public void clickOnTicket(View view){
-//        Intent intent = new Intent(this, TicketReadActivity.class);
-//        startActivity(intent);
-//    }
 }

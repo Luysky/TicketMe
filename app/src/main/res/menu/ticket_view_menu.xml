@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_close_ticket"
+        android:icon="@android:drawable/ic_lock_power_off"
+        android:title="Close"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_edit_ticket"
+        android:icon="@drawable/ic_pen"
+        android:title="Edit"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_delete_ticket"
+        android:icon="@android:drawable/ic_delete"
+        android:title="Delete"
+        app:showAsAction="never"/>
+</menu>

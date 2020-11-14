@@ -14,7 +14,7 @@ import hes.projet.ticketme.data.async.user.CreateUser;
 import hes.projet.ticketme.data.entity.UserEntity;
 import hes.projet.ticketme.util.OnAsyncEventListener;
 
-public class LoginNewActivity extends BaseActivity {
+public class RegisterActivity extends BaseActivity {
 
     private static final String TAG = "LoginNewActivity";
     private EditText email,password;
@@ -49,7 +49,7 @@ public class LoginNewActivity extends BaseActivity {
                             public void onSuccess() {
                                 Log.i(TAG, "User created " + user.toString());
 
-                                Intent intent = new Intent(LoginNewActivity.this, TicketListActivity.class);
+                                Intent intent = new Intent(RegisterActivity.this, TicketListActivity.class);
                                 startActivity(intent);
 
                             }

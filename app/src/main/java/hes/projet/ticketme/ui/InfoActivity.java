@@ -10,9 +10,10 @@ public class InfoActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_info);
+        initView(this, R.layout.activity_info, "About");
+        // setContentView(R.layout.activity_info);
 
-        initMenu();
+        //initMenu();
         initReturn();
     }
 

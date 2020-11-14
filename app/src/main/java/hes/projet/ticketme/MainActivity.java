@@ -3,7 +3,7 @@ package hes.projet.ticketme;
 import android.content.Intent;
 import android.os.Bundle;
 
-import hes.projet.ticketme.ui.LoginHomepageActivity;
+import hes.projet.ticketme.ui.LoginActivity;
 import hes.projet.ticketme.ui.TicketListActivity;
 import hes.projet.ticketme.ui.BaseActivity;
 
@@ -21,7 +21,7 @@ public class MainActivity extends BaseActivity {
         long userId = getLoggedInUserId();
 
         if (userId == 0) {
-            intent = new Intent(this, LoginHomepageActivity.class);
+            intent = new Intent(this, LoginActivity.class);
         } else {
             intent = new Intent(this, TicketListActivity.class);
         }

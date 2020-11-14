@@ -7,14 +7,12 @@
     android:elevation="4dp"
     android:id="@+id/toolbar">
 
-    <!-- android:theme="@style/Theme.TicketMe.NoActionBar"> -->
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TicketMe"
         android:textSize="24dp"
-        android:layout_gravity="center"
+        android:layout_gravity="left"
         android:id="@+id/toolbar_title"/>
 
 

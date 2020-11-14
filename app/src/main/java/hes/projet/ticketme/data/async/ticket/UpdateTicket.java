@@ -18,6 +18,7 @@ public class UpdateTicket extends AsyncTask<TicketEntity, Void, Void> {
         this.callback = callback;
     }
 
+
     @Override
     protected Void doInBackground(TicketEntity... params) {
         try {
@@ -31,9 +32,7 @@ public class UpdateTicket extends AsyncTask<TicketEntity, Void, Void> {
 
 
     /**
-     * TODO Clarify aVoid param
-     *
-     * @param aVoid
+     * Triggered after async task has completed
      */
     @Override
     protected void onPostExecute(Void aVoid) {

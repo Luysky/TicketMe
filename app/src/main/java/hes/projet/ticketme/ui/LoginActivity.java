@@ -10,12 +10,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.jetbrains.annotations.NotNull;
+
 import hes.projet.ticketme.R;
 import hes.projet.ticketme.data.repository.UserRepository;
 import hes.projet.ticketme.util.Constants;
 
 
-public class LoginHomepageActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity {
 
     private static final String TAG = "LoginHomepageActivity";
 
@@ -71,7 +73,7 @@ public class LoginHomepageActivity extends BaseActivity {
         }
 
 
-        repository.getUserByUsername(email, getApplication()).observe(LoginHomepageActivity.this, user -> {
+        repository.getUserByUsername(email, getApplication()).observe(LoginActivity.this, user -> {
 
             if (user == null) {
                 emailView.setError(getString(R.string.error_invalid_email));
@@ -121,7 +123,7 @@ public class LoginHomepageActivity extends BaseActivity {
         });
     }
 
-    private boolean isPasswordValid(String password) {
+    private boolean isPasswordValid(@NotNull String password) {
         return password.length() > 2;
     }
 
@@ -132,13 +134,13 @@ public class LoginHomepageActivity extends BaseActivity {
 
 
     public void clickNewUser(View view) {
-        Intent intent = new Intent(this,LoginNewActivity.class);
+        Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
 
 
     public void clickForgotPassword(View view) {
-        Toast.makeText(LoginHomepageActivity.this,"Veuillez envoyer un mail à admin@ticketme.ch",Toast.LENGTH_LONG).show();
+        Toast.makeText(LoginActivity.this,"Veuillez envoyer un mail à admin@ticketme.ch",Toast.LENGTH_LONG).show();
     }
 
 

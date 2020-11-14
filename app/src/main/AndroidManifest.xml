@@ -13,11 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TicketMe.NoActionBar">
-        <activity android:name=".ui.LoginHomepageActivity" />
-        <activity android:name=".ui.LoginNewActivity" />
+        <activity android:name=".ui.LoginActivity" />
+        <activity android:name=".ui.RegisterActivity" />
         <activity android:name=".ui.InfoActivity" />
-        <activity android:name=".ui.UserManagementActivity" />
-        <activity android:name=".ui.UserInterfaceActivity" />
+        <activity android:name=".ui.UserListActivity" />
+        <activity android:name=".ui.UserEditActivity" />
         <activity android:name=".ui.TicketEditActivity" />
         <activity android:name=".ui.TicketViewActivity" />
         <activity android:name=".ui.TicketListActivity" />

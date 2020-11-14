@@ -59,6 +59,6 @@ public class UserEntity {
     }
 
     public String toString() {
-        return "User " + id + " " + username;
+        return username;
     }
 }

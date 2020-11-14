@@ -1,5 +1,4 @@
 package hes.projet.ticketme.data.dao;
-import android.database.sqlite.SQLiteConstraintException;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -11,12 +10,6 @@ import androidx.room.Update;
 import java.util.List;
 
 import hes.projet.ticketme.data.entity.TicketEntity;
-import hes.projet.ticketme.data.entity.UserEntity;
-
-
-/**
- * TODO Find a way to bind foreign keys
- */
 
 
 @Dao
