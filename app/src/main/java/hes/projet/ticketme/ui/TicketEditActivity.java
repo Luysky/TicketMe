@@ -218,27 +218,15 @@ public class TicketEditActivity extends BaseActivity {
         /**
          * TODO Use strings from xml file
          */
-        AlertDialog.Builder builder = new AlertDialog.Builder(TicketEditActivity.this);
 
-        builder.setCancelable(true);
-        builder.setTitle("Attention!");
-        builder.setMessage("Les modifications ne seront pas enregistrées. Voulez-vous quitter la création de ticket?");
-
-        builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+        Runnable run = new Runnable() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void run() {
                 finish();
             }
-        });
+        };
 
-        builder.show();
+        alertDialog("Attention!","Les modifications ne seront pas enregistrées. Voulez-vous quitter la création de ticket?",TicketEditActivity.this,run);
     }
 
 

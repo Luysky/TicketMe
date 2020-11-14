@@ -90,7 +90,7 @@
         android:onClick="clickForgotPassword"
         android:text="@string/mot_de_passse_oubli"
         android:textAllCaps="false"
-        android:textSize="10dp"
+        android:textSize="10sp"
         android:textStyle="normal" />
 
 

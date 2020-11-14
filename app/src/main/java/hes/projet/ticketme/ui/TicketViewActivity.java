@@ -4,12 +4,16 @@
 
 package hes.projet.ticketme.ui;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -100,7 +104,7 @@ public class TicketViewActivity extends BaseActivity {
         switch (item.getItemId()){
 
             case R.id.action_close_ticket:
-                clickTicketClose();
+                alertDialog("Information","Voulez-vous fermer ce ticket?",TicketViewActivity.this,this::clickTicketClose);
                 break;
 
             case R.id.action_edit_ticket:
@@ -108,7 +112,7 @@ public class TicketViewActivity extends BaseActivity {
                 break;
 
             case R.id.action_delete_ticket:
-                clickTicketDelete();
+                alertDialog("Information","Voulez-vous supprimer ce ticket?",TicketViewActivity.this,this::clickTicketDelete);
                 break;
 
             default:
@@ -148,6 +152,7 @@ public class TicketViewActivity extends BaseActivity {
                 //
                 TextView subject = findViewById(R.id.subject);
                 TextView message = findViewById(R.id.message);
+                message.setMovementMethod(new ScrollingMovementMethod());
 
                 //
                 subject.setText(ticket.getSubject());
@@ -205,11 +210,12 @@ public class TicketViewActivity extends BaseActivity {
      */
     public void clickTicketDelete() {
 
+        Log.i(TAG, "clicked on  delete ticket");
+
         new DeleteTicket(getApplication(), new OnAsyncEventListener() {
             @Override
             public void onSuccess() {
-
-                finish();
+                        finish();
             }
 
             @Override

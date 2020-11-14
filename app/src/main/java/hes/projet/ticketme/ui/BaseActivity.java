@@ -2,9 +2,11 @@ package hes.projet.ticketme.ui;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -15,12 +17,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+
+
 
 import hes.projet.ticketme.R;
 import hes.projet.ticketme.util.Constants;
@@ -232,4 +237,31 @@ public class BaseActivity extends AppCompatActivity {
         finish();
         startActivity(navIntent);
     }
+
+    public void alertDialog(String titre, String message, Context cont, Runnable run){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(cont);
+
+        builder.setCancelable(true);
+        builder.setTitle(titre);
+        builder.setMessage(message);
+
+        builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                new Handler().post(run);
+            }
+        });
+
+        builder.show();
+
+    }
+
 }

@@ -66,7 +66,7 @@
     <string name="valider">Valider</string>
     <string name="s_enregister">S\'enregister</string>
     <string name="ticketme">TicketMe</string>
-    <string name="mot_de_passse_oubli">Mot de passse oublié</string>
+    <string name="mot_de_passse_oubli">Mot de passe oublié</string>
     <string name="vous_n_avez_pas_de_compte">Vous n\'avez pas de compte?</string>
     <string name="se_connecter">Se connecter</string>
     <string name="cette_application_a_t_cr_e_dans_le_cadre_du_cours_644_1_mobile_and_cloud">Cette application a été crée dans le cadre du cours 644-1 Mobile and Cloud</string>
@@ -86,6 +86,7 @@
     <string name="mot_de_passe">Mot de passe</string>
     <string name="administrateur">Administrateur</string>
     <string name="saveUser">saveUser</string>
+    <string name="save">Save</string>
 
 
 </resources>
