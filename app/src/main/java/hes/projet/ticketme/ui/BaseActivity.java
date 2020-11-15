@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,8 +35,11 @@ import hes.projet.ticketme.util.Constants;
 public class BaseActivity extends AppCompatActivity {
     public static final String TAG = "OptionsMenuActivity";
 
+    public int sortOrder;
     protected Toolbar menuToolBar;
     DrawerLayout drawer;
+
+    public ArrayAdapter adapter;
 
     public void initView(BaseActivity currActivity, int viewId, String title)
     {
@@ -125,6 +129,16 @@ public class BaseActivity extends AppCompatActivity {
                 } else if(id == R.id.menu_ticket_list_closed) {
                     Intent intent = new Intent(currActivity, TicketListActivity.class);
                     intent.putExtra("statusFilter", 1);
+                    adapter.notifyDataSetChanged();
+                    startActivity(intent);
+                } else if(id == R.id.menu_sortAsc){
+                    sortTicket(0);
+                    Intent intent = new Intent(currActivity,TicketListActivity.class);
+                    adapter.notifyDataSetChanged();
+                    startActivity(intent);
+                } else if(id == R.id.menu_sortDesc){
+                    sortTicket(1);
+                    Intent intent = new Intent(currActivity,TicketListActivity.class);
                     startActivity(intent);
                 }
 
@@ -179,10 +193,6 @@ public class BaseActivity extends AppCompatActivity {
 
         switch (item.getItemId()){
 
-            case R.id.action_settings:
-                displayMessage(getString(R.string.toast_settings_selected),0);
-                return true;
-
             case R.id.action_info:
 
                 Intent intent = new Intent(this, InfoActivity.class);
@@ -232,6 +242,10 @@ public class BaseActivity extends AppCompatActivity {
         startActivity(navIntent);
     }
 
+
+    /**
+     * Display an alert box message
+     */
     public void displayAlert(String titre, String message, Runnable run){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -258,6 +272,10 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
+
+    /**
+     * Display a toast
+     */
     public void displayMessage(String message,int size){
 
         if(size==0) {
@@ -271,26 +289,33 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     *
-     * @param dir Sort direction (ASC | DESC)
+     * Define sort order
      */
-    public void setTicketOrder(String dir) {
-        if (! dir.equals("ASC") && ! dir.equals("ASC")) {
-            return;
+    public void sortTicket(int order){
+        if(order==1){
+            setSort(1);
         }
+        else{
+            setSort(0);
+        }
+    }
 
-        SharedPreferences.Editor editor = getSharedPreferences(Constants.PREF_FILE, 0).edit();
-
-        editor.putString(Constants.TICKET_ORDER, dir);
+    /**
+     * Set the sharedPreferences for Sort
+     */
+    public void setSort(int value){
+        SharedPreferences.Editor editor = getSharedPreferences(Constants.TICKET_ORDER,0).edit();
+        editor.putInt(Constants.TICKET_ORDER,value);
         editor.apply();
     }
 
     /**
-     *
+     * Get the sharedPreferences for Sort
      */
-    public String getTicketOrder() {
+    public int getSort(){
+        SharedPreferences editor = getSharedPreferences(Constants.TICKET_ORDER, 0);
 
-        SharedPreferences settings = getSharedPreferences(Constants.PREF_FILE, 0);
-        return settings.getString(Constants.TICKET_ORDER, "ASC");
+        return editor.getInt(Constants.TICKET_ORDER,0);
     }
+
 }

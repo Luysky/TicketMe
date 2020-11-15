@@ -3,21 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
     <item
         android:id="@+id/action_info"
         android:icon="@drawable/ic_info"
-        android:title="Info"
-        app:showAsAction="never"/>
-
-    <item
-        android:id="@+id/action_settings"
-        android:icon="@drawable/ic_settings"
-        android:title="Settings"
+        android:title="@string/appbarMenu_Info"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/action_logout"
-        android:title="Logout"
+        android:title="@string/appbarMenu_Logout"
         app:showAsAction="never"/>
 
 </menu>

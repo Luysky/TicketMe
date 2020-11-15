@@ -72,6 +72,18 @@
     <string name="userInterface_passwordDisplay">"AffichePassword"</string>
     <string name="userInterface_admin">"Administrateur"</string>
 
+    <string name="drawerMenuDisplayTicket">"Affichage des tickets"</string>
+    <string name="drawerMenuOpenTickets">"Tickets ouverts"</string>
+    <string name="drawerMenuCloseTickets">"Tickets fermé"</string>
+    <string name="drawerMenuSortTicket">"Ordre des tickets"</string>
+    <string name="drawerMenuSortDesc">"Nouveau ticket en premier"</string>
+    <string name="drawerMenuSortAsc">"Ancien ticket en premier"</string>
+    <string name="drawerMenuManageUser">"Gestion des utilisateurs"</string>
+    <string name="drawerMenuManager">"Administration"</string>
+
+    <string name="appbarMenu_Info">"Info"</string>
+    <string name="appbarMenu_Logout">"Déconnexion"</string>
+
     <string name="editMenu_save">Save</string>
 
 

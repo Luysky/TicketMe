@@ -11,13 +11,13 @@ import android.widget.ListView;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import hes.projet.ticketme.R;
 
-import hes.projet.ticketme.data.entity.CategoryEntity;
 import hes.projet.ticketme.data.entity.TicketEntity;
-import hes.projet.ticketme.viewmodel.CategoryListViewModel;
 import hes.projet.ticketme.viewmodel.TicketListViewModel;
 
 public class TicketListActivity extends BaseActivity {
@@ -29,7 +29,7 @@ public class TicketListActivity extends BaseActivity {
     private ListView listView;
     private List<TicketEntity> tickets = new ArrayList<>();
     //private List<CategoryEntity> categories = new ArrayList<>();
-    private ArrayAdapter adapter;
+    //private ArrayAdapter adapter;
 
     private TicketListViewModel viewModel;
     //private CategoryListViewModel categoryListViewModel;
@@ -62,29 +62,31 @@ public class TicketListActivity extends BaseActivity {
         viewModel.getTickets().observe(this, ticketEntities -> {
             if (ticketEntities != null) {
                 tickets = ticketEntities;
+                sortOrder = getSort();
 
-                /*
-                 * TODO sort tickets before giving to ArrayAdapter
-                 */
+                if(sortOrder==1){
+                    Collections.sort(tickets, new Comparator<TicketEntity>() {
+                        @Override
+                        public int compare(TicketEntity o1, TicketEntity o2) {
+                            return o2.getId().compareTo(o1.getId());
+                        }
+                    });
+                }
+                else {
+                    Collections.sort(tickets, new Comparator<TicketEntity>() {
+                        @Override
+                        public int compare(TicketEntity o1, TicketEntity o2) {
+                            return o1.getId().compareTo(o2.getId());
+                        }
+                    });
+                }
 
                 //Ces lignes servent a la mise en place d une liste deroulante.
-                adapter = new ArrayAdapter(TicketListActivity.this, android.R.layout.simple_list_item_1, ticketEntities);
+                //adapter = new ArrayAdapter(TicketListActivity.this, android.R.layout.simple_list_item_1, ticketEntities);
+                adapter = new ArrayAdapter(TicketListActivity.this, android.R.layout.simple_list_item_1, tickets);
                 listView.setAdapter(adapter);
             }
         });
-
-
-
-        /*
-        CategoryListViewModel.Factory factory2 = new CategoryListViewModel.Factory(getApplication());
-        ViewModelProvider provider2 = new ViewModelProvider(this, factory2);
-        categoryListViewModel = provider2.get(CategoryListViewModel.class);
-        categoryListViewModel.getCategories().observe(this, categoryEntities ->  {
-            if (categoryEntities != null) {
-                categories = categoryEntities;
-            }
-        });
-        */
 
 
         //Action lorsque l on click sur un objet de la liste.

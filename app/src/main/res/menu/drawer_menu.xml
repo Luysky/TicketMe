@@ -2,25 +2,49 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
+        <item android:title="@string/drawerMenuDisplayTicket" android:id="@+id/menu_displayTicket">
+            <menu>
+            <item
+                android:id="@+id/menu_ticket_list_open"
+                android:title="@string/drawerMenuOpenTickets"
+                android:icon="@drawable/ic_ticket_ouvert">
+            </item>
 
-        <item
-            android:id="@+id/menu_ticket_list_open"
-            android:title="Tickets ouverts"
-            android:icon="@drawable/ic_ticket_ouvert">
+                <item
+                    android:id="@+id/menu_ticket_list_closed"
+                    android:title="@string/drawerMenuCloseTickets"
+                    android:icon="@drawable/ic_ticket_ferme">
+                </item>
+            </menu>
         </item>
-
-        <item
-            android:id="@+id/menu_ticket_list_closed"
-            android:title="Tickets fermés"
-            android:icon="@drawable/ic_ticket_ferme">
-        </item>
-
     </group>
 
-    <item android:title="Administration" android:id="@+id/menu_administration">
+    <group android:checkableBehavior="single">
+    <item android:title="@string/drawerMenuSortTicket" android:id="@+id/menu_sortTickets">
+        <menu>
+
+            <item
+                android:id="@+id/menu_sortAsc"
+                android:title="@string/drawerMenuSortAsc"
+                android:icon="@drawable/ic_sort">
+            </item>
+
+            <item
+                android:id="@+id/menu_sortDesc"
+                android:title="@string/drawerMenuSortDesc"
+                android:icon="@drawable/ic_sort">
+            </item>
+
+        </menu>
+    </item>
+    </group>
+
+
+
+    <item android:title="@string/drawerMenuManager" android:id="@+id/menu_administration">
         <menu>
             <item
-                android:title="Gestion des utilisateurs"
+                android:title="@string/drawerMenuManageUser"
                 android:id="@+id/menu_user_list"
                 android:icon="@drawable/ic_user">
             </item>
