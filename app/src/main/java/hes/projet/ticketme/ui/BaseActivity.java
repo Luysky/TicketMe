@@ -175,7 +175,7 @@ public class BaseActivity extends AppCompatActivity {
         switch (item.getItemId()){
 
             case R.id.action_settings:
-                displayMessage("Settings option selected",0);
+                displayMessage(getString(R.string.toast_settings_selected),0);
                 return true;
 
             case R.id.action_info:
@@ -227,7 +227,7 @@ public class BaseActivity extends AppCompatActivity {
         startActivity(navIntent);
     }
 
-    public void alertDialog(String titre, String message, Runnable run){
+    public void displayAlert(String titre, String message, Runnable run){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 

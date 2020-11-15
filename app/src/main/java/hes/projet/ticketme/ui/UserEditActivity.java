@@ -3,8 +3,6 @@ package hes.projet.ticketme.ui;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,11 +13,9 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import hes.projet.ticketme.R;
 import hes.projet.ticketme.data.async.user.UpdateUser;
-import hes.projet.ticketme.data.entity.CategoryEntity;
 import hes.projet.ticketme.data.entity.UserEntity;
 import hes.projet.ticketme.util.OnAsyncEventListener;
 import hes.projet.ticketme.viewmodel.UserViewModel;
@@ -110,7 +106,7 @@ public class UserEditActivity extends BaseActivity {
         user.setAdmin(admin);
 
         if(password.equals("")){
-            displayMessage("Mot de passe non valide",0);
+            displayMessage(getString(R.string.toast_passwordInvalid),0);
             return;
         }
         user.setPassword(password);
@@ -125,7 +121,7 @@ public class UserEditActivity extends BaseActivity {
 
             @Override
             public void onFailure(Exception e) {
-
+                displayMessage(getString(R.string.toast_updateUserError),1);
             }
         }).execute(user);
     }
@@ -185,7 +181,7 @@ public class UserEditActivity extends BaseActivity {
             }
         };
 
-        alertDialog("Attention!","Les modifications ne seront pas enregistrées. Voulez-vous quitter la gestion utilisateur?",run);
+        displayAlert(getString(R.string.alert_titleWarning),getString(R.string.alert_userChangesNotSaved),run);
 
     }
 }

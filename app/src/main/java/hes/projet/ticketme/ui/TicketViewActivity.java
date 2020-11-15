@@ -4,8 +4,6 @@
 
 package hes.projet.ticketme.ui;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
@@ -13,7 +11,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -104,7 +101,7 @@ public class TicketViewActivity extends BaseActivity {
         switch (item.getItemId()){
 
             case R.id.action_close_ticket:
-                alertDialog("Information","Voulez-vous fermer ce ticket?",this::clickTicketClose);
+                displayAlert(getString(R.string.alert_titleInformation),getString(R.string.alert_ticketClosingStatus),this::clickTicketClose);
                 break;
 
             case R.id.action_edit_ticket:
@@ -112,7 +109,7 @@ public class TicketViewActivity extends BaseActivity {
                 break;
 
             case R.id.action_delete_ticket:
-                alertDialog("Information","Voulez-vous supprimer ce ticket?",this::clickTicketDelete);
+                displayAlert(getString(R.string.alert_titleInformation),getString(R.string.alert_ticketDelete),this::clickTicketDelete);
                 break;
 
             default:
@@ -220,9 +217,7 @@ public class TicketViewActivity extends BaseActivity {
 
             @Override
             public void onFailure(Exception e) {
-                /**
-                 * TODO alert in case of an error
-                 */
+                displayMessage(getString(R.string.toast_deleteTicketError),1);
             }
         }).execute(ticket);
     }
@@ -244,7 +239,7 @@ public class TicketViewActivity extends BaseActivity {
 
             @Override
             public void onFailure(Exception e) {
-                displayMessage("Problème lors de la modification",1);
+                displayMessage(getString(R.string.toast_closingTicketError),1);
             }
         }).execute(ticket);
     }

@@ -57,6 +57,7 @@ public class RegisterActivity extends BaseActivity {
                             @Override
                             public void onFailure(Exception e) {
                                 Log.i(TAG, "User not created " + user.toString());
+                                displayMessage(getString(R.string.toast_createUserError),1);
                             }
                         }).execute(user);
                     }
@@ -70,10 +71,10 @@ public class RegisterActivity extends BaseActivity {
             String emailInput = email.getText().toString();
 
             if(!emailInput.isEmpty()&& Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()){
-                displayMessage("Adresse email valide",0);
+                displayMessage(getString(R.string.toast_emailCorrect),0);
                 return true;
             }else {
-                displayMessage("Adresse email invalide",0);
+                displayMessage(getString(R.string.toast_emailIncorrect),0);
                 return false;
             }
         }
@@ -82,11 +83,11 @@ public class RegisterActivity extends BaseActivity {
             String pass = password.getText().toString();
 
             if(pass.length()<8){
-                displayMessage("Mot de passe trop court",0);
+                displayMessage(getString(R.string.toast_emailTooShort),0);
                 return false;
             }
             if(!pass.matches(".*[!@#$%^&*+?-]*")){
-                displayMessage("Un caractère spécial minimum obligatoire",0);
+                displayMessage(getString(R.string.toast_emailNotConform),0);
                 return false;
             }
             return true;

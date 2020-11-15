@@ -4,8 +4,6 @@
 
 package hes.projet.ticketme.ui;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.os.Bundle;
@@ -16,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
@@ -226,7 +223,7 @@ public class TicketEditActivity extends BaseActivity {
             }
         };
 
-        alertDialog("Attention!","Les modifications ne seront pas enregistrées. Voulez-vous quitter la création de ticket?",run);
+        displayAlert(getString(R.string.alert_titleWarning),getString(R.string.alert_ticketChangesNotSaved),run);
     }
 
 
@@ -250,12 +247,6 @@ public class TicketEditActivity extends BaseActivity {
         }
     }
 
-
-    /**
-     * Triggered when user clicks on save button
-     *
-     * TODO Use strings from xml file
-     */
     public void clickSaveTicket() {
 
         /*
@@ -271,14 +262,14 @@ public class TicketEditActivity extends BaseActivity {
 
         //
         if(subject.equals("")){
-           displayMessage("Veuillez remplir le sujet!",0);
+           displayMessage(getString(R.string.toast_subjectEmpty),0);
             return;
         }
         ticket.setSubject(subject);
 
         //
         if(message.equals("")){
-            displayMessage("Veuillez remplir le message!",0);
+            displayMessage(getString(R.string.toast_messageEmpty),0);
             return;
         }
         ticket.setMessage(message);
@@ -303,9 +294,7 @@ public class TicketEditActivity extends BaseActivity {
 
                 @Override
                 public void onFailure(Exception e) {
-                    /**
-                     * TODO Display a message for unexpected error
-                     */
+                    displayMessage(getString(R.string.toast_createTicketError),1);
                 }
             }).execute(ticket);
         }
@@ -320,7 +309,7 @@ public class TicketEditActivity extends BaseActivity {
 
                 @Override
                 public void onFailure(Exception e) {
-                    displayMessage("Problème lors de la modification",1);
+                    displayMessage(getString(R.string.toast_updateTicketError),1);
                 }
             }).execute(ticket);
         }
