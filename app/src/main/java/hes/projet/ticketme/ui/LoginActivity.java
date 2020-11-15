@@ -79,6 +79,7 @@ public class LoginActivity extends BaseActivity {
                 emailView.setError(getString(R.string.error_invalid_email));
                 emailView.requestFocus();
                 passwordView.setText("");
+                return;
             }
 
             Log.i(TAG, "loaded user " + user.toString());
@@ -87,13 +88,7 @@ public class LoginActivity extends BaseActivity {
                 passwordView.setError(getString(R.string.error_incorrect_password));
                 passwordView.requestFocus();
                 passwordView.setText("");
-            }
-            else{
-                Intent intent = new Intent(this, TicketListActivity.class);
-                startActivity(intent);
-
-                emailView.setText("");
-                passwordView.setText("");
+                return;
             }
 
 
@@ -115,11 +110,13 @@ public class LoginActivity extends BaseActivity {
             emailView.setText("");
             passwordView.setText("");
 
+
             /*
              * Go to ticket list
              */
 
-
+            Intent intent = new Intent(this, TicketListActivity.class);
+            startActivity(intent);
         });
     }
 
