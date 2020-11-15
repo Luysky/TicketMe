@@ -28,11 +28,11 @@ public class TicketListActivity extends BaseActivity {
 
     private ListView listView;
     private List<TicketEntity> tickets = new ArrayList<>();
-    private List<CategoryEntity> categories = new ArrayList<>();
+    //private List<CategoryEntity> categories = new ArrayList<>();
     private ArrayAdapter adapter;
 
     private TicketListViewModel viewModel;
-    private CategoryListViewModel categoryListViewModel;
+    //private CategoryListViewModel categoryListViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,14 +63,19 @@ public class TicketListActivity extends BaseActivity {
             if (ticketEntities != null) {
                 tickets = ticketEntities;
 
+                /*
+                 * TODO sort tickets before giving to ArrayAdapter
+                 */
+
                 //Ces lignes servent a la mise en place d une liste deroulante.
-                adapter = new ArrayAdapter(TicketListActivity.this, android.R.layout.simple_list_item_1, tickets);
+                adapter = new ArrayAdapter(TicketListActivity.this, android.R.layout.simple_list_item_1, ticketEntities);
                 listView.setAdapter(adapter);
             }
         });
 
 
 
+        /*
         CategoryListViewModel.Factory factory2 = new CategoryListViewModel.Factory(getApplication());
         ViewModelProvider provider2 = new ViewModelProvider(this, factory2);
         categoryListViewModel = provider2.get(CategoryListViewModel.class);
@@ -79,7 +84,7 @@ public class TicketListActivity extends BaseActivity {
                 categories = categoryEntities;
             }
         });
-
+        */
 
 
         //Action lorsque l on click sur un objet de la liste.

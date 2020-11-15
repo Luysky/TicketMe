@@ -270,4 +270,27 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
+    /**
+     *
+     * @param dir Sort direction (ASC | DESC)
+     */
+    public void setTicketOrder(String dir) {
+        if (! dir.equals("ASC") && ! dir.equals("ASC")) {
+            return;
+        }
+
+        SharedPreferences.Editor editor = getSharedPreferences(Constants.PREF_FILE, 0).edit();
+
+        editor.putString(Constants.TICKET_ORDER, dir);
+        editor.apply();
+    }
+
+    /**
+     *
+     */
+    public String getTicketOrder() {
+
+        SharedPreferences settings = getSharedPreferences(Constants.PREF_FILE, 0);
+        return settings.getString(Constants.TICKET_ORDER, "ASC");
+    }
 }

@@ -41,7 +41,7 @@
         android:layout_marginRight="32dp"
         android:autofillHints=""
         android:ems="10"
-        android:hint="@string/sujet"
+        android:hint="@string/ticketEdit_subject"
         android:textSize="15sp"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"

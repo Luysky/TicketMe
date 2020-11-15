@@ -23,7 +23,6 @@ public class MainActivity extends BaseActivity {
          * Check if user is logged in or not.
          * If logged in redirect to ticket list else to login
          */
-        Intent intent;
         long userId = getLoggedInUserId();
 
         if (userId == 0) {
