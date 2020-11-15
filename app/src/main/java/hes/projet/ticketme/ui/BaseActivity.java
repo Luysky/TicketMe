@@ -107,6 +107,11 @@ public class BaseActivity extends AppCompatActivity {
             return;
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.navigation_view).getParent();
+
+        if (! isAdministrator()) {
+            navigationView.getMenu().findItem(R.id.menu_administration).setVisible(false);
+        }
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
