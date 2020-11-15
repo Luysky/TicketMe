@@ -29,6 +29,8 @@
     <string name="toast_createUserError">"Problème lors de la création de l'utilisateur. L'utilisateur n'a pas été crée</string>
     <string name="toast_passwordInvalid">"Le mot de passe est invalide"</string>
     <string name="toast_updateUserError">"Problème lors de la modification de l'utilisateur. Les modification n'ont pas été enregistrées</string>
+    <string name="toast_deleteUserError">"Problème lors de la suppression de l'utilisateur. La suppresssion n'a pas été effectuée"</string>
+
 
     <!-- Alert messages -->
     <string name="alert_titleWarning">"Attention!"</string>
@@ -37,6 +39,7 @@
     <string name="alert_ticketClosingStatus">"Voulez-vous fermer ce ticket?"</string>
     <string name="alert_ticketDelete">"Voulez-vous supprimer ce ticket?"</string>
     <string name="alert_userChangesNotSaved">"Les modifications ne seront pas enregistrées. Voulez-vous quitter la gestion utilisateur?"</string>
+    <string name="alert_userDelete">"Etes-vous sûr de vouloir supprimer l'utilisateur?"</string>
 
     <!-- Layout object names -->
     <string name="ticketme">"TicketMe"</string>

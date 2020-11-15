@@ -1,10 +1,14 @@
 package hes.projet.ticketme.ui;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,7 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hes.projet.ticketme.R;
+import hes.projet.ticketme.data.async.ticket.DeleteTicket;
+import hes.projet.ticketme.data.async.user.DeleteUser;
 import hes.projet.ticketme.data.entity.UserEntity;
+import hes.projet.ticketme.util.OnAsyncEventListener;
 import hes.projet.ticketme.viewmodel.UserListViewModel;
 
 public class UserListActivity extends BaseActivity {
@@ -66,6 +73,45 @@ public class UserListActivity extends BaseActivity {
             }
         });
 
-    }
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
 
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(UserListActivity.this);
+
+                builder.setCancelable(true);
+                builder.setTitle(R.string.alert_titleWarning);
+                builder.setMessage(R.string.alert_userDelete);
+
+                builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        UserEntity userToDelete = users.get(position);
+                        new DeleteUser(getApplication(), new OnAsyncEventListener() {
+                            @Override
+                            public void onSuccess() {
+                                finish();
+                            }
+
+                            @Override
+                            public void onFailure(Exception e) {
+                                displayMessage(getString(R.string.toast_deleteUserError),1);
+                            }
+                        }).execute(userToDelete);
+                    }
+                });
+                builder.show();
+                return true;
+            }
+        });
+    }
 }

@@ -211,11 +211,6 @@ public class TicketEditActivity extends BaseActivity {
         /*
          * There are changed values, alert user about loosing changes
          */
-
-        /**
-         * TODO Use strings from xml file
-         */
-
         Runnable run = new Runnable() {
             @Override
             public void run() {
