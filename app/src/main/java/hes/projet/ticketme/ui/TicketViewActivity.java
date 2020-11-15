@@ -6,6 +6,7 @@ package hes.projet.ticketme.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -100,7 +101,7 @@ public class TicketViewActivity extends BaseActivity {
         switch (item.getItemId()){
 
             case R.id.action_close_ticket:
-                clickTicketClose();
+                displayAlert(getString(R.string.alert_titleInformation),getString(R.string.alert_ticketClosingStatus),this::clickTicketClose);
                 break;
 
             case R.id.action_edit_ticket:
@@ -108,7 +109,7 @@ public class TicketViewActivity extends BaseActivity {
                 break;
 
             case R.id.action_delete_ticket:
-                clickTicketDelete();
+                displayAlert(getString(R.string.alert_titleInformation),getString(R.string.alert_ticketDelete),this::clickTicketDelete);
                 break;
 
             default:
@@ -148,6 +149,7 @@ public class TicketViewActivity extends BaseActivity {
                 //
                 TextView subject = findViewById(R.id.subject);
                 TextView message = findViewById(R.id.message);
+                message.setMovementMethod(new ScrollingMovementMethod());
 
                 //
                 subject.setText(ticket.getSubject());
@@ -205,18 +207,17 @@ public class TicketViewActivity extends BaseActivity {
      */
     public void clickTicketDelete() {
 
+        Log.i(TAG, "clicked on  delete ticket");
+
         new DeleteTicket(getApplication(), new OnAsyncEventListener() {
             @Override
             public void onSuccess() {
-
-                finish();
+                        finish();
             }
 
             @Override
             public void onFailure(Exception e) {
-                /**
-                 * TODO alert in case of an error
-                 */
+                displayMessage(getString(R.string.toast_deleteTicketError),1);
             }
         }).execute(ticket);
     }
@@ -238,9 +239,7 @@ public class TicketViewActivity extends BaseActivity {
 
             @Override
             public void onFailure(Exception e) {
-                /**
-                 * TODO alert in case of an error
-                 */
+                displayMessage(getString(R.string.toast_closingTicketError),1);
             }
         }).execute(ticket);
     }

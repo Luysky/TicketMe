@@ -2,9 +2,11 @@ package hes.projet.ticketme.ui;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -15,12 +17,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+
+
 
 import hes.projet.ticketme.R;
 import hes.projet.ticketme.util.Constants;
@@ -170,7 +175,7 @@ public class BaseActivity extends AppCompatActivity {
         switch (item.getItemId()){
 
             case R.id.action_settings:
-                displayMessage("Settings option selected");
+                displayMessage(getString(R.string.toast_settings_selected),0);
                 return true;
 
             case R.id.action_info:
@@ -188,17 +193,6 @@ public class BaseActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
 
         }
-    }
-
-
-    /**
-     * Show a toast message
-     *
-     * TODO Make it public and use it from all activities using toast messages
-     * @param message Message to display in the toast
-     */
-    private void displayMessage(String message){
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -232,4 +226,43 @@ public class BaseActivity extends AppCompatActivity {
         finish();
         startActivity(navIntent);
     }
+
+    public void displayAlert(String titre, String message, Runnable run){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setCancelable(true);
+        builder.setTitle(titre);
+        builder.setMessage(message);
+
+        builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                new Handler().post(run);
+            }
+        });
+
+        builder.show();
+
+    }
+
+    public void displayMessage(String message,int size){
+
+        if(size==0) {
+            int toast = Toast.LENGTH_SHORT;
+            Toast.makeText(this, message, toast).show();
+        }
+        else {
+            Toast.makeText(this,message,Toast.LENGTH_LONG).show();
+        }
+
+    }
+
 }

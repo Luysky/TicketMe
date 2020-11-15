@@ -137,7 +137,7 @@ public class LoginActivity extends BaseActivity {
 
 
     public void clickForgotPassword(View view) {
-        Toast.makeText(LoginActivity.this,"Veuillez envoyer un mail à admin@ticketme.ch",Toast.LENGTH_LONG).show();
+        displayMessage(getString(R.string.toast_emailToAdmin),1);
     }
 
 

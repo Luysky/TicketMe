@@ -7,6 +7,42 @@
         <item>Help</item>
     </string-array>
 
+    <!-- View messages -->
+    <string name="error_invalid_password">Le mot de passe est trop court!(&lt;3 characters)</string>
+    <string name="error_field_required">Champs obligatoire</string>
+    <string name="error_invalid_email">Email non valide</string>
+    <string name="error_incorrect_password">Mot de passe non valide</string>
+
+    <!-- Toast messages -->
+    <string name="toast_settings_selected">Paramètre sélectionné</string>
+    <string name="toast_emailToAdmin">"Veuillez envoyer un mail à admin@ticketme.ch"</string>
+    <string name="toast_emailCorrect">"Adresse email valide"</string>
+    <string name="toast_emailIncorrect">"Adresse email invalide"</string>
+    <string name="toast_emailTooShort">"Mot de passe trop court"</string>
+    <string name="toast_emailNotConform">"Un caractère spécial minimum obligatoire"</string>
+    <string name="toast_subjectEmpty">"Veuillez remplir le sujet!"</string>
+    <string name="toast_messageEmpty">"Veuillez remplir le message!"</string>
+    <string name="toast_createTicketError">"Erreur lors de la création. Le ticket n'a pas été créé."</string>
+    <string name="toast_updateTicketError">"Problème lors de la modification. Le ticket n'as pas été modifié"</string>
+    <string name="toast_deleteTicketError">"Problème lors de la suppression. Le ticket n'as pas été supprimé</string>
+    <string name="toast_closingTicketError">"Problème lors de la fermeture. Le ticket n'as pas été fermé</string>
+    <string name="toast_createUserError">"Problème lors de la création de l'utilisateur. L'utilisateur n'a pas été crée</string>
+    <string name="toast_passwordInvalid">"Le mot de passe est invalide"</string>
+    <string name="toast_updateUserError">"Problème lors de la modification de l'utilisateur. Les modification n'ont pas été enregistrées</string>
+
+    <!-- Alert messages -->
+    <string name="alert_titleWarning">"Attention!"</string>
+    <string name="alert_titleInformation">"Information"</string>
+    <string name="alert_ticketChangesNotSaved">"Les modifications ne seront pas enregistrées. Voulez-vous quitter la création de ticket?"</string>
+    <string name="alert_ticketClosingStatus">"Voulez-vous fermer ce ticket?"</string>
+    <string name="alert_ticketDelete">"Voulez-vous supprimer ce ticket?"</string>
+    <string name="alert_userChangesNotSaved">"Les modifications ne seront pas enregistrées. Voulez-vous quitter la gestion utilisateur?"</string>
+
+
+
+
+
+
     <string name="app_name">TicketMe</string>
     <string name="ecran_d_accueil">Ecran d\'accueil</string>
     <string name="page_user_admin">Page User/Admin</string>
@@ -21,7 +57,7 @@
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
+
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_user_admin">ScrollingActivity</string>
 
@@ -66,7 +102,7 @@
     <string name="valider">Valider</string>
     <string name="s_enregister">S\'enregister</string>
     <string name="ticketme">TicketMe</string>
-    <string name="mot_de_passse_oubli">Mot de passse oublié</string>
+    <string name="mot_de_passse_oubli">Mot de passe oublié</string>
     <string name="vous_n_avez_pas_de_compte">Vous n\'avez pas de compte?</string>
     <string name="se_connecter">Se connecter</string>
     <string name="cette_application_a_t_cr_e_dans_le_cadre_du_cours_644_1_mobile_and_cloud">Cette application a été crée dans le cadre du cours 644-1 Mobile and Cloud</string>
@@ -75,17 +111,18 @@
     <string name="liste_des_d_veloppeurs_et_administrateurs">Liste des développeurs et administrateurs:</string>
     <string name="todo">TODO</string>
     <string name="createticket">createTicket</string>
-    <string name="error_invalid_password">Le mot de passe est trop court!(&lt;3 characters)</string>
-    <string name="error_field_required">Champs obligatoire</string>
-    <string name="error_invalid_email">Email non valide</string>
-    <string name="error_incorrect_password">Mot de passe non valide</string>
 
+
+
+
+    <string name="invalid_password">Password must be >5 characters</string>
 
     <string name="add_to_group">Add to Group</string>
     <string name="nom_de_l_utilisateur">Nom de l\'utilisateur</string>
     <string name="mot_de_passe">Mot de passe</string>
     <string name="administrateur">Administrateur</string>
     <string name="saveUser">saveUser</string>
+    <string name="save">Save</string>
 
 
 </resources>

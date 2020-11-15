@@ -1,17 +1,18 @@
 package hes.projet.ticketme.ui;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import hes.projet.ticketme.R;
 import hes.projet.ticketme.data.async.user.UpdateUser;
@@ -25,7 +26,12 @@ public class UserEditActivity extends BaseActivity {
     private EditText editTextPassword;
     private CheckBox checkBoxAdmin;
     private UserEntity user;
+    private String password;
+    private boolean admin;
+    private String checkPassword;
+    private String checkAdmin;
 
+    private static final String TAG = "UserEditActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +65,13 @@ public class UserEditActivity extends BaseActivity {
                 username.setText(user.getUsername());
                 editTextPassword.setText(user.getPassword());
                 checkBoxAdmin.setChecked(user.getAdmin());
+
+                checkPassword = editTextPassword.getText().toString();
+                Log.i(TAG, "CheckPassword: " + checkPassword.toString());
+
+                checkAdmin = String.valueOf(checkBoxAdmin.isChecked());
+                Log.i(TAG, "CheckAdmin: " + checkAdmin.toString());
+
             }
             else {
                 Log.i(TAG, "User is null");
@@ -66,15 +79,34 @@ public class UserEditActivity extends BaseActivity {
         });
     }
 
-    public void clickSaveUser(View viev){
+    /**
+     * Detect click on custom activity menu items
+     *
+     * @param item Clicked item in menu
+     */
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        String password = editTextPassword.getText().toString();
-        boolean admin = checkBoxAdmin.isChecked();
+        if (item.getItemId() == R.id.action_save_user) {
+            clickSaveUser();
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+
+        return true;
+    }
+
+
+
+    public void clickSaveUser(){
+
+        password = editTextPassword.getText().toString();
+        admin = checkBoxAdmin.isChecked();
 
         user.setAdmin(admin);
 
         if(password.equals("")){
-            Toast.makeText(UserEditActivity.this,"Mot de passe non valide",Toast.LENGTH_SHORT).show();
+            displayMessage(getString(R.string.toast_passwordInvalid),0);
             return;
         }
         user.setPassword(password);
@@ -89,36 +121,67 @@ public class UserEditActivity extends BaseActivity {
 
             @Override
             public void onFailure(Exception e) {
-
+                displayMessage(getString(R.string.toast_updateUserError),1);
             }
         }).execute(user);
+    }
+
+    /**
+     * Add activity specific menu to actionBar
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.user_edit_menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
     }
 
 
     @Override
     public void onReturn(View view) {
 
-        //Creation d un message d alerte en cas d utilisation du bouton retour
-        AlertDialog.Builder builder = new AlertDialog.Builder(UserEditActivity.this);
 
-        builder.setCancelable(true);
-        builder.setTitle("Attention!");
-        builder.setMessage("Les modifications ne seront pas enregistrées. Voulez-vous quitter la gestion utilisateur?");
+        /*
+         * Check if form values have changed
+         */
 
-        builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+
+        boolean modifPassword = false;
+        boolean modifCheck = false;
+
+        if(!checkPassword.equals(editTextPassword.getText().toString())){
+            modifPassword = true;
+        }
+
+        if(!checkAdmin.equals(String.valueOf(checkBoxAdmin.isChecked()))){
+            modifCheck = true;
+        }
+
+
+        /*
+         * If no changes detected, let user go back
+         */
+
+        if (((modifCheck || modifPassword)==false)) {
+            finish();
+            return;
+        }
+
+
+        /*
+         * There are changed values, alert user about loosing changes
+         */
+
+        Runnable run = new Runnable() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void run() {
                 finish();
             }
-        });
-        builder.show();
+        };
+
+        displayAlert(getString(R.string.alert_titleWarning),getString(R.string.alert_userChangesNotSaved),run);
 
     }
 }

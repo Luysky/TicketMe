@@ -4,8 +4,6 @@
 
 package hes.projet.ticketme.ui;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.os.Bundle;
@@ -16,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
@@ -218,27 +215,15 @@ public class TicketEditActivity extends BaseActivity {
         /**
          * TODO Use strings from xml file
          */
-        AlertDialog.Builder builder = new AlertDialog.Builder(TicketEditActivity.this);
 
-        builder.setCancelable(true);
-        builder.setTitle("Attention!");
-        builder.setMessage("Les modifications ne seront pas enregistrées. Voulez-vous quitter la création de ticket?");
-
-        builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+        Runnable run = new Runnable() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void run() {
                 finish();
             }
-        });
+        };
 
-        builder.show();
+        displayAlert(getString(R.string.alert_titleWarning),getString(R.string.alert_ticketChangesNotSaved),run);
     }
 
 
@@ -262,12 +247,6 @@ public class TicketEditActivity extends BaseActivity {
         }
     }
 
-
-    /**
-     * Triggered when user clicks on save button
-     *
-     * TODO Use strings from xml file
-     */
     public void clickSaveTicket() {
 
         /*
@@ -283,14 +262,14 @@ public class TicketEditActivity extends BaseActivity {
 
         //
         if(subject.equals("")){
-            Toast.makeText(TicketEditActivity.this,"Veuillez remplir le sujet!", Toast.LENGTH_SHORT).show();
+           displayMessage(getString(R.string.toast_subjectEmpty),0);
             return;
         }
         ticket.setSubject(subject);
 
         //
         if(message.equals("")){
-            Toast.makeText(TicketEditActivity.this,"Veuillez remplir le message!", Toast.LENGTH_SHORT).show();
+            displayMessage(getString(R.string.toast_messageEmpty),0);
             return;
         }
         ticket.setMessage(message);
@@ -315,9 +294,7 @@ public class TicketEditActivity extends BaseActivity {
 
                 @Override
                 public void onFailure(Exception e) {
-                    /**
-                     * TODO Display a message for unexpected error
-                     */
+                    displayMessage(getString(R.string.toast_createTicketError),1);
                 }
             }).execute(ticket);
         }
@@ -332,9 +309,7 @@ public class TicketEditActivity extends BaseActivity {
 
                 @Override
                 public void onFailure(Exception e) {
-                    /**
-                     * TODO Display a message for unexpected error
-                     */
+                    displayMessage(getString(R.string.toast_updateTicketError),1);
                 }
             }).execute(ticket);
         }

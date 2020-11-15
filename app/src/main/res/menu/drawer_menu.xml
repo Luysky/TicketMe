@@ -6,13 +6,13 @@
         <item
             android:id="@+id/menu_ticket_list_open"
             android:title="Tickets ouverts"
-            android:icon="@drawable/ic_sort">
+            android:icon="@drawable/ic_ticket_ouvert">
         </item>
 
         <item
             android:id="@+id/menu_ticket_list_closed"
             android:title="Tickets fermés"
-            android:icon="@drawable/ic_sort">
+            android:icon="@drawable/ic_ticket_ferme">
         </item>
 
     </group>
@@ -22,7 +22,7 @@
             <item
                 android:title="Gestion des utilisateurs"
                 android:id="@+id/menu_user_list"
-                android:icon="@drawable/ic_add">
+                android:icon="@drawable/ic_user">
             </item>
         </menu>
     </item>
