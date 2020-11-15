@@ -226,7 +226,7 @@ public class TicketEditActivity extends BaseActivity {
             }
         };
 
-        alertDialog("Attention!","Les modifications ne seront pas enregistrées. Voulez-vous quitter la création de ticket?",TicketEditActivity.this,run);
+        alertDialog("Attention!","Les modifications ne seront pas enregistrées. Voulez-vous quitter la création de ticket?",run);
     }
 
 
@@ -271,14 +271,14 @@ public class TicketEditActivity extends BaseActivity {
 
         //
         if(subject.equals("")){
-            toastGen(TicketEditActivity.this,"Veuillez remplir le sujet!",0);
+           displayMessage("Veuillez remplir le sujet!",0);
             return;
         }
         ticket.setSubject(subject);
 
         //
         if(message.equals("")){
-            toastGen(TicketEditActivity.this,"Veuillez remplir le message!",0);
+            displayMessage("Veuillez remplir le message!",0);
             return;
         }
         ticket.setMessage(message);
@@ -320,7 +320,7 @@ public class TicketEditActivity extends BaseActivity {
 
                 @Override
                 public void onFailure(Exception e) {
-                    toastGen(TicketEditActivity.this,"Problème lors de la modification",1);
+                    displayMessage("Problème lors de la modification",1);
                 }
             }).execute(ticket);
         }

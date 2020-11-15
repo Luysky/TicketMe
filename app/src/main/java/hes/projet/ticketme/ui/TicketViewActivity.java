@@ -104,7 +104,7 @@ public class TicketViewActivity extends BaseActivity {
         switch (item.getItemId()){
 
             case R.id.action_close_ticket:
-                alertDialog("Information","Voulez-vous fermer ce ticket?",TicketViewActivity.this,this::clickTicketClose);
+                alertDialog("Information","Voulez-vous fermer ce ticket?",this::clickTicketClose);
                 break;
 
             case R.id.action_edit_ticket:
@@ -112,7 +112,7 @@ public class TicketViewActivity extends BaseActivity {
                 break;
 
             case R.id.action_delete_ticket:
-                alertDialog("Information","Voulez-vous supprimer ce ticket?",TicketViewActivity.this,this::clickTicketDelete);
+                alertDialog("Information","Voulez-vous supprimer ce ticket?",this::clickTicketDelete);
                 break;
 
             default:
@@ -244,7 +244,7 @@ public class TicketViewActivity extends BaseActivity {
 
             @Override
             public void onFailure(Exception e) {
-                toastGen(TicketViewActivity.this,"Problème lors de la modification",1);
+                displayMessage("Problème lors de la modification",1);
             }
         }).execute(ticket);
     }

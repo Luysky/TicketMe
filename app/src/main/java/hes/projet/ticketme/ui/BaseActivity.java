@@ -175,7 +175,7 @@ public class BaseActivity extends AppCompatActivity {
         switch (item.getItemId()){
 
             case R.id.action_settings:
-                displayMessage("Settings option selected");
+                displayMessage("Settings option selected",0);
                 return true;
 
             case R.id.action_info:
@@ -193,17 +193,6 @@ public class BaseActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
 
         }
-    }
-
-
-    /**
-     * Show a toast message
-     *
-     * TODO Make it public and use it from all activities using toast messages
-     * @param message Message to display in the toast
-     */
-    private void displayMessage(String message){
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -238,9 +227,9 @@ public class BaseActivity extends AppCompatActivity {
         startActivity(navIntent);
     }
 
-    public void alertDialog(String titre, String message, Context cont, Runnable run){
+    public void alertDialog(String titre, String message, Runnable run){
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(cont);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setCancelable(true);
         builder.setTitle(titre);
@@ -264,14 +253,14 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
-    public void toastGen(Context cont,String message,int size){
+    public void displayMessage(String message,int size){
 
         if(size==0) {
             int toast = Toast.LENGTH_SHORT;
-            Toast.makeText(cont, message, toast).show();
+            Toast.makeText(this, message, toast).show();
         }
         else {
-            Toast.makeText(cont,message,Toast.LENGTH_LONG).show();
+            Toast.makeText(this,message,Toast.LENGTH_LONG).show();
         }
 
     }

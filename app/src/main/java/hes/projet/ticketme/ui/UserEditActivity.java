@@ -110,7 +110,7 @@ public class UserEditActivity extends BaseActivity {
         user.setAdmin(admin);
 
         if(password.equals("")){
-            toastGen(UserEditActivity.this,"Mot de passe non valide",0);
+            displayMessage("Mot de passe non valide",0);
             return;
         }
         user.setPassword(password);
@@ -185,7 +185,7 @@ public class UserEditActivity extends BaseActivity {
             }
         };
 
-        alertDialog("Attention!","Les modifications ne seront pas enregistrées. Voulez-vous quitter la gestion utilisateur?",UserEditActivity.this,run);
+        alertDialog("Attention!","Les modifications ne seront pas enregistrées. Voulez-vous quitter la gestion utilisateur?",run);
 
     }
 }
