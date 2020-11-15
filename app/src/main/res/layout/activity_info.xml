@@ -11,13 +11,13 @@
     </include>
 
     <TextView
-        android:id="@+id/Info"
+        android:id="@+id/info_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="72dp"
         android:text="@string/ticketme"
         android:textSize="28sp"
-        app:layout_constraintBottom_toTopOf="@+id/textInfo"
+        app:layout_constraintBottom_toTopOf="@+id/info_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,23 +25,23 @@
         app:layout_constraintVertical_bias="0.6" />
 
     <TextView
-        android:id="@+id/textInfo"
+        android:id="@+id/info_text"
         android:layout_width="355dp"
         android:layout_height="47dp"
         android:layout_marginBottom="92dp"
-        android:text="@string/cette_application_a_t_cr_e_dans_le_cadre_du_cours_644_1_mobile_and_cloud"
+        android:text="@string/info_aboutInfo"
         android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@id/textInfo2"
+        app:layout_constraintBottom_toTopOf="@id/info_titleAdmin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.714"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textInfo2"
+        android:id="@+id/info_titleAdmin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="48dp"
-        android:text="@string/liste_des_d_veloppeurs_et_administrateurs"
+        android:text="@string/info_aboutAdmin"
         android:textSize="15sp"
         app:layout_constraintBottom_toTopOf="@+id/Admin1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -54,7 +54,7 @@
         android:layout_marginStart="36dp"
         android:layout_marginLeft="36dp"
         android:layout_marginBottom="304dp"
-        android:text="@string/benjamin_keller"
+        android:text="@string/info_admin1"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -66,11 +66,11 @@
         android:layout_marginEnd="46dp"
         android:layout_marginRight="46dp"
         android:layout_marginBottom="304dp"
-        android:text="@string/thomas_luyet"
+        android:text="@string/info_admin2"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInfo2"
+        app:layout_constraintTop_toBottomOf="@+id/info_titleAdmin"
         app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

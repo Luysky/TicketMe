@@ -93,13 +93,13 @@ public class TicketEditActivity extends BaseActivity {
          */
 
         //
-        editTextSubject = findViewById(R.id.editTextSubject);
+        editTextSubject = findViewById(R.id.ticketEdit_editTextSubject);
 
         //
-        editTextMessage = findViewById(R.id.editTextTextMultiLine);
+        editTextMessage = findViewById(R.id.ticketeEdit_editTextTextMultiLine);
 
         //
-        spinnerCategory = findViewById(R.id.spinnerCategory);
+        spinnerCategory = findViewById(R.id.ticketEdit_spinnerCategory);
 
         ListAdapter<CategoryEntity> adapter = new ListAdapter<>(this, android.R.layout.simple_spinner_item, new ArrayList<>());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -35,7 +34,7 @@ public class UserListActivity extends BaseActivity {
         initView(this, R.layout.activity_user_management, "Liste des utilisateurs");
         initDrawer();
 
-        listView = findViewById(R.id.list_viewUser);
+        listView = findViewById(R.id.userManagement_listViewUser);
 
 
         UserListViewModel.Factory factory = new UserListViewModel.Factory(getApplication());

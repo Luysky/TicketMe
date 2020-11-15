@@ -7,7 +7,6 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import hes.projet.ticketme.R;
 import hes.projet.ticketme.data.async.user.CreateUser;
@@ -26,9 +25,9 @@ public class RegisterActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_new);
 
-        email = findViewById(R.id.editTextTextEmailAddress);
-        password = findViewById(R.id.editTextTextPassword2);
-        button = findViewById(R.id.btnValider);
+        email = findViewById(R.id.loginNew_editTextTextEmailAddress);
+        password = findViewById(R.id.loginNew_editTextTextPassword);
+        button = findViewById(R.id.loginNew_btnValider);
 
 
         button.setOnClickListener(new View.OnClickListener() {

@@ -147,8 +147,8 @@ public class TicketViewActivity extends BaseActivity {
                 Log.i(TAG, "loaded ticket " + ticket.toString());
 
                 //
-                TextView subject = findViewById(R.id.subject);
-                TextView message = findViewById(R.id.message);
+                TextView subject = findViewById(R.id.ticketView_subject);
+                TextView message = findViewById(R.id.ticketView_message);
                 message.setMovementMethod(new ScrollingMovementMethod());
 
                 //
@@ -181,7 +181,7 @@ public class TicketViewActivity extends BaseActivity {
 
         catViewModel.getCategory().observe(this, categoryEntity -> {
             if (categoryEntity != null) {
-                TextView category = findViewById(R.id.category);
+                TextView category = findViewById(R.id.ticketView_category);
                 category.setText(categoryEntity.getName());
             } else {
                 Log.i(TAG, "Ticket is null");

@@ -19,7 +19,7 @@
         </include>
 
         <ListView
-            android:id="@+id/list_viewUser"
+            android:id="@+id/userManagement_listViewUser"
             android:layout_width="match_parent"
             android:layout_height="600dp"
             android:layout_marginTop="16dp"
@@ -28,16 +28,6 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/include" />
-
-        <Space
-            android:id="@+id/space"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="28dp"
-            app:layout_constraintBottom_toTopOf="@+id/button7"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

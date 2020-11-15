@@ -11,7 +11,7 @@
     </include>
 
     <Spinner
-        android:id="@+id/spinnerCategory"
+        android:id="@+id/ticketEdit_spinnerCategory"
         android:layout_width="300dp"
         android:layout_height="46dp"
         android:layout_marginStart="32dp"
@@ -21,7 +21,7 @@
         android:layout_marginRight="32dp"
         android:autofillHints=""
         android:ems="10"
-        android:hint="@string/cat_gorie"
+        android:hint="@string/ticketEdit_category"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.459"
@@ -31,7 +31,7 @@
 
 
     <EditText
-        android:id="@+id/editTextSubject"
+        android:id="@+id/ticketEdit_editTextSubject"
         android:layout_width="300dp"
         android:layout_height="45dp"
         android:layout_marginStart="32dp"
@@ -42,14 +42,14 @@
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/sujet"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerCategory" />
+        app:layout_constraintTop_toBottomOf="@+id/ticketEdit_spinnerCategory" />
 
     <EditText
-        android:id="@+id/editTextTextMultiLine"
+        android:id="@+id/ticketeEdit_editTextTextMultiLine"
         android:layout_width="300dp"
         android:layout_height="450dp"
         android:layout_marginStart="32dp"
@@ -60,14 +60,14 @@
         android:layout_marginBottom="32dp"
         android:autofillHints=""
         android:ems="10"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:gravity="start|top"
-        android:hint="@string/votre_message"
+        android:hint="@string/ticketEdit_message"
         android:inputType="textMultiLine"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextSubject"
+        app:layout_constraintTop_toBottomOf="@+id/ticketEdit_editTextSubject"
         app:layout_constraintVertical_bias="0.0" />
 
 

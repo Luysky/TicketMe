@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -34,10 +33,10 @@ public class LoginActivity extends BaseActivity {
         repository = UserRepository.getInstance();
 
         // Set up the login form.
-        emailView = findViewById(R.id.etEmail);
-        passwordView = findViewById(R.id.etPassword);
+        emailView = findViewById(R.id.login_email);
+        passwordView = findViewById(R.id.login_password);
 
-        Button emailSignInButton = findViewById(R.id.btnLogin);
+        Button emailSignInButton = findViewById(R.id.login_btnLogin);
         emailSignInButton.setOnClickListener(view -> attemptLogin());
     }
 

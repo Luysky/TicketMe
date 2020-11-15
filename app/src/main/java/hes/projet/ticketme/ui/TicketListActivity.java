@@ -54,7 +54,7 @@ public class TicketListActivity extends BaseActivity {
         initDrawer();
 
 
-        listView  = findViewById(R.id.list_view);
+        listView  = findViewById(R.id.ticketList_listView);
 
         TicketListViewModel.Factory factory = new TicketListViewModel.Factory(getApplication(), userId, statusFilter, (long) 0);
         ViewModelProvider provider = new ViewModelProvider(this, factory);

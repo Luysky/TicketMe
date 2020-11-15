@@ -40,9 +40,9 @@ public class UserEditActivity extends BaseActivity {
         initView(this, R.layout.activity_user_interface, "Editer un utilisateur");
         initReturn();
 
-        username = findViewById(R.id.editTextTextPersonName);
-        editTextPassword = findViewById(R.id.editTextTextPassword2);
-        checkBoxAdmin = findViewById(R.id.checkBox);
+        username = findViewById(R.id.userInterface_editTextTextPersonName);
+        editTextPassword = findViewById(R.id.userInterface_editTextTextPassword);
+        checkBoxAdmin = findViewById(R.id.userInterface_checkBox);
 
         Intent intent = getIntent();
         Long userId = intent.getLongExtra("userId", 0);
