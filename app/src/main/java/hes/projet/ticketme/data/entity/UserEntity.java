@@ -59,6 +59,7 @@ public class UserEntity {
     }
 
     public String toString() {
-        return username;
+
+        return username + (getAdmin() ? " (admin)" : "");
     }
 }

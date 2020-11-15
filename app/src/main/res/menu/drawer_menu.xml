@@ -17,7 +17,7 @@
 
     </group>
 
-    <item android:title="Administration">
+    <item android:title="Administration" android:id="@+id/menu_administration">
         <menu>
             <item
                 android:title="Gestion des utilisateurs"
