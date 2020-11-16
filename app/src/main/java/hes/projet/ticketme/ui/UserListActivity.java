@@ -47,10 +47,11 @@ public class UserListActivity extends BaseActivity {
         UserListViewModel.Factory factory = new UserListViewModel.Factory(getApplication());
         ViewModelProvider provider = new ViewModelProvider(this, factory);
         viewModel = provider.get(UserListViewModel.class);
-        viewModel.getUsers().observe(this, ticketEntities -> {
-            if (ticketEntities != null) {
-                users = ticketEntities;
+        viewModel.getUsers().observe(this, userEntities -> {
+            if (userEntities != null) {
+                users = userEntities;
 
+                listString = new ArrayList<>();
                 //On recupere l idTicket et le subjet pour l affichage dans la liste de message.
                 for(int i = 0; i < users.size(); i++){
                     listString.add(users.get(i).toString());

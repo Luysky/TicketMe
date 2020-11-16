@@ -199,6 +199,7 @@ public class TicketViewActivity extends BaseActivity {
         Intent intent = new Intent(this, TicketEditActivity.class);
         intent.putExtra("ticketId", ticket.getId());
         startActivity(intent);
+        finish();
     }
 
 
