@@ -100,7 +100,9 @@ public class UserListActivity extends BaseActivity {
                         new DeleteUser(getApplication(), new OnAsyncEventListener() {
                             @Override
                             public void onSuccess() {
-                                finish();
+                                /*
+                                 * Don't do anything, user list will be updated thanks to the view model.
+                                 */
                             }
 
                             @Override

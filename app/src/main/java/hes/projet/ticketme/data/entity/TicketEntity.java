@@ -9,12 +9,21 @@ import androidx.room.PrimaryKey;
 
 
 @Entity(tableName = "tickets",
-        foreignKeys = @ForeignKey(
+    foreignKeys = {
+        @ForeignKey(
                 entity = CategoryEntity.class,
                 parentColumns = "id",
                 childColumns = "category",
                 onDelete = ForeignKey.CASCADE
-        ))
+        ),
+        @ForeignKey(
+            entity = UserEntity.class,
+            parentColumns = "id",
+            childColumns = "user",
+            onDelete = ForeignKey.CASCADE
+        )
+    }
+)
 public class TicketEntity {
 
     @PrimaryKey(autoGenerate = true)
