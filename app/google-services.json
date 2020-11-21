@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "640520562211",
+    "firebase_url": "https://ticketme-aa369.firebaseio.com",
+    "project_id": "ticketme-aa369",
+    "storage_bucket": "ticketme-aa369.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:640520562211:android:61060f3fdf8ca3ee1c3396",
+        "android_client_info": {
+          "package_name": "hes.projet.ticketme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "640520562211-2q7mmol1iessj6bqvhr7n6fepfe5g74m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCYQqmzYQ1EOHxpl2RO6Jc1ZcSyhVXMX0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "640520562211-2q7mmol1iessj6bqvhr7n6fepfe5g74m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
