@@ -17,10 +17,11 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import hes.projet.ticketme.BaseApp;
+import hes.projet.ticketme.MainActivity;
 import hes.projet.ticketme.R;
-import hes.projet.ticketme.data.async.ticket.DeleteTicket;
-import hes.projet.ticketme.data.async.user.DeleteUser;
 import hes.projet.ticketme.data.entity.UserEntity;
+import hes.projet.ticketme.data.repository.UserRepository;
 import hes.projet.ticketme.util.OnAsyncEventListener;
 import hes.projet.ticketme.viewmodel.UserListViewModel;
 
@@ -32,11 +33,15 @@ public class UserListActivity extends BaseActivity {
     private ArrayAdapter adapter;
     private ListView listView;
 
+    private UserRepository repository;
+
     private UserListViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        repository = ((BaseApp) getApplication()).getUserRepository();
 
         initView(this, R.layout.activity_user_management, "Liste des utilisateurs");
         initDrawer();
@@ -44,7 +49,8 @@ public class UserListActivity extends BaseActivity {
         listView = findViewById(R.id.userManagement_listViewUser);
 
 
-        UserListViewModel.Factory factory = new UserListViewModel.Factory(getApplication());
+
+        UserListViewModel.Factory factory = new UserListViewModel.Factory(getApplication(),getLoggedInUserId());
         ViewModelProvider provider = new ViewModelProvider(this, factory);
         viewModel = provider.get(UserListViewModel.class);
         viewModel.getUsers().observe(this, userEntities -> {
@@ -97,7 +103,8 @@ public class UserListActivity extends BaseActivity {
                     public void onClick(DialogInterface dialog, int which) {
 
                         UserEntity userToDelete = users.get(position);
-                        new DeleteUser(getApplication(), new OnAsyncEventListener() {
+
+                        viewModel.deleteUser(userToDelete, new OnAsyncEventListener() {
                             @Override
                             public void onSuccess() {
                                 /*
@@ -109,7 +116,7 @@ public class UserListActivity extends BaseActivity {
                             public void onFailure(Exception e) {
                                 displayMessage(getString(R.string.toast_deleteUserError),1);
                             }
-                        }).execute(userToDelete);
+                        });
                     }
                 });
                 builder.show();

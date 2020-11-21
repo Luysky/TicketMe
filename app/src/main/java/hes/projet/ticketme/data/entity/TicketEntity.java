@@ -1,66 +1,55 @@
 package hes.projet.ticketme.data.entity;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.ForeignKey;
-import androidx.room.Ignore;
+
 import androidx.annotation.NonNull;
-import androidx.room.PrimaryKey;
+
+import com.google.firebase.database.Exclude;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
-@Entity(tableName = "tickets",
-    foreignKeys = {
-        @ForeignKey(
-                entity = CategoryEntity.class,
-                parentColumns = "id",
-                childColumns = "category",
-                onDelete = ForeignKey.CASCADE
-        ),
-        @ForeignKey(
-            entity = UserEntity.class,
-            parentColumns = "id",
-            childColumns = "user",
-            onDelete = ForeignKey.CASCADE
-        )
-    }
-)
 public class TicketEntity {
 
-    @PrimaryKey(autoGenerate = true)
-    private Long id;
+    private String id;
 
-    @ColumnInfo(name = "category")
-    private Long categoryId;
+    private String userId;
+
+    private String category;
 
     private String subject;
 
     private String message;
-
-    @ColumnInfo(name = "user")
-    private Long userId;
-
     private int status;
 
-    @Ignore
     public TicketEntity() {
     }
 
-    public TicketEntity(@NonNull Long userId,
-                        @NonNull Long categoryId,
+    public TicketEntity(@NonNull String category,
                         @NonNull String subject,
                         @NonNull String message) {
 
-        this.userId = userId;
-        this.categoryId = categoryId;
+        this.category = category;
         this.subject = subject;
         this.message = message;
     }
-    public Long getId() {
+
+    @Exclude
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
+    }
+
+    @Exclude
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getSubject() {
@@ -79,26 +68,27 @@ public class TicketEntity {
         this.message = message;
     }
 
-    public Long getCategoryId() {
-        return categoryId;
+    public String getCategory() {
+        return category;
     }
 
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String toString() {
         return subject;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Map<String, Object> toMap(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("category",category);
+        result.put("subject",subject);
+        result.put("message",message);
+        return result;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
+    @Exclude
     public int getStatus() {
         return status;
     }

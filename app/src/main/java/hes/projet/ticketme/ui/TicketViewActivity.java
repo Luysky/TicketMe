@@ -57,10 +57,12 @@ public class TicketViewActivity extends BaseActivity {
 
         //
         Intent intent = getIntent();
-        Long ticketId = intent.getLongExtra("ticketId", 0);
+        String ticketId = intent.getStringExtra("ticketId");
+        String ticketUid = intent.getStringExtra("ticketUid");
+        int ticketStatus = intent.getIntExtra("ticketStatus", 0);
 
         //
-        showTicket(ticketId);
+        showTicket(ticketId, ticketUid, ticketStatus);
     }
 
 
@@ -125,13 +127,13 @@ public class TicketViewActivity extends BaseActivity {
      *
      * @param ticketId Ticket identifier
      */
-    private void showTicket(Long ticketId) {
+    private void showTicket(String ticketId, String ticketUid, int ticketStatus) {
 
         /*
          * Get the viewModel for displayed ticket
          */
 
-        TicketViewModel.Factory factory = new TicketViewModel.Factory(getApplication(), ticketId);
+        TicketViewModel.Factory factory = new TicketViewModel.Factory(getApplication(), ticketId, ticketUid, ticketStatus);
         ViewModelProvider provider = new ViewModelProvider(this, factory);
         TicketViewModel viewModel = provider.get(TicketViewModel.class);
 
@@ -158,32 +160,10 @@ public class TicketViewActivity extends BaseActivity {
                 if (ticket.getStatus() > 0 && menu != null) {
                     menu.findItem(R.id.action_close_ticket).setVisible(false);
                 }
-
-                showCategory(ticket.getCategoryId());
+                TextView category = findViewById(R.id.ticketView_category);
+                category.setText(ticket.getCategory());
             }
             else {
-                Log.i(TAG, "Ticket is null");
-            }
-        });
-    }
-
-
-    /**
-     * Load and show category in activity
-     *
-     * @param categoryId Category identifier
-     */
-    private void showCategory(Long categoryId) {
-        CategoryViewModel.Factory factory = new CategoryViewModel.Factory(getApplication(), categoryId);
-        ViewModelProvider provider = new ViewModelProvider(this, factory);
-
-        CategoryViewModel catViewModel = provider.get(CategoryViewModel.class);
-
-        catViewModel.getCategory().observe(this, categoryEntity -> {
-            if (categoryEntity != null) {
-                TextView category = findViewById(R.id.ticketView_category);
-                category.setText(categoryEntity.getName());
-            } else {
                 Log.i(TAG, "Ticket is null");
             }
         });

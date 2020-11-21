@@ -5,11 +5,17 @@ import android.icu.util.ULocale;
 
 import androidx.lifecycle.LiveData;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.lang.ref.Reference;
 import java.util.List;
 
 import hes.projet.ticketme.data.AppDatabase;
 import hes.projet.ticketme.data.entity.CategoryEntity;
 import hes.projet.ticketme.data.entity.TicketEntity;
+import hes.projet.ticketme.data.firebase.CategoryListLiveData;
+import hes.projet.ticketme.data.firebase.TicketLiveData;
 
 public class CategoryRepository {
 
@@ -37,12 +43,21 @@ public class CategoryRepository {
     }
 
 
-    public LiveData<CategoryEntity> getCategory(final Long id, Context context) {
-        return AppDatabase.getInstance(context).categoryDao().getById(id);
+    public LiveData<CategoryEntity> getCategory(final String id) {
+        return null;
+//        return AppDatabase.getInstance(context).categoryDao().getById(id);
     }
 
-    public LiveData<List<CategoryEntity>> getAllCategories(Context context) {
-        return AppDatabase.getInstance(context).categoryDao().getAll();
+    /**
+     * TODO Vérifier si getAllCategoies nécessite un id? je l'ai supprimé
+     * @param
+     * @return
+     */
+
+    public LiveData<List<CategoryEntity>> getAllCategories() {
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("categories");
+        return new CategoryListLiveData(reference);
     }
 
 }

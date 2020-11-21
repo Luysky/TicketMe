@@ -1,36 +1,36 @@
 package hes.projet.ticketme.data.entity;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.Index;
-import androidx.room.PrimaryKey;
+import com.google.firebase.database.Exclude;
 
-import hes.projet.ticketme.data.dao.UserDao;
+import java.util.HashMap;
+import java.util.Map;
 
-//@Entity(tableName = "users")
-@Entity(tableName = "users", indices = {@Index(value = {"username"}, unique = true)})
 public class UserEntity {
 
-    @PrimaryKey(autoGenerate = true)
-    private Long id;
+    private String id;
 
     private String username;
 
-    private String password;
-
     private boolean admin;
 
-    public UserEntity(String username, String password, boolean admin){
-        this.username = username;
-        this.password = password;
+    public UserEntity(boolean admin){
         this.admin = admin;
     }
 
-    public Long getId() {
+    public boolean getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
+
+    @Exclude
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -42,24 +42,14 @@ public class UserEntity {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public boolean getAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
-    }
-
     public String toString() {
 
-        return username + (getAdmin() ? " (admin)" : "");
+        return (getAdmin() ? " (admin)" : "");
+    }
+
+    public Map<String, Object> toMap(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("admin",admin);
+        return result;
     }
 }

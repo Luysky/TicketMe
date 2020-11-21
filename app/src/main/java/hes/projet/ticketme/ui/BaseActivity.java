@@ -148,9 +148,9 @@ public class BaseActivity extends AppCompatActivity {
         });
     }
 
-    public long getLoggedInUserId() {
+    public String getLoggedInUserId() {
         SharedPreferences settings = getSharedPreferences(Constants.PREF_FILE, 0);
-        return settings.getLong(Constants.PREF_USER_ID, 0);
+        return settings.getString(Constants.PREF_USER_ID, "");
     }
 
     public boolean isAdministrator() {
@@ -158,10 +158,10 @@ public class BaseActivity extends AppCompatActivity {
         return settings.getBoolean(Constants.PREF_USER_ISADMIN, false);
     }
 
-    protected long requireLoggedInUser() {
-        long uid = getLoggedInUserId();
+    protected String requireLoggedInUser() {
+        String uid = getLoggedInUserId();
 
-        if (uid == 0) {
+        if (uid.equals("")) {
             goToLogin();
         }
 

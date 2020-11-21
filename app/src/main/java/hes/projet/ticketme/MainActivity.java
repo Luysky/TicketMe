@@ -23,36 +23,10 @@ public class MainActivity extends BaseActivity {
          * Check if user is logged in or not.
          * If logged in redirect to ticket list else to login
          */
-        long userId = getLoggedInUserId();
+        String userId = getLoggedInUserId();
 
-        if (userId == 0) {
-
-            /*
-             * Check if db is installed or not (it takes too much time to install at login time)
-             */
-
-            SharedPreferences settings = getSharedPreferences(Constants.PREF_FILE, 0);
-            if (!settings.getBoolean(Constants.INSTALLED_DB, false)) {
-
-                // Not installed, therefore access a category to initialize database then redirect to login
-
-                CategoryViewModel.Factory factory = new CategoryViewModel.Factory(getApplication(), (long) 1);
-                ViewModelProvider provider = new ViewModelProvider(this, factory);
-                CategoryViewModel catViewModel = provider.get(CategoryViewModel.class);
-                catViewModel.getCategory().observe(this, categoryEntity -> {
-                    if (categoryEntity != null) {
-                        SharedPreferences.Editor editor = settings.edit();
-                        editor.putBoolean(Constants.INSTALLED_DB, true);
-                        editor.apply();
-
-                        goTo(LoginActivity.class);
-                    } else {
-                        Log.i(TAG, "Ticket is null");
-                    }
-                });
-            } else {
-                goTo(LoginActivity.class);
-            }
+        if (userId.equals("")) {
+            goTo(LoginActivity.class);
         } else {
             goTo(TicketListActivity.class);
         }

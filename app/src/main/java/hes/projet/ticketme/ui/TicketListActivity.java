@@ -100,6 +100,8 @@ public class TicketListActivity extends BaseActivity {
 
                 //
                 Intent intent = new Intent(TicketListActivity.this, TicketViewActivity.class);
+                intent.putExtra("ticketStatus", t.getStatus());
+                intent.putExtra("ticketUid", t.getUserId());
                 intent.putExtra("ticketId", t.getId());
                 startActivity(intent);
             }

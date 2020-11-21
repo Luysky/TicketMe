@@ -20,7 +20,8 @@ public class LoginViewModel extends AndroidViewModel {
     // MediatorLiveData can observe other LiveData objects and react on their emissions.
     private final MediatorLiveData<UserEntity> observableUser;
 
-    public LoginViewModel(@NonNull Application application, final String username, UserRepository userRepository) {
+    public LoginViewModel(@NonNull Application application,
+                          final String username, UserRepository userRepository) {
         super(application);
 
         Context applicationContext = application.getApplicationContext();
@@ -30,7 +31,7 @@ public class LoginViewModel extends AndroidViewModel {
         // set by default null, until we get data from the database.
         observableUser.setValue(null);
 
-        LiveData<UserEntity> user = userRepository.getUserByUsername(username, applicationContext);
+        LiveData<UserEntity> user = userRepository.getUserByUsername(username);
 
         // observe the changes of the entities from the database and forward them
         observableUser.addSource(user, observableUser::setValue);

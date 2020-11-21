@@ -4,14 +4,17 @@ import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.List;
 
-import hes.projet.ticketme.data.AppDatabase;
-import hes.projet.ticketme.data.async.ticket.CreateTicket;
-import hes.projet.ticketme.data.async.ticket.DeleteTicket;
-import hes.projet.ticketme.data.async.ticket.UpdateTicket;
-import hes.projet.ticketme.data.dao.TicketDao;
+
 import hes.projet.ticketme.data.entity.TicketEntity;
+import hes.projet.ticketme.data.entity.UserEntity;
+import hes.projet.ticketme.data.firebase.TicketListAdminLiveData;
+import hes.projet.ticketme.data.firebase.TicketListLiveData;
+import hes.projet.ticketme.data.firebase.TicketLiveData;
 import hes.projet.ticketme.util.OnAsyncEventListener;
 
 public class TicketRepository {
@@ -40,41 +43,94 @@ public class TicketRepository {
     }
 
 
-    public LiveData<TicketEntity> getTicket(final Long id, Context context) {
-        return AppDatabase.getInstance(context).ticketDao().getById(id);
+    public LiveData<TicketEntity> getTicket(final String id) {
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("tickets").child(id);
+
+        return new TicketLiveData(reference);
     }
 
-    public LiveData<List<TicketEntity>> getAllTickets(Context context, Long userId, int status, Long categoryId) {
-        TicketDao ticketDao = AppDatabase.getInstance(context).ticketDao();
 
-        if (userId == 0) {
-            if (categoryId == 0) {
-                return ticketDao.getAllByStatus(status);
-            }
+    /**
+     * TODO remove categoryId
+     * @param userId
+     * @param status
+     * * @return
+     */
+    public LiveData<List<TicketEntity>> getAllTickets(String userId, int status) {
 
-            return ticketDao.getAllInCategoryByStatus(categoryId, status);
+        DatabaseReference reference;
+        String statusString = status == 0 ? "open" : "closed";
+
+        boolean admin = userId == null;
+
+        if (admin) {
+            reference = FirebaseDatabase.getInstance()
+                    .getReference(statusString + "_tickets");
+
+            return new TicketListAdminLiveData(reference, status);
         }
 
-        if (categoryId == 0) {
-            return ticketDao.getAllOfUserByStatus(userId, status);
-        }
+        reference = FirebaseDatabase.getInstance()
+                .getReference(statusString + "_tickets").child(userId);
 
-        return ticketDao.getAllOfUserInCategoryByStatus(userId, categoryId, status);
+        return new TicketListLiveData(reference, status);
+
     }
 
-    public LiveData<List<TicketEntity>> getAllTicketsOfUserByStatus(Context context, long userId, int status) {
-        return AppDatabase.getInstance(context).ticketDao().getAllOfUserByStatus(userId, status);
+
+
+    // Firebase Database paths must not contain '.', '#', '$', '[', or ']'
+    public void insert(final TicketEntity ticket, final OnAsyncEventListener callback) {
+        String id = FirebaseDatabase.getInstance()
+                .getReference("open_tickets").child(ticket.getUserId()).push().getKey();
+
+        FirebaseDatabase.getInstance()
+                .getReference("open_tickets")
+                .child(ticket.getUserId())
+                .child(id)
+                .setValue(ticket, (databaseError, databaseReference) -> {
+                    if (databaseError != null) {
+                        callback.onFailure(databaseError.toException());
+                    } else {
+                        callback.onSuccess();
+                    }
+                });
     }
 
-    public void insert(final TicketEntity ticket, OnAsyncEventListener callback, Context context) {
-        new CreateTicket(context, callback).execute(ticket);
+
+    public void update(final TicketEntity ticket, final OnAsyncEventListener callback) {
+
+        String statusString = ticket.getStatus() == 0 ? "open" : "closed";
+
+        FirebaseDatabase.getInstance()
+                .getReference(statusString + "_tickets")
+                .child(ticket.getUserId())
+                .child(ticket.getId())
+                .updateChildren(ticket.toMap(), (databaseError, databaseReference) -> {
+                    if (databaseError != null) {
+                        callback.onFailure(databaseError.toException());
+                    } else {
+                        callback.onSuccess();
+                    }
+                });
     }
 
-    public void update(final TicketEntity ticket, OnAsyncEventListener callback, Context context) {
-        new UpdateTicket(context, callback).execute(ticket);
+    public void delete(final TicketEntity ticket, OnAsyncEventListener callback) {
+
+        String statusString = ticket.getStatus() == 0 ? "open" : "closed";
+
+        FirebaseDatabase.getInstance()
+                .getReference(statusString + "_tickets")
+                .child(ticket.getUserId())
+                .child(ticket.getId())
+                .removeValue((databaseError, databaseReference) -> {
+                    if (databaseError != null) {
+                        callback.onFailure(databaseError.toException());
+                    } else {
+                        callback.onSuccess();
+                    }
+                });
     }
 
-    public void delete(final TicketEntity ticket, OnAsyncEventListener callback, Context context) {
-        new DeleteTicket(context, callback).execute(ticket);
-    }
 }

@@ -5,11 +5,12 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "categories")
+import java.util.HashMap;
+import java.util.Map;
+
 public class CategoryEntity {
 
-    @PrimaryKey(autoGenerate = true)
-    private Long id;
+    private String id;
 
     private String name;
 
@@ -21,11 +22,11 @@ public class CategoryEntity {
         this.name = name;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -39,5 +40,11 @@ public class CategoryEntity {
 
     public String toString() {
         return name;
+    }
+
+    public Map<String, Object> toMap(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("name",name);
+        return result;
     }
 }

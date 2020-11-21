@@ -23,17 +23,16 @@ public class CategoryListViewModel extends AndroidViewModel {
     // MediatorLiveData can observe other LiveData objects and react on their emissions.
     private final MediatorLiveData<List<CategoryEntity>> observableCategories;
 
-    public CategoryListViewModel(@NonNull Application application, CategoryRepository categoryRepository) {
+    public CategoryListViewModel(@NonNull Application application,
+                                 CategoryRepository categoryRepository) {
         super(application);
-
-        Context applicationContext = application.getApplicationContext();
 
         observableCategories = new MediatorLiveData<>();
 
         // set by default null, until we get data from the database.
         observableCategories.setValue(null);
 
-        LiveData<List<CategoryEntity>> categories = categoryRepository.getAllCategories(applicationContext);
+        LiveData<List<CategoryEntity>> categories = categoryRepository.getAllCategories();
 
         // observe the changes of the entities from the database and forward them
         observableCategories.addSource(categories, observableCategories::setValue);

@@ -6,12 +6,13 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import hes.projet.ticketme.data.AppDatabase;
-import hes.projet.ticketme.data.async.user.CreateUser;
-import hes.projet.ticketme.data.async.user.DeleteUser;
-import hes.projet.ticketme.data.async.user.UpdateUser;
 import hes.projet.ticketme.data.entity.UserEntity;
+import hes.projet.ticketme.data.firebase.UserListLiveData;
+import hes.projet.ticketme.data.firebase.UserLiveData;
 import hes.projet.ticketme.util.OnAsyncEventListener;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class UserRepository {
 
@@ -39,27 +40,68 @@ public class UserRepository {
     }
 
 
-    public LiveData<UserEntity> getUser(final Long id, Context context) {
-        return AppDatabase.getInstance(context).userDao().getById(id);
+    public LiveData<UserEntity> getUser(final String id) {
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("users").child(id);
+
+        return new UserLiveData(reference);
     }
 
-    public LiveData<UserEntity> getUserByUsername(final String username, Context context) {
-        return AppDatabase.getInstance(context).userDao().getByUsername(username);
+
+    public LiveData<UserEntity> getUserByUsername(final String username) {
+        return null;
     }
 
-    public LiveData<List<UserEntity>> getAllUsers(Context context) {
-        return AppDatabase.getInstance(context).userDao().getAll();
+
+
+    public LiveData<List<UserEntity>> getAllUsers() {
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("users");
+
+        return new UserListLiveData(reference);
     }
 
-    public void insert(final UserEntity userEntity, OnAsyncEventListener callback, Context context) {
-        new CreateUser(context, callback).execute(userEntity);
+
+    // Firebase Database paths must not contain '.', '#', '$', '[', or ']'
+    public void insert(final UserEntity user, final OnAsyncEventListener callback) {
+        String id = FirebaseDatabase.getInstance().getReference("users").push().getKey();
+        FirebaseDatabase.getInstance()
+                .getReference("users")
+                .child(id)
+                .setValue(user, (databaseError, databaseReference) -> {
+                    if (databaseError != null) {
+                        callback.onFailure(databaseError.toException());
+                    } else {
+                        callback.onSuccess();
+                    }
+                });
     }
 
-    public void update(final UserEntity user, OnAsyncEventListener callback, Context context) {
-        new UpdateUser(context, callback).execute(user);
+
+    public void update(final UserEntity user, final OnAsyncEventListener callback) {
+        FirebaseDatabase.getInstance()
+                .getReference("users")
+                .child(user.getId())
+                .updateChildren(user.toMap(), (databaseError, databaseReference) -> {
+                    if (databaseError != null) {
+                        callback.onFailure(databaseError.toException());
+                    } else {
+                        callback.onSuccess();
+                    }
+                });
     }
 
-    public void delete(final UserEntity user, OnAsyncEventListener callback, Context context) {
-        new DeleteUser(context, callback).execute(user);
+    public void delete(final UserEntity user, OnAsyncEventListener callback) {
+        FirebaseDatabase.getInstance()
+                .getReference("users")
+                .child(user.getId())
+                .removeValue((databaseError, databaseReference) -> {
+                    if (databaseError != null) {
+                        callback.onFailure(databaseError.toException());
+                    } else {
+                        callback.onSuccess();
+                    }
+                });
     }
+
 }

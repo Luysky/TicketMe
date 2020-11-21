@@ -1,7 +1,6 @@
 package hes.projet.ticketme.viewmodel;
 
 import android.app.Application;
-import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -14,24 +13,29 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+import hes.projet.ticketme.BaseApp;
 import hes.projet.ticketme.data.entity.TicketEntity;
 import hes.projet.ticketme.data.repository.TicketRepository;
+import hes.projet.ticketme.util.OnAsyncEventListener;
 
 public class TicketListViewModel extends AndroidViewModel {
+
+    private TicketRepository mRepository;
 
     // MediatorLiveData can observe other LiveData objects and react on their emissions.
     private final MediatorLiveData<List<TicketEntity>> observableTickets;
 
-    public TicketListViewModel(@NonNull Application application, Long userId, int status, Long categoryId, TicketRepository ticketRepository) {
+    public TicketListViewModel(@NonNull Application application,
+                               final String userId, int status, TicketRepository ticketRepository) {
         super(application);
 
-        Context applicationContext = application.getApplicationContext();
+        mRepository = ticketRepository;
 
         observableTickets = new MediatorLiveData<>();
 
         // set by default null, until we get data from the database.
         observableTickets.setValue(null);
-        LiveData<List<TicketEntity>> tickets = ticketRepository.getAllTickets(applicationContext, userId, status, categoryId);
+        LiveData<List<TicketEntity>> tickets = ticketRepository.getAllTickets(userId, status);
 
         // observe the changes of the entities from the database and forward them
         observableTickets.addSource(tickets, observableTickets::setValue);
@@ -44,38 +48,50 @@ public class TicketListViewModel extends AndroidViewModel {
     public static class Factory extends ViewModelProvider.NewInstanceFactory {
 
         @NonNull
-        private final Application application;
-
-        private final TicketRepository ticketRepository;
-
-        private final Long userId;
+        private final Application mApplication;
+        private final String mUserId;
+        private final TicketRepository mTicketRepository;
 
         private int status;
 
-        private Long categoryId;
+        private String categoryId;
 
-        public Factory(@NonNull Application application, Long userId, int status, Long categoryId) {
-            this.application = application;
-
-            this.userId = userId;
+        public Factory(@NonNull Application application, String userId, int status, String categoryId) {
+            mApplication = application;
+            mUserId = userId;
             this.status = status;
             this.categoryId = categoryId;
-
-            ticketRepository = TicketRepository.getInstance();
+            mTicketRepository = TicketRepository.getInstance();
         }
 
         @NotNull
         @Override
         public <T extends ViewModel> T create(@NotNull Class<T> modelClass) {
             //noinspection unchecked
-            return (T) new TicketListViewModel(application, userId, status, categoryId, ticketRepository);
+            return (T) new TicketListViewModel(mApplication, mUserId, status, mTicketRepository);
         }
     }
 
     /**
-     * Expose the LiveData ClientEntities query so the UI can observe it.
+     * Expose the LiveData UserEntities query so the UI can observe it.
      */
     public LiveData<List<TicketEntity>> getTickets() {
         return observableTickets;
+    }
+
+
+    public void createTicket(TicketEntity ticket, OnAsyncEventListener callback) {
+        ((BaseApp) getApplication()).getTicketRepository()
+                .insert(ticket, callback);
+    }
+
+    public void updateTicket(TicketEntity ticket, OnAsyncEventListener callback) {
+        ((BaseApp) getApplication()).getTicketRepository()
+                .update(ticket, callback);
+    }
+
+    public void deleteTicket(TicketEntity ticket, OnAsyncEventListener callback) {
+        ((BaseApp) getApplication()).getTicketRepository()
+                .update(ticket, callback);
     }
 }

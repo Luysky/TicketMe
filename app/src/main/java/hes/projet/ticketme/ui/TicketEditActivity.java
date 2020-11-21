@@ -74,7 +74,7 @@ public class TicketEditActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        long userId = requireLoggedInUser();
+        String userId = requireLoggedInUser();
 
 
         /*
@@ -119,7 +119,7 @@ public class TicketEditActivity extends BaseActivity {
          */
 
         Intent intent = getIntent();
-        long ticketId = intent.getLongExtra("ticketId", 0);
+        String ticketId = intent.getLongExtra("ticketId", 0);
 
         Log.i(TAG, "Ticket id as extra: " + ticketId);
 
@@ -128,7 +128,7 @@ public class TicketEditActivity extends BaseActivity {
          * Load ticket or set new ticket depending on mode
          */
 
-        if (ticketId == 0) {
+        if (ticketId == null) {
             Log.i(TAG, "New ticket");
 
             ticket = new TicketEntity();
