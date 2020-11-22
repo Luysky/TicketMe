@@ -21,8 +21,13 @@ public class TicketLiveData extends LiveData<TicketEntity> {
     private final DatabaseReference reference;
     private final TicketLiveData.MyValueEventListener listener = new TicketLiveData.MyValueEventListener();
 
-    public TicketLiveData(DatabaseReference ref) {
+    private int ticketStatus;
+    private String ticketUid;
+
+    public TicketLiveData(DatabaseReference ref, String uid, int status) {
         this.reference = ref;
+        ticketUid = uid;
+        ticketStatus = status;
     }
 
 
@@ -43,6 +48,8 @@ public class TicketLiveData extends LiveData<TicketEntity> {
             if (dataSnapshot.exists()) {
                 TicketEntity entity = dataSnapshot.getValue(TicketEntity.class);
                 entity.setId(dataSnapshot.getKey());
+                entity.setUserId(ticketUid);
+                entity.setStatus(ticketStatus);
                 setValue(entity);
             }
         }

@@ -24,7 +24,7 @@ public class TicketListActivity extends BaseActivity {
 
     private static final String TAG = "TicketListActivity";
 
-    private long userId;
+    private String userId;
 
     private ListView listView;
     private List<TicketEntity> tickets = new ArrayList<>();
@@ -41,7 +41,7 @@ public class TicketListActivity extends BaseActivity {
         userId = requireLoggedInUser();
 
         if (isAdministrator())
-            userId = 0;
+            userId = null;
 
 
 
@@ -56,15 +56,16 @@ public class TicketListActivity extends BaseActivity {
 
         listView  = findViewById(R.id.ticketList_listView);
 
-        TicketListViewModel.Factory factory = new TicketListViewModel.Factory(getApplication(), userId, statusFilter, (long) 0);
+        TicketListViewModel.Factory factory = new TicketListViewModel.Factory(getApplication(), userId, statusFilter);
         ViewModelProvider provider = new ViewModelProvider(this, factory);
         viewModel = provider.get(TicketListViewModel.class);
         viewModel.getTickets().observe(this, ticketEntities -> {
             if (ticketEntities != null) {
                 tickets = ticketEntities;
-                sortOrder = getSort();
+                //sortOrder = getSort();
 
-                if(sortOrder==1){
+
+                /*if(sortOrder==1){
                     Collections.sort(tickets, new Comparator<TicketEntity>() {
                         @Override
                         public int compare(TicketEntity o1, TicketEntity o2) {
@@ -79,7 +80,7 @@ public class TicketListActivity extends BaseActivity {
                             return o1.getId().compareTo(o2.getId());
                         }
                     });
-                }
+                }*/
 
                 //Ces lignes servent a la mise en place d une liste deroulante.
                 //adapter = new ArrayAdapter(TicketListActivity.this, android.R.layout.simple_list_item_1, ticketEntities);

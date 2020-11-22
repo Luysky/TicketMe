@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import hes.projet.ticketme.R;
-import hes.projet.ticketme.data.async.user.UpdateUser;
 import hes.projet.ticketme.data.entity.UserEntity;
 import hes.projet.ticketme.util.OnAsyncEventListener;
 import hes.projet.ticketme.viewmodel.UserViewModel;
@@ -30,6 +29,7 @@ public class UserEditActivity extends BaseActivity {
     private boolean admin;
     private String checkPassword;
     private String checkAdmin;
+    private UserViewModel viewModel;
 
     private static final String TAG = "UserEditActivity";
 
@@ -45,16 +45,22 @@ public class UserEditActivity extends BaseActivity {
         checkBoxAdmin = findViewById(R.id.userInterface_checkBox);
 
         Intent intent = getIntent();
-        Long userId = intent.getLongExtra("userId", 0);
+        String userId = intent.getStringExtra("userId");
+
+        initViewModel(userId);
         showUser(userId);
     }
 
-    private void showUser(Long userId) {
+    private void initViewModel(String userId) {
         UserViewModel.Factory factory = new UserViewModel.Factory(getApplication(), userId);
         ViewModelProvider provider = new ViewModelProvider(this, factory);
 
 
-        UserViewModel viewModel = provider.get(UserViewModel.class);
+        viewModel = provider.get(UserViewModel.class);
+
+    }
+
+    private void showUser(String userId) {
 
         viewModel.getUser().observe(this, userEntity -> {
             if (userEntity != null) {
@@ -113,7 +119,7 @@ public class UserEditActivity extends BaseActivity {
 
         Log.i(TAG, "Modifier user: " + user.toString());
 
-        new UpdateUser(getApplication(), new OnAsyncEventListener() {
+        viewModel.updateUser(user, new OnAsyncEventListener() {
             @Override
             public void onSuccess() {
                 finish();
@@ -123,7 +129,7 @@ public class UserEditActivity extends BaseActivity {
             public void onFailure(Exception e) {
                 displayMessage(getString(R.string.toast_updateUserError),1);
             }
-        }).execute(user);
+        });
     }
 
     /**

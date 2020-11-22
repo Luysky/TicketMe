@@ -17,7 +17,7 @@ import hes.projet.ticketme.data.entity.TicketEntity;
 
 public class TicketListAdminLiveData extends LiveData<List<TicketEntity>> {
 
-    private static final String TAG = "TicketListLiveData";
+    private static final String TAG = "TicketListAdminLiveData";
 
     private final DatabaseReference reference;
     private final TicketListAdminLiveData.MyValueEventListener listener = new TicketListAdminLiveData.MyValueEventListener();
@@ -57,10 +57,14 @@ public class TicketListAdminLiveData extends LiveData<List<TicketEntity>> {
         List<TicketEntity> tickets = new ArrayList<>();
 
         for (DataSnapshot uidSnapshot : snapshot.getChildren()) {
+            String uid = uidSnapshot.getKey();
+            Log.e(TAG, "Listing tickets for " + uid);
             for (DataSnapshot childSnapshot : uidSnapshot.getChildren()) {
                 TicketEntity entity = childSnapshot.getValue(TicketEntity.class);
-                entity.setUserId(uidSnapshot.getKey());
-                entity.setId(childSnapshot.getKey());
+                entity.setUserId(uid);
+                String ticketKey = childSnapshot.getKey();
+                entity.setId(ticketKey);
+                Log.e(TAG, "Found ticket " + ticketKey);
                 entity.setStatus(this.status);
                 tickets.add(entity);
             }

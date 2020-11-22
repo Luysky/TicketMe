@@ -11,9 +11,21 @@ public class UserEntity {
 
     private String username;
 
+    private String password;
+
     private boolean admin;
 
+    public UserEntity(){
+
+    }
+
     public UserEntity(boolean admin){
+        this.admin = admin;
+    }
+
+    public UserEntity(String username, String password, boolean admin){
+        this.username = username;
+        this.password = password;
         this.admin = admin;
     }
 
@@ -44,12 +56,22 @@ public class UserEntity {
 
     public String toString() {
 
-        return (getAdmin() ? " (admin)" : "");
+        return username + (getAdmin() ? " (admin)" : "");
     }
 
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
-        result.put("admin",admin);
+        result.put("username", username);
+        result.put("password", password);
+        result.put("admin", admin);
         return result;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

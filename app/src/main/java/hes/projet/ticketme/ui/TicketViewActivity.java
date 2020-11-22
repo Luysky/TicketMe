@@ -17,9 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 
 import hes.projet.ticketme.R;
-import hes.projet.ticketme.data.async.ticket.DeleteTicket;
-import hes.projet.ticketme.data.async.ticket.UpdateTicket;
 import hes.projet.ticketme.data.entity.TicketEntity;
+import hes.projet.ticketme.data.repository.TicketRepository;
 import hes.projet.ticketme.util.OnAsyncEventListener;
 import hes.projet.ticketme.viewmodel.CategoryViewModel;
 import hes.projet.ticketme.viewmodel.TicketViewModel;
@@ -177,6 +176,8 @@ public class TicketViewActivity extends BaseActivity {
         Log.i(TAG, "clicked on  " + ticket.toString());
 
         Intent intent = new Intent(this, TicketEditActivity.class);
+        intent.putExtra("ticketStatus", ticket.getStatus());
+        intent.putExtra("ticketUid", ticket.getUserId());
         intent.putExtra("ticketId", ticket.getId());
         startActivity(intent);
         finish();
@@ -190,7 +191,7 @@ public class TicketViewActivity extends BaseActivity {
 
         Log.i(TAG, "clicked on  delete ticket");
 
-        new DeleteTicket(getApplication(), new OnAsyncEventListener() {
+        TicketRepository.getInstance().delete(ticket, new OnAsyncEventListener() {
             @Override
             public void onSuccess() {
                         finish();
@@ -200,7 +201,7 @@ public class TicketViewActivity extends BaseActivity {
             public void onFailure(Exception e) {
                 displayMessage(getString(R.string.toast_deleteTicketError),1);
             }
-        }).execute(ticket);
+        });
     }
 
 
@@ -212,6 +213,8 @@ public class TicketViewActivity extends BaseActivity {
 
         ticket.setStatus(1);
 
+        return;
+        /*
         new UpdateTicket(getApplication(), new OnAsyncEventListener() {
             @Override
             public void onSuccess() {
@@ -222,6 +225,7 @@ public class TicketViewActivity extends BaseActivity {
             public void onFailure(Exception e) {
                 displayMessage(getString(R.string.toast_closingTicketError),1);
             }
-        }).execute(ticket);
+        }).execute(ticket);*/
+
     }
 }

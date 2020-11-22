@@ -6,14 +6,21 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.lifecycle.ViewModelProvider;
+
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+
 import hes.projet.ticketme.R;
+import hes.projet.ticketme.data.entity.UserEntity;
 import hes.projet.ticketme.data.repository.UserRepository;
 import hes.projet.ticketme.util.Constants;
+import hes.projet.ticketme.viewmodel.UserListViewModel;
 
 
 public class LoginActivity extends BaseActivity {
@@ -71,52 +78,68 @@ public class LoginActivity extends BaseActivity {
             return;
         }
 
+        UserListViewModel.Factory factory = new UserListViewModel.Factory(getApplication(),getLoggedInUserId());
+        ViewModelProvider provider = new ViewModelProvider(this, factory);
+        UserListViewModel viewModel = provider.get(UserListViewModel.class);
+        viewModel.getUsers().observe(this, users -> {
+            if (users != null) {
 
-        repository.getUserByUsername(email, getApplication()).observe(LoginActivity.this, user -> {
+                // listString = new ArrayList<>();
+                //On recupere l idTicket et le subjet pour l affichage dans la liste de message.
+                for(int i = 0; i < users.size(); i++){
+                    UserEntity u = users.get(i);
+                    if (u.getUsername().equals(email)) {
+                        if (u.getPassword().equals(password)) {
+                            // ok
+                            login(u);
+                        } else {
+                            // password error
+                            passwordView.setError(getString(R.string.error_incorrect_password));
+                            passwordView.requestFocus();
+                            passwordView.setText("");
+                            return;
+                        }
+                    }
+                }
 
-            if (user == null) {
+                // User not found
                 emailView.setError(getString(R.string.error_invalid_email));
                 emailView.requestFocus();
                 passwordView.setText("");
                 return;
             }
-
-            Log.i(TAG, "loaded user " + user.toString());
-
-            if (!user.getPassword().equals(password)) {
-                passwordView.setError(getString(R.string.error_incorrect_password));
-                passwordView.requestFocus();
-                passwordView.setText("");
-                return;
-            }
-
-
-            /*
-             * Store logged in user as global var in application
-             */
-
-            SharedPreferences.Editor editor = getSharedPreferences(Constants.PREF_FILE, 0).edit();
-
-            editor.putLong(Constants.PREF_USER_ID, user.getId());
-            editor.putBoolean(Constants.PREF_USER_ISADMIN, user.getAdmin());
-            editor.apply();
-
-
-            /*
-             * Should not be necessary, but  just in case for security let's clear values in form
-             */
-
-            emailView.setText("");
-            passwordView.setText("");
-
-
-            /*
-             * Go to ticket list
-             */
-
-            Intent intent = new Intent(this, TicketListActivity.class);
-            startActivity(intent);
         });
+
+
+    }
+
+    private void login(UserEntity user) {
+
+        /*
+         * Store logged in user as global var in application
+         */
+
+        SharedPreferences.Editor editor = getSharedPreferences(Constants.PREF_FILE, 0).edit();
+
+        editor.putString(Constants.PREF_USER_ID, user.getId());
+        editor.putBoolean(Constants.PREF_USER_ISADMIN, user.getAdmin());
+        editor.apply();
+
+
+        /*
+         * Should not be necessary, but  just in case for security let's clear values in form
+         */
+
+        emailView.setText("");
+        passwordView.setText("");
+
+
+        /*
+         * Go to ticket list
+         */
+
+        Intent intent = new Intent(this, TicketListActivity.class);
+        startActivity(intent);
     }
 
     private boolean isPasswordValid(@NotNull String password) {

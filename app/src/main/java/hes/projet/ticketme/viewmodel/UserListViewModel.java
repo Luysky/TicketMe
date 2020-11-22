@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import hes.projet.ticketme.BaseApp;
 import hes.projet.ticketme.data.entity.UserEntity;
 import hes.projet.ticketme.data.repository.UserRepository;
 import hes.projet.ticketme.util.OnAsyncEventListener;
@@ -56,7 +55,7 @@ public class UserListViewModel extends AndroidViewModel {
         public Factory(@NonNull Application application,String userId) {
             mApplication = application;
             mUserId = userId;
-            mRepository = ((BaseApp)application).getUserRepository();
+            mRepository = UserRepository.getInstance();
         }
 
         @NotNull
@@ -75,17 +74,17 @@ public class UserListViewModel extends AndroidViewModel {
     }
 
     public void createUser(UserEntity user, OnAsyncEventListener callback) {
-        ((BaseApp) getApplication()).getUserRepository()
+        UserRepository.getInstance()
                 .insert(user, callback);
     }
 
     public void updateUser(UserEntity user, OnAsyncEventListener callback) {
-        ((BaseApp) getApplication()).getUserRepository()
+        UserRepository.getInstance()
                 .update(user, callback);
     }
 
     public void deleteUser(UserEntity user, OnAsyncEventListener callback) {
-        ((BaseApp) getApplication()).getUserRepository()
+        UserRepository.getInstance()
                 .delete(user, callback);
     }
 }

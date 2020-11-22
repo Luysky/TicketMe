@@ -7,8 +7,6 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,8 +15,6 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import hes.projet.ticketme.BaseApp;
-import hes.projet.ticketme.MainActivity;
 import hes.projet.ticketme.R;
 import hes.projet.ticketme.data.entity.UserEntity;
 import hes.projet.ticketme.data.repository.UserRepository;
@@ -41,7 +37,7 @@ public class UserListActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        repository = ((BaseApp) getApplication()).getUserRepository();
+        repository = UserRepository.getInstance();
 
         initView(this, R.layout.activity_user_management, "Liste des utilisateurs");
         initDrawer();
@@ -104,7 +100,7 @@ public class UserListActivity extends BaseActivity {
 
                         UserEntity userToDelete = users.get(position);
 
-                        viewModel.deleteUser(userToDelete, new OnAsyncEventListener() {
+                        repository.delete(userToDelete, new OnAsyncEventListener() {
                             @Override
                             public void onSuccess() {
                                 /*

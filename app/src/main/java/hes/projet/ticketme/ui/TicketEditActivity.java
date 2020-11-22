@@ -23,10 +23,9 @@ import java.util.List;
 
 import hes.projet.ticketme.R;
 import hes.projet.ticketme.adapter.ListAdapter;
-import hes.projet.ticketme.data.async.ticket.CreateTicket;
-import hes.projet.ticketme.data.async.ticket.UpdateTicket;
 import hes.projet.ticketme.data.entity.CategoryEntity;
 import hes.projet.ticketme.data.entity.TicketEntity;
+import hes.projet.ticketme.data.repository.TicketRepository;
 import hes.projet.ticketme.util.OnAsyncEventListener;
 import hes.projet.ticketme.viewmodel.CategoryListViewModel;
 import hes.projet.ticketme.viewmodel.TicketViewModel;
@@ -44,6 +43,8 @@ public class TicketEditActivity extends BaseActivity {
      */
     private TicketEntity ticket;
 
+    private TicketRepository ticketRepository;
+
 
     /*
      * Form controls
@@ -60,14 +61,14 @@ public class TicketEditActivity extends BaseActivity {
 
     private String subject;
     private String message;
-    private long categoryId;
+    private String category;
 
 
     /*
      * Category list to show in the spinner
      */
 
-    private List<CategoryEntity> categories;
+    private List<String> categories;
 
 
     @Override
@@ -88,6 +89,9 @@ public class TicketEditActivity extends BaseActivity {
         initReturn();
 
 
+        ticketRepository = TicketRepository.getInstance();
+
+
         /*
          * Initialize form controls
          */
@@ -101,9 +105,10 @@ public class TicketEditActivity extends BaseActivity {
         //
         spinnerCategory = findViewById(R.id.ticketEdit_spinnerCategory);
 
-        ListAdapter<CategoryEntity> adapter = new ListAdapter<>(this, android.R.layout.simple_spinner_item, new ArrayList<>());
+        ListAdapter<String> adapter = new ListAdapter<>(this, android.R.layout.simple_spinner_item, new ArrayList<>());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategory.setAdapter(adapter);
+
         adapter.registerDataSetObserver(new DataSetObserver() {
             @Override
             public void onChanged() {
@@ -119,7 +124,9 @@ public class TicketEditActivity extends BaseActivity {
          */
 
         Intent intent = getIntent();
-        String ticketId = intent.getLongExtra("ticketId", 0);
+        String ticketId = intent.getStringExtra("ticketId");
+        String ticketUid = intent.getStringExtra("ticketUid");
+        int ticketStatus = intent.getIntExtra("ticketStatus", 0);
 
         Log.i(TAG, "Ticket id as extra: " + ticketId);
 
@@ -136,18 +143,18 @@ public class TicketEditActivity extends BaseActivity {
             ticket.setUserId(userId);
 
             // Set a default category for new tickets
-            ticket.setCategoryId((long) 1);
+            ticket.setCategory("Bug");
 
             subject = "";
             message = "";
-            categoryId = (long) 1;
+            category = "Bug";
 
         }
         else {
             Log.i(TAG, "loading ticket");
 
             // Load existing ticket to edit.
-            loadTicket(ticketId);
+            loadTicket(ticketId, ticketUid, ticketStatus);
         }
     }
 
@@ -195,7 +202,7 @@ public class TicketEditActivity extends BaseActivity {
 
         boolean changedSubject = !subject.equals(editTextSubject.getText().toString());
         boolean changedMessage = !message.equals(editTextMessage.getText().toString());
-        boolean changedCategory = categoryId != ((CategoryEntity) spinnerCategory.getSelectedItem()).getId();
+        boolean changedCategory = !category.equals(((CategoryEntity) spinnerCategory.getSelectedItem()).getName());
 
 
         /*
@@ -233,8 +240,8 @@ public class TicketEditActivity extends BaseActivity {
         if (categories == null)
             return;
 
-        for(CategoryEntity category : categories) {
-            if(category.getId().equals(ticket.getCategoryId())) {
+        for(String category : categories) {
+            if(category .equals(ticket.getCategory())) {
                 int pos = categories.indexOf(category);
                 spinnerCategory.setSelection(pos);
                 return;
@@ -270,8 +277,7 @@ public class TicketEditActivity extends BaseActivity {
         ticket.setMessage(message);
 
         //
-        CategoryEntity category = (CategoryEntity) spinnerCategory.getSelectedItem();
-        ticket.setCategoryId(category.getId());
+        ticket.setCategory((String) spinnerCategory.getSelectedItem());
 
 
         /*
@@ -281,7 +287,7 @@ public class TicketEditActivity extends BaseActivity {
         if (ticket.getId() == null) {
             Log.i(TAG, "Sauver le nouveau ticket: " + ticket.getSubject());
 
-            new CreateTicket(getApplication(), new OnAsyncEventListener() {
+            ticketRepository.insert(ticket, new OnAsyncEventListener() {
                 @Override
                 public void onSuccess() {
                     finish();
@@ -291,12 +297,12 @@ public class TicketEditActivity extends BaseActivity {
                 public void onFailure(Exception e) {
                     displayMessage(getString(R.string.toast_createTicketError),1);
                 }
-            }).execute(ticket);
+            });
         }
         else {
             Log.i(TAG, "Modifier ticket: " + ticket.toString());
 
-            new UpdateTicket(getApplication(), new OnAsyncEventListener() {
+            ticketRepository.update(ticket, new OnAsyncEventListener() {
                 @Override
                 public void onSuccess() {
                     finish();
@@ -306,7 +312,7 @@ public class TicketEditActivity extends BaseActivity {
                 public void onFailure(Exception e) {
                     displayMessage(getString(R.string.toast_updateTicketError),1);
                 }
-            }).execute(ticket);
+            });
         }
     }
 
@@ -316,12 +322,12 @@ public class TicketEditActivity extends BaseActivity {
      *
      * @param ticketId Id of the ticket to display
      */
-    private void loadTicket(long ticketId) {
+    private void loadTicket(String ticketId, String ticketUid, int ticketStatus) {
 
         // Get TicketViewModel
         TicketViewModel ticketViewModel;
 
-        TicketViewModel.Factory factory = new TicketViewModel.Factory(getApplication(), ticketId);
+        TicketViewModel.Factory factory = new TicketViewModel.Factory(getApplication(), ticketId, ticketUid, ticketStatus);
         ViewModelProvider provider = new ViewModelProvider(this, factory);
         ticketViewModel = provider.get(TicketViewModel.class);
         ticketViewModel.getTicket().observe(this, ticketEntity -> {
@@ -333,7 +339,7 @@ public class TicketEditActivity extends BaseActivity {
 
                 subject = ticket.getSubject();
                 message = ticket.getMessage();
-                categoryId = ticket.getCategoryId();;
+                category = ticket.getCategory();
 
                 editTextSubject.setText(subject);
                 editTextMessage.setText(message);
@@ -350,7 +356,7 @@ public class TicketEditActivity extends BaseActivity {
      *
      * @param adapter ListAdapter for categories spinner
      */
-    private void loadCategories(ListAdapter<CategoryEntity> adapter) {
+    private void loadCategories(ListAdapter<String> adapter) {
 
         // Get CategoryViewModel
         CategoryListViewModel categoriesViewModel;

@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import hes.projet.ticketme.BaseApp;
 import hes.projet.ticketme.data.entity.TicketEntity;
 import hes.projet.ticketme.data.repository.TicketRepository;
 import hes.projet.ticketme.util.OnAsyncEventListener;
@@ -56,11 +55,10 @@ public class TicketListViewModel extends AndroidViewModel {
 
         private String categoryId;
 
-        public Factory(@NonNull Application application, String userId, int status, String categoryId) {
+        public Factory(@NonNull Application application, String userId, int status) {
             mApplication = application;
             mUserId = userId;
             this.status = status;
-            this.categoryId = categoryId;
             mTicketRepository = TicketRepository.getInstance();
         }
 
@@ -81,17 +79,17 @@ public class TicketListViewModel extends AndroidViewModel {
 
 
     public void createTicket(TicketEntity ticket, OnAsyncEventListener callback) {
-        ((BaseApp) getApplication()).getTicketRepository()
+        TicketRepository.getInstance()
                 .insert(ticket, callback);
     }
 
     public void updateTicket(TicketEntity ticket, OnAsyncEventListener callback) {
-        ((BaseApp) getApplication()).getTicketRepository()
+        TicketRepository.getInstance()
                 .update(ticket, callback);
     }
 
     public void deleteTicket(TicketEntity ticket, OnAsyncEventListener callback) {
-        ((BaseApp) getApplication()).getTicketRepository()
+        TicketRepository.getInstance()
                 .update(ticket, callback);
     }
 }

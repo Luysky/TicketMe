@@ -56,11 +56,20 @@ public class TicketListLiveData  extends LiveData<List<TicketEntity>> {
 
     private List<TicketEntity> toTicketList(DataSnapshot snapshot) {
         List<TicketEntity> tickets = new ArrayList<>();
+
+        String uid = snapshot.getKey();
+        Log.e(TAG, "Listing tickets for " + uid);
+
         for (DataSnapshot childSnapshot : snapshot.getChildren()) {
 
             TicketEntity entity = childSnapshot.getValue(TicketEntity.class);
-            entity.setUserId(snapshot.getKey());
-            entity.setId(childSnapshot.getKey());
+
+            String ticketKey = childSnapshot.getKey();
+            entity.setId(ticketKey);
+            Log.e(TAG, "Found ticket " + ticketKey);
+
+            entity.setUserId(uid);
+//            entity.setId(childSnapshot.getKey());
             entity.setStatus(this.status);
             tickets.add(entity);
         }

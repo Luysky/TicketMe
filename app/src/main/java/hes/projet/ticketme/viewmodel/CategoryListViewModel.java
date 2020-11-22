@@ -21,7 +21,7 @@ import hes.projet.ticketme.data.repository.CategoryRepository;
 public class CategoryListViewModel extends AndroidViewModel {
 
     // MediatorLiveData can observe other LiveData objects and react on their emissions.
-    private final MediatorLiveData<List<CategoryEntity>> observableCategories;
+    private final MediatorLiveData<List<String>> observableCategories;
 
     public CategoryListViewModel(@NonNull Application application,
                                  CategoryRepository categoryRepository) {
@@ -32,7 +32,7 @@ public class CategoryListViewModel extends AndroidViewModel {
         // set by default null, until we get data from the database.
         observableCategories.setValue(null);
 
-        LiveData<List<CategoryEntity>> categories = categoryRepository.getAllCategories();
+        LiveData<List<String>> categories = categoryRepository.getAllCategories();
 
         // observe the changes of the entities from the database and forward them
         observableCategories.addSource(categories, observableCategories::setValue);
@@ -65,7 +65,7 @@ public class CategoryListViewModel extends AndroidViewModel {
     /**
      * Expose the LiveData ClientEntities query so the UI can observe it.
      */
-    public LiveData<List<CategoryEntity>> getCategories() {
+    public LiveData<List<String>> getCategories() {
         return observableCategories;
     }
 }

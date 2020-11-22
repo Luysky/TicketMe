@@ -16,7 +16,7 @@ import java.util.List;
 import hes.projet.ticketme.data.entity.CategoryEntity;
 import hes.projet.ticketme.data.entity.TicketEntity;
 
-public class CategoryListLiveData extends LiveData<List<CategoryEntity>> {
+public class CategoryListLiveData extends LiveData<List<String>> {
 
     private static final String TAG = "CategoryListLiveData";
 
@@ -43,6 +43,7 @@ public class CategoryListLiveData extends LiveData<List<CategoryEntity>> {
     private class MyValueEventListener implements ValueEventListener {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            Log.e(TAG, "Query with results " + reference);
             setValue(toCategoryList(dataSnapshot));
         }
 
@@ -52,17 +53,19 @@ public class CategoryListLiveData extends LiveData<List<CategoryEntity>> {
         }
     }
 
-    private List<CategoryEntity> toCategoryList(DataSnapshot snapshot) {
-        List<CategoryEntity> categories = new ArrayList<>();
+    private List<String> toCategoryList(DataSnapshot snapshot) {
+        List<String> categories = new ArrayList<>();
 
-        for (DataSnapshot uidSnapshot : snapshot.getChildren()) {
-            for (DataSnapshot childSnapshot : uidSnapshot.getChildren()) {
-                CategoryEntity entity = childSnapshot.getValue(CategoryEntity.class);
-                entity.setName(childSnapshot.getKey());
-                categories.add(entity);
-            }
+        for (DataSnapshot childSnapshot : snapshot.getChildren()) {
 
+//            CategoryEntity entity = childSnapshot.getValue(CategoryEntity.class);
+//
+//            Log.e(TAG, "Category found " + childSnapshot.getKey());
+//
+//            entity.setName(childSnapshot.getKey());
+            categories.add(childSnapshot.getKey());
         }
+
         return categories;
     }
 

@@ -1,6 +1,7 @@
 package hes.projet.ticketme.data.repository;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -20,6 +21,7 @@ import hes.projet.ticketme.util.OnAsyncEventListener;
 public class TicketRepository {
 
     private static TicketRepository instance;
+    private static final String TAG = "TicketRepository";
 
     /**
      * Private constructor for singleton
@@ -43,11 +45,15 @@ public class TicketRepository {
     }
 
 
-    public LiveData<TicketEntity> getTicket(final String id) {
-        DatabaseReference reference = FirebaseDatabase.getInstance()
-                .getReference("tickets").child(id);
+    public LiveData<TicketEntity> getTicket(final String id, String ticketUid, int ticketStatus) {
+        String statusString = ticketStatus == 0 ? "open" : "closed";
 
-        return new TicketLiveData(reference);
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference(statusString + "_tickets")
+                .child(ticketUid)
+                .child(id);
+
+        return new TicketLiveData(reference, ticketUid, ticketStatus);
     }
 
 
@@ -61,16 +67,19 @@ public class TicketRepository {
 
         DatabaseReference reference;
         String statusString = status == 0 ? "open" : "closed";
+        Log.i(TAG, "getAllTickets");
 
         boolean admin = userId == null;
 
         if (admin) {
+            Log.i(TAG, " for admin");
             reference = FirebaseDatabase.getInstance()
                     .getReference(statusString + "_tickets");
 
             return new TicketListAdminLiveData(reference, status);
         }
 
+        Log.i(TAG, " " + statusString + " for normal user: " + userId);
         reference = FirebaseDatabase.getInstance()
                 .getReference(statusString + "_tickets").child(userId);
 

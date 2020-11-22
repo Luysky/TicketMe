@@ -12,9 +12,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-
-import hes.projet.ticketme.BaseApp;
 import hes.projet.ticketme.data.entity.TicketEntity;
 import hes.projet.ticketme.data.repository.TicketRepository;
 import hes.projet.ticketme.util.OnAsyncEventListener;
@@ -27,10 +24,13 @@ public class TicketViewModel extends AndroidViewModel {
     private final MediatorLiveData<TicketEntity> observableTicket;
 
     public TicketViewModel(@NonNull Application application,
-                           final String ticketId, TicketRepository ticketRepository) {
+                           final String ticketId,
+                           String ticketUid,
+                           int ticketStatus,
+                           TicketRepository ticketRepository) {
         super(application);
 
-        Context applicationContext = application.getApplicationContext();
+//        Context applicationContext = application.getApplicationContext();
 
         observableTicket = new MediatorLiveData<>();
 
@@ -38,7 +38,7 @@ public class TicketViewModel extends AndroidViewModel {
         observableTicket.setValue(null);
 
         if(ticketId !=null){
-            LiveData<TicketEntity> ticket = mRepository.getTicket(ticketId);
+            LiveData<TicketEntity> ticket = ticketRepository.getTicket(ticketId, ticketUid, ticketStatus);
 
             // observe the changes of the entities from the database and forward them
             observableTicket.addSource(ticket, observableTicket::setValue);
@@ -56,21 +56,25 @@ public class TicketViewModel extends AndroidViewModel {
         @NonNull
         private final Application mApplication;
         private final String mTicketId;
+        private final String mTicketUid;
+        private final int mTicketStatus;
         private final TicketRepository mRepository;
 
 
 
-        public Factory(@NonNull Application application, String ticketId) {
+        public Factory(@NonNull Application application, String ticketId, String ticketUid, int ticketStatus) {
             mApplication = application;
             mTicketId = ticketId;
-            mRepository = ((BaseApp)application).getTicketRepository();
+            mTicketUid = ticketUid;
+            mTicketStatus = ticketStatus;
+            mRepository = TicketRepository.getInstance();
         }
 
         @NotNull
         @Override
         public <T extends ViewModel> T create(@NotNull Class<T> modelClass) {
             //noinspection unchecked
-            return (T) new TicketViewModel(mApplication, mTicketId, mRepository);
+            return (T) new TicketViewModel(mApplication, mTicketId, mTicketUid, mTicketStatus, mRepository);
         }
     }
 
@@ -81,18 +85,21 @@ public class TicketViewModel extends AndroidViewModel {
         return observableTicket;
     }
 
+    /*
     public void createTicket(TicketEntity ticket, OnAsyncEventListener callback) {
-        ((BaseApp) getApplication()).getTicketRepository()
+        TicketRepository.getInstance()
                 .insert(ticket, callback);
-    }
+    }*/
 
+    /*
     public void updateTicket(TicketEntity ticket, OnAsyncEventListener callback) {
-        ((BaseApp) getApplication()).getTicketRepository()
+        TicketRepository.getInstance()
                 .update(ticket, callback);
-    }
+    }*/
 
+    /*
     public void deleteTicket(TicketEntity ticket, OnAsyncEventListener callback) {
-        ((BaseApp) getApplication()).getTicketRepository()
-                .update(ticket, callback);
-    }
+        TicketRepository.getInstance()
+                .delete(ticket, callback);
+    }*/
 }

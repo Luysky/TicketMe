@@ -18,6 +18,8 @@ public class UserRepository {
 
     private static UserRepository instance;
 
+
+
     /**
      * Private constructor for singleton
      */
@@ -48,9 +50,22 @@ public class UserRepository {
     }
 
 
-    public LiveData<UserEntity> getUserByUsername(final String username) {
+    /* public LiveData<UserEntity> getUserByUsername(final String username) {
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("users");
+
+        FirebaseDatabase.getInstance()
+                .getReference("users")
+                .child(id)
+                .setValue(user, (databaseError, databaseReference) -> {
+                    if (databaseError != null) {
+                        callback.onFailure(databaseError.toException());
+                    } else {
+                        callback.onSuccess();
+                    }
+                });
         return null;
-    }
+    } */
 
 
 

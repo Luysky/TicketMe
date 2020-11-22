@@ -9,8 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import hes.projet.ticketme.R;
-import hes.projet.ticketme.data.async.user.CreateUser;
 import hes.projet.ticketme.data.entity.UserEntity;
+import hes.projet.ticketme.data.repository.UserRepository;
 import hes.projet.ticketme.util.OnAsyncEventListener;
 
 public class RegisterActivity extends BaseActivity {
@@ -38,11 +38,13 @@ public class RegisterActivity extends BaseActivity {
                 String passInput = password.getText().toString();
 
                 if(validateEmailAddress(email)==true){
+                    Log.i(TAG, "valid email ");
                     if (validatePassword(password)==true){
+                        Log.i(TAG, "valid password ");
 
                         UserEntity user = new UserEntity(emailInput, passInput,false);
 
-                        new CreateUser(getApplication(), new OnAsyncEventListener(){
+                        UserRepository.getInstance().insert(user, new OnAsyncEventListener(){
 
                             @Override
                             public void onSuccess() {
@@ -58,7 +60,7 @@ public class RegisterActivity extends BaseActivity {
                                 Log.i(TAG, "User not created " + user.toString());
                                 displayMessage(getString(R.string.toast_createUserError),1);
                             }
-                        }).execute(user);
+                        });
                     }
                 }
 
