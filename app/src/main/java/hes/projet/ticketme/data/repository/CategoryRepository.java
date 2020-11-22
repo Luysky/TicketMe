@@ -7,7 +7,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
-import hes.projet.ticketme.data.entity.CategoryEntity;
 import hes.projet.ticketme.data.firebase.CategoryListLiveData;
 
 public class CategoryRepository {
@@ -35,17 +34,6 @@ public class CategoryRepository {
         return instance;
     }
 
-
-    public LiveData<CategoryEntity> getCategory(final String id) {
-        return null;
-//        return AppDatabase.getInstance(context).categoryDao().getById(id);
-    }
-
-    /**
-     * TODO Vérifier si getAllCategoies nécessite un id? je l'ai supprimé
-     * @param
-     * @return
-     */
 
     public LiveData<List<String>> getAllCategories() {
         DatabaseReference reference = FirebaseDatabase.getInstance()

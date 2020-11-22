@@ -20,7 +20,6 @@ import hes.projet.ticketme.R;
 import hes.projet.ticketme.data.entity.TicketEntity;
 import hes.projet.ticketme.data.repository.TicketRepository;
 import hes.projet.ticketme.util.OnAsyncEventListener;
-import hes.projet.ticketme.viewmodel.CategoryViewModel;
 import hes.projet.ticketme.viewmodel.TicketViewModel;
 
 public class TicketViewActivity extends BaseActivity {

@@ -13,9 +13,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import hes.projet.ticketme.data.entity.CategoryEntity;
-import hes.projet.ticketme.data.entity.TicketEntity;
-
 public class CategoryListLiveData extends LiveData<List<String>> {
 
     private static final String TAG = "CategoryListLiveData";

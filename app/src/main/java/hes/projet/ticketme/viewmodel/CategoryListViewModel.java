@@ -1,8 +1,6 @@
 package hes.projet.ticketme.viewmodel;
 
 import android.app.Application;
-import android.content.Context;
-import android.icu.util.ULocale;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -15,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import hes.projet.ticketme.data.entity.CategoryEntity;
 import hes.projet.ticketme.data.repository.CategoryRepository;
 
 public class CategoryListViewModel extends AndroidViewModel {

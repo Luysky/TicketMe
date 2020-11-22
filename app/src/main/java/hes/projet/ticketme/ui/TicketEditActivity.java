@@ -23,7 +23,6 @@ import java.util.List;
 
 import hes.projet.ticketme.R;
 import hes.projet.ticketme.adapter.ListAdapter;
-import hes.projet.ticketme.data.entity.CategoryEntity;
 import hes.projet.ticketme.data.entity.TicketEntity;
 import hes.projet.ticketme.data.repository.TicketRepository;
 import hes.projet.ticketme.util.OnAsyncEventListener;
@@ -202,7 +201,7 @@ public class TicketEditActivity extends BaseActivity {
 
         boolean changedSubject = !subject.equals(editTextSubject.getText().toString());
         boolean changedMessage = !message.equals(editTextMessage.getText().toString());
-        boolean changedCategory = !category.equals(((CategoryEntity) spinnerCategory.getSelectedItem()).getName());
+        boolean changedCategory = !category.equals((String) spinnerCategory.getSelectedItem());
 
 
         /*

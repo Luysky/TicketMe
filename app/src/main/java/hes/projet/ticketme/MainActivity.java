@@ -1,17 +1,11 @@
 package hes.projet.ticketme;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-
-import androidx.lifecycle.ViewModelProvider;
 
 import hes.projet.ticketme.ui.LoginActivity;
 import hes.projet.ticketme.ui.TicketListActivity;
 import hes.projet.ticketme.ui.BaseActivity;
-import hes.projet.ticketme.util.Constants;
-import hes.projet.ticketme.viewmodel.CategoryViewModel;
 
 public class MainActivity extends BaseActivity {
 

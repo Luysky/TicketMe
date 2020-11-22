@@ -25,45 +25,9 @@ public class ListAdapter<T> extends ArrayAdapter<T> {
         this.data = data;
     }
 
-    /*@NonNull
-    @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        return getCustomView(position, convertView, parent);
-    }*/
-
-    /*@Override
-    public View getDropDownView(int position, View convertView, ViewGroup parent){
-        return getCustomView(position, convertView, parent);
-    }*/
-
     public T getItem(int position) {
         return data.get(position);
     }
-
-    /*private View getCustomView(int position, View convertView, ViewGroup parent) {
-        ListAdapter.ViewHolder viewHolder;
-
-        if (convertView == null) {
-            convertView = LayoutInflater.from(this.getContext())
-                    .inflate(resource, parent, false);
-
-            viewHolder = new ListAdapter.ViewHolder();
-            viewHolder.itemView = convertView.findViewById(R.id.tvClientView);
-
-            convertView.setTag(viewHolder);
-        } else {
-            viewHolder = (ListAdapter.ViewHolder) convertView.getTag();
-        }
-        T item = getItem(position);
-        if (item != null) {
-            viewHolder.itemView.setText(item.toString());
-        }
-        return convertView;
-    }*/
-
-    /*private static class ViewHolder {
-        TextView itemView;
-    }*/
 
     public void updateData(List<T> data) {
         this.data.clear();
