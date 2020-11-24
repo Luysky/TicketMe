@@ -1,6 +1,8 @@
 package hes.projet.ticketme.data.entity;
 
 
+import android.text.format.Time;
+
 import androidx.annotation.NonNull;
 
 import com.google.firebase.database.Exclude;
@@ -20,7 +22,10 @@ public class TicketEntity {
     private String subject;
 
     private String message;
+
     private int status;
+
+    private Long created;
 
     public TicketEntity() {
     }
@@ -95,5 +100,13 @@ public class TicketEntity {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public Long getCreated() {
+        return created;
+    }
+
+    public void setCreated(Long created) {
+        this.created = created;
     }
 }

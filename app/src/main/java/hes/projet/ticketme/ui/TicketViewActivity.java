@@ -211,10 +211,7 @@ public class TicketViewActivity extends BaseActivity {
         Log.i(TAG, "clicked on  close ticket");
 
         ticket.setStatus(1);
-
-        return;
-        /*
-        new UpdateTicket(getApplication(), new OnAsyncEventListener() {
+        TicketRepository.getInstance().close(ticket, new OnAsyncEventListener() {
             @Override
             public void onSuccess() {
                 finish();
@@ -224,7 +221,6 @@ public class TicketViewActivity extends BaseActivity {
             public void onFailure(Exception e) {
                 displayMessage(getString(R.string.toast_closingTicketError),1);
             }
-        }).execute(ticket);*/
-
+        });
     }
 }

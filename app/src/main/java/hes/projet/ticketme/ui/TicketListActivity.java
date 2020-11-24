@@ -62,14 +62,14 @@ public class TicketListActivity extends BaseActivity {
         viewModel.getTickets().observe(this, ticketEntities -> {
             if (ticketEntities != null) {
                 tickets = ticketEntities;
-                //sortOrder = getSort();
+                sortOrder = getSort();
 
 
-                /*if(sortOrder==1){
+                if(sortOrder==1){
                     Collections.sort(tickets, new Comparator<TicketEntity>() {
                         @Override
                         public int compare(TicketEntity o1, TicketEntity o2) {
-                            return o2.getId().compareTo(o1.getId());
+                            return o2.getCreated().compareTo(o1.getCreated());
                         }
                     });
                 }
@@ -77,10 +77,10 @@ public class TicketListActivity extends BaseActivity {
                     Collections.sort(tickets, new Comparator<TicketEntity>() {
                         @Override
                         public int compare(TicketEntity o1, TicketEntity o2) {
-                            return o1.getId().compareTo(o2.getId());
+                            return o1.getCreated().compareTo(o2.getCreated());
                         }
                     });
-                }*/
+                }
 
                 //Ces lignes servent a la mise en place d une liste deroulante.
                 //adapter = new ArrayAdapter(TicketListActivity.this, android.R.layout.simple_list_item_1, ticketEntities);

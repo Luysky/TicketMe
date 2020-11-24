@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -91,6 +92,8 @@ public class TicketRepository {
 
     // Firebase Database paths must not contain '.', '#', '$', '[', or ']'
     public void insert(final TicketEntity ticket, final OnAsyncEventListener callback) {
+        ticket.setCreated(new Date().getTime());
+
         String id = FirebaseDatabase.getInstance()
                 .getReference("open_tickets").child(ticket.getUserId()).push().getKey();
 
@@ -121,6 +124,33 @@ public class TicketRepository {
                         callback.onFailure(databaseError.toException());
                     } else {
                         callback.onSuccess();
+                    }
+                });
+    }
+
+    public void close(final TicketEntity ticket, final OnAsyncEventListener callback) {
+
+        String statusString = ticket.getStatus() == 0 ? "open" : "closed";
+
+        FirebaseDatabase.getInstance()
+                .getReference("closed_tickets")
+                .child(ticket.getUserId())
+                .child(ticket.getId())
+                .setValue(ticket, (databaseError, databaseReference) -> {
+                    if (databaseError != null) {
+                        callback.onFailure(databaseError.toException());
+                    } else {
+                        FirebaseDatabase.getInstance()
+                                .getReference("open_tickets")
+                                .child(ticket.getUserId())
+                                .child(ticket.getId())
+                                .removeValue((databaseDelError, databaseDelReference) -> {
+                                    if (databaseDelError != null) {
+                                        callback.onFailure(databaseDelError.toException());
+                                    } else {
+                                        callback.onSuccess();
+                                    }
+                                });
                     }
                 });
     }
