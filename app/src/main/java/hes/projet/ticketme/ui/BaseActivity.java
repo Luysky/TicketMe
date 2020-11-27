@@ -25,7 +25,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
-
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 import hes.projet.ticketme.R;
@@ -149,8 +150,13 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public String getLoggedInUserId() {
-        SharedPreferences settings = getSharedPreferences(Constants.PREF_FILE, 0);
-        return settings.getString(Constants.PREF_USER_ID, "");
+        FirebaseUser u = FirebaseAuth.getInstance().getCurrentUser();
+        if (u == null) {
+            return "";
+        }
+        return u.getUid();
+//        SharedPreferences settings = getSharedPreferences(Constants.PREF_FILE, 0);
+//        return settings.getString(Constants.PREF_USER_ID, "");
     }
 
     public boolean isAdministrator() {
@@ -216,11 +222,12 @@ public class BaseActivity extends AppCompatActivity {
      */
     private void logout() {
 
+        FirebaseAuth.getInstance().signOut();
+
         /*
          * Remove login informations from preferences file
          */
         SharedPreferences.Editor editor = getSharedPreferences(Constants.PREF_FILE, 0).edit();
-        editor.remove(Constants.PREF_USER_ID);
         editor.remove(Constants.PREF_USER_ISADMIN);
         editor.apply();
 

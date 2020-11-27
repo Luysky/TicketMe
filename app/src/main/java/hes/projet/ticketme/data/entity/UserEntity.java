@@ -59,14 +59,16 @@ public class UserEntity {
         return username + (getAdmin() ? " (admin)" : "");
     }
 
+    @Exclude
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
         result.put("username", username);
-        result.put("password", password);
+        //result.put("password", password);
         result.put("admin", admin);
         return result;
     }
 
+    @Exclude
     public String getPassword() {
         return password;
     }

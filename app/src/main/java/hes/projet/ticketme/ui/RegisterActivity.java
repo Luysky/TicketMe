@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import hes.projet.ticketme.R;
 import hes.projet.ticketme.data.entity.UserEntity;
 import hes.projet.ticketme.data.repository.UserRepository;
@@ -37,6 +39,11 @@ public class RegisterActivity extends BaseActivity {
                 String emailInput = email.getText().toString();
                 String passInput = password.getText().toString();
 
+
+
+
+
+
                 if(validateEmailAddress(email)==true){
                     Log.i(TAG, "valid email ");
                     if (validatePassword(password)==true){
@@ -44,54 +51,74 @@ public class RegisterActivity extends BaseActivity {
 
                         UserEntity user = new UserEntity(emailInput, passInput,false);
 
-                        UserRepository.getInstance().insert(user, new OnAsyncEventListener(){
-
-                            @Override
-                            public void onSuccess() {
-                                Log.i(TAG, "User created " + user.toString());
-
-                                Intent intent = new Intent(RegisterActivity.this, TicketListActivity.class);
-                                startActivity(intent);
-
-                            }
-
-                            @Override
-                            public void onFailure(Exception e) {
-                                Log.i(TAG, "User not created " + user.toString());
-                                displayMessage(getString(R.string.toast_createUserError),1);
+                        FirebaseAuth.getInstance().createUserWithEmailAndPassword(
+                                user.getUsername(),
+                                user.getPassword()
+                        ).addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                user.setId(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                insertUser(user);
+                            } else {
+                                onRegisterFailure(user);
                             }
                         });
                     }
                 }
+            }
+        });
+    }
+
+    private void insertUser(UserEntity user) {
+        UserRepository.getInstance().insert(user, new OnAsyncEventListener(){
+
+            @Override
+            public void onSuccess() {
+                Log.i(TAG, "User created " + user.toString());
+
+
+                Intent intent = new Intent(RegisterActivity.this, TicketListActivity.class);
+                startActivity(intent);
 
             }
-            });
-        }
 
-        private boolean validateEmailAddress (EditText email){
-            String emailInput = email.getText().toString();
-
-            if(!emailInput.isEmpty()&& Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()){
-                displayMessage(getString(R.string.toast_emailCorrect),0);
-                return true;
-            }else {
-                displayMessage(getString(R.string.toast_emailIncorrect),0);
-                return false;
+            @Override
+            public void onFailure(Exception e) {
+                onRegisterFailure(user);
             }
-        }
+        });
 
-        private boolean validatePassword (EditText password){
-            String pass = password.getText().toString();
+    }
 
-            if(pass.length()<8){
-                displayMessage(getString(R.string.toast_emailTooShort),0);
-                return false;
-            }
-            if(!pass.matches(".*[!@#$%^&*+?-]*")){
-                displayMessage(getString(R.string.toast_emailNotConform),0);
-                return false;
-            }
+    private void onRegisterFailure(UserEntity user) {
+        Log.i(TAG, "User not created " + user.toString());
+        displayMessage(getString(R.string.toast_createUserError),1);
+
+    }
+
+    private boolean validateEmailAddress (EditText email){
+        String emailInput = email.getText().toString();
+
+        if(!emailInput.isEmpty()&& Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()){
+            displayMessage(getString(R.string.toast_emailCorrect),0);
             return true;
-
+        }else {
+            displayMessage(getString(R.string.toast_emailIncorrect),0);
+            return false;
         }
+    }
+
+    private boolean validatePassword (EditText password){
+        String pass = password.getText().toString();
+
+        if(pass.length()<8){
+            displayMessage(getString(R.string.toast_emailTooShort),0);
+            return false;
+        }
+        if(!pass.matches(".*[!@#$%^&*+?-]*")){
+            displayMessage(getString(R.string.toast_emailNotConform),0);
+            return false;
+        }
+        return true;
+
+    }
 }

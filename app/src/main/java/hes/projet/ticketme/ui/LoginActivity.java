@@ -10,7 +10,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -115,31 +121,38 @@ public class LoginActivity extends BaseActivity {
 
     private void login(UserEntity user) {
 
-        /*
-         * Store logged in user as global var in application
-         */
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(user.getUsername(), user.getPassword())
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        /*
+                         * Store logged in user as global var in application
+                         */
 
-        SharedPreferences.Editor editor = getSharedPreferences(Constants.PREF_FILE, 0).edit();
+                        SharedPreferences.Editor editor = getSharedPreferences(Constants.PREF_FILE, 0).edit();
 
-        editor.putString(Constants.PREF_USER_ID, user.getId());
-        editor.putBoolean(Constants.PREF_USER_ISADMIN, user.getAdmin());
-        editor.apply();
-
-
-        /*
-         * Should not be necessary, but  just in case for security let's clear values in form
-         */
-
-        emailView.setText("");
-        passwordView.setText("");
+                        editor.putBoolean(Constants.PREF_USER_ISADMIN, user.getAdmin());
+                        editor.apply();
 
 
-        /*
-         * Go to ticket list
-         */
+                        /*
+                         * Should not be necessary, but  just in case for security let's clear values in form
+                         */
 
-        Intent intent = new Intent(this, TicketListActivity.class);
-        startActivity(intent);
+                        emailView.setText("");
+                        passwordView.setText("");
+
+
+                        /*
+                         * Go to ticket list
+                         */
+
+                        Intent intent = new Intent(LoginActivity.this, TicketListActivity.class);
+                        startActivity(intent);
+                    }
+                });
+
+
     }
 
     private boolean isPasswordValid(@NotNull String password) {
