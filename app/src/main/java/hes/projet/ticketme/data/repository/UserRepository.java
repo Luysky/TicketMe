@@ -11,6 +11,7 @@ import hes.projet.ticketme.data.firebase.UserListLiveData;
 import hes.projet.ticketme.data.firebase.UserLiveData;
 import hes.projet.ticketme.util.OnAsyncEventListener;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -79,10 +80,10 @@ public class UserRepository {
 
     // Firebase Database paths must not contain '.', '#', '$', '[', or ']'
     public void insert(final UserEntity user, final OnAsyncEventListener callback) {
-        String id = FirebaseDatabase.getInstance().getReference("users").push().getKey();
+        // String id = FirebaseDatabase.getInstance().getReference("users").push().getKey();
         FirebaseDatabase.getInstance()
                 .getReference("users")
-                .child(id)
+                .child(user.getId())
                 .setValue(user, (databaseError, databaseReference) -> {
                     if (databaseError != null) {
                         callback.onFailure(databaseError.toException());
@@ -107,16 +108,8 @@ public class UserRepository {
     }
 
     public void delete(final UserEntity user, OnAsyncEventListener callback) {
-        FirebaseDatabase.getInstance()
-                .getReference("users")
-                .child(user.getId())
-                .removeValue((databaseError, databaseReference) -> {
-                    if (databaseError != null) {
-                        callback.onFailure(databaseError.toException());
-                    } else {
-                        callback.onSuccess();
-                    }
-                });
+        user.setActive(false);
+        update(user, callback);
     }
 
 }

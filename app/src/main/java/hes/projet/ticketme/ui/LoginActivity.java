@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -20,21 +19,21 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-
 import hes.projet.ticketme.R;
 import hes.projet.ticketme.data.entity.UserEntity;
 import hes.projet.ticketme.data.repository.UserRepository;
 import hes.projet.ticketme.util.Constants;
-import hes.projet.ticketme.viewmodel.UserListViewModel;
+import hes.projet.ticketme.viewmodel.UserViewModel;
 
 
 public class LoginActivity extends BaseActivity {
 
-    private static final String TAG = "LoginHomepageActivity";
+    private static final String TAG = "LoginActivity";
 
     private EditText emailView;
     private EditText passwordView;
+    private String password;
+    private String email;
 
     private UserRepository repository;
 
@@ -60,8 +59,11 @@ public class LoginActivity extends BaseActivity {
         passwordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = emailView.getText().toString();
-        String password = passwordView.getText().toString();
+        //String email = emailView.getText().toString();
+        //String password = passwordView.getText().toString();
+        email = emailView.getText().toString();
+        password = passwordView.getText().toString();
+
 
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
@@ -84,39 +86,66 @@ public class LoginActivity extends BaseActivity {
             return;
         }
 
-        UserListViewModel.Factory factory = new UserListViewModel.Factory(getApplication(),getLoggedInUserId());
-        ViewModelProvider provider = new ViewModelProvider(this, factory);
-        UserListViewModel viewModel = provider.get(UserListViewModel.class);
-        viewModel.getUsers().observe(this, users -> {
-            if (users != null) {
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-                // listString = new ArrayList<>();
-                //On recupere l idTicket et le subjet pour l affichage dans la liste de message.
-                for(int i = 0; i < users.size(); i++){
-                    UserEntity u = users.get(i);
-                    if (u.getUsername().equals(email)) {
-                        if (u.getPassword().equals(password)) {
-                            // ok
-                            login(u);
-                        } else {
-                            // password error
-                            passwordView.setError(getString(R.string.error_incorrect_password));
-                            passwordView.requestFocus();
-                            passwordView.setText("");
-                            return;
-                        }
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        /*
+                         *  Email et mot de passe corrects, authentifié sur  FirebaseAuth
+                         */
+                        String userId = getLoggedInUserId();
+                        storeLoggedInUser(userId);
+                    } else {
+                        displayMessage("Adresse email ou mot de passe incorrect - échec de l'identification!",1);
                     }
+                });
+    }
+
+    private void storeLoggedInUser(String userId) {
+
+        Log.i(TAG, "UserID " + userId);
+
+        UserViewModel.Factory factory = new UserViewModel.Factory(getApplication(), userId);
+        ViewModelProvider provider = new ViewModelProvider(this, factory);
+
+        UserViewModel viewModel = provider.get(UserViewModel.class);
+
+        viewModel.getUser().observe(this, user -> {
+            if (user != null) {
+
+                if (! user.getActive()) {
+                    displayMessage("Votre compte a été supprimé",0);
+                    return;
                 }
 
-                // User not found
-                emailView.setError(getString(R.string.error_invalid_email));
-                emailView.requestFocus();
+                Log.i(TAG, "loaded user " + user.toString());
+
+                SharedPreferences.Editor editor = getSharedPreferences(Constants.PREF_FILE, 0).edit();
+                editor.putBoolean(Constants.PREF_USER_ISADMIN, user.getAdmin());
+                editor.apply();
+
+
+                /*
+                 * Go to ticket list
+                 */
+
+                Intent intent = new Intent(LoginActivity.this, TicketListActivity.class);
+                startActivity(intent);
+
+
+                /*
+                 * Should not be necessary, but  just in case for security let's clear values in form
+                 */
+
+                emailView.setText("");
                 passwordView.setText("");
-                return;
+
+            }
+            else {
+                Log.i(TAG, "User is null");
             }
         });
-
-
     }
 
     private void login(UserEntity user) {

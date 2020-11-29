@@ -55,6 +55,9 @@ public class UserListLiveData extends LiveData<List<UserEntity>> {
         for (DataSnapshot childSnapshot : snapshot.getChildren()) {
 
             UserEntity entity = childSnapshot.getValue(UserEntity.class);
+            if (! entity.getActive())
+                continue;
+
             Log.e(TAG, "user id " + childSnapshot.getKey());
             entity.setId(childSnapshot.getKey());
             users.add(entity);

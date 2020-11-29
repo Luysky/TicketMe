@@ -100,12 +100,11 @@ public class UserListActivity extends BaseActivity {
 
                         UserEntity userToDelete = users.get(position);
 
-                        repository.delete(userToDelete, new OnAsyncEventListener() {
+
+                        viewModel.deleteUser(userToDelete,new OnAsyncEventListener() {
                             @Override
                             public void onSuccess() {
-                                /*
-                                 * Don't do anything, user list will be updated thanks to the view model.
-                                 */
+                                finish();
                             }
 
                             @Override
@@ -113,6 +112,23 @@ public class UserListActivity extends BaseActivity {
                                 displayMessage(getString(R.string.toast_deleteUserError),1);
                             }
                         });
+
+                        /*
+                        repository.delete(userToDelete, new OnAsyncEventListener() {
+                            @Override
+                            public void onSuccess() {
+                                //Don't do anything, user list will be updated thanks to the view model.
+                            }
+
+                            @Override
+                            public void onFailure(Exception e) {
+                                displayMessage(getString(R.string.toast_deleteUserError),1);
+                            }
+                        }
+                        );
+                        */
+
+
                     }
                 });
                 builder.show();

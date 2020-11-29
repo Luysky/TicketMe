@@ -15,6 +15,8 @@ public class UserEntity {
 
     private boolean admin;
 
+    private boolean active = true;
+
     public UserEntity(){
 
     }
@@ -65,6 +67,7 @@ public class UserEntity {
         result.put("username", username);
         //result.put("password", password);
         result.put("admin", admin);
+        result.put("active", active);
         return result;
     }
 
@@ -75,5 +78,13 @@ public class UserEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean getActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

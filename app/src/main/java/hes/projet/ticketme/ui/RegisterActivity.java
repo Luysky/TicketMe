@@ -40,10 +40,6 @@ public class RegisterActivity extends BaseActivity {
                 String passInput = password.getText().toString();
 
 
-
-
-
-
                 if(validateEmailAddress(email)==true){
                     Log.i(TAG, "valid email ");
                     if (validatePassword(password)==true){
@@ -56,9 +52,14 @@ public class RegisterActivity extends BaseActivity {
                                 user.getPassword()
                         ).addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
+
+                                Log.i(TAG, "Longueur chaine " + FirebaseAuth.getInstance().getCurrentUser().getUid().length() );
+                                Log.i(TAG, "Id " + FirebaseAuth.getInstance().getCurrentUser().getUid() );
+
                                 user.setId(FirebaseAuth.getInstance().getCurrentUser().getUid());
                                 insertUser(user);
                             } else {
+
                                 onRegisterFailure(user);
                             }
                         });
@@ -75,6 +76,8 @@ public class RegisterActivity extends BaseActivity {
             public void onSuccess() {
                 Log.i(TAG, "User created " + user.toString());
 
+                Log.i(TAG, "Longueur chaine " + user.getId().length() );
+                Log.i(TAG, "Longueur chaine " + FirebaseAuth.getInstance().getCurrentUser().getUid().length() );
 
                 Intent intent = new Intent(RegisterActivity.this, TicketListActivity.class);
                 startActivity(intent);

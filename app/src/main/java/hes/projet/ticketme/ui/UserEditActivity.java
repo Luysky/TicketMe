@@ -152,8 +152,6 @@ public class UserEditActivity extends BaseActivity {
         /*
          * Check if form values have changed
          */
-
-
         boolean modifPassword = false;
         boolean modifCheck = false;
 
