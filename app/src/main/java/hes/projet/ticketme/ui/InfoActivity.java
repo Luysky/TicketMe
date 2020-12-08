@@ -11,9 +11,6 @@ public class InfoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         initView(this, R.layout.activity_info, "About");
-        // setContentView(R.layout.activity_info);
-
-        //initMenu();
         initReturn();
     }
 

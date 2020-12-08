@@ -28,11 +28,9 @@ public class TicketListActivity extends BaseActivity {
 
     private ListView listView;
     private List<TicketEntity> tickets = new ArrayList<>();
-    //private List<CategoryEntity> categories = new ArrayList<>();
-    //private ArrayAdapter adapter;
 
     private TicketListViewModel viewModel;
-    //private CategoryListViewModel categoryListViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +81,6 @@ public class TicketListActivity extends BaseActivity {
                 }
 
                 //Ces lignes servent a la mise en place d une liste deroulante.
-                //adapter = new ArrayAdapter(TicketListActivity.this, android.R.layout.simple_list_item_1, ticketEntities);
                 adapter = new ArrayAdapter(TicketListActivity.this, android.R.layout.simple_list_item_1, tickets);
                 listView.setAdapter(adapter);
             }

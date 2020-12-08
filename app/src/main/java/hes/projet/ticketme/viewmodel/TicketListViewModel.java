@@ -78,18 +78,5 @@ public class TicketListViewModel extends AndroidViewModel {
     }
 
 
-    public void createTicket(TicketEntity ticket, OnAsyncEventListener callback) {
-        TicketRepository.getInstance()
-                .insert(ticket, callback);
-    }
 
-    public void updateTicket(TicketEntity ticket, OnAsyncEventListener callback) {
-        TicketRepository.getInstance()
-                .update(ticket, callback);
-    }
-
-    public void deleteTicket(TicketEntity ticket, OnAsyncEventListener callback) {
-        TicketRepository.getInstance()
-                .update(ticket, callback);
-    }
 }

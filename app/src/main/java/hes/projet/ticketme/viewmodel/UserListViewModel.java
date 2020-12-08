@@ -73,15 +73,6 @@ public class UserListViewModel extends AndroidViewModel {
         return observableUsers;
     }
 
-    public void createUser(UserEntity user, OnAsyncEventListener callback) {
-        UserRepository.getInstance()
-                .insert(user, callback);
-    }
-
-    public void updateUser(UserEntity user, OnAsyncEventListener callback) {
-        UserRepository.getInstance()
-                .update(user, callback);
-    }
 
     public void deleteUser(UserEntity user, OnAsyncEventListener callback) {
         UserRepository.getInstance()

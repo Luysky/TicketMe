@@ -23,7 +23,7 @@ import hes.projet.ticketme.viewmodel.UserListViewModel;
 
 public class UserListActivity extends BaseActivity {
 
-    private Toolbar menuToolBar;
+
     private List<UserEntity> users = new ArrayList<>();
     private List<String> listString = new ArrayList();
     private ArrayAdapter adapter;

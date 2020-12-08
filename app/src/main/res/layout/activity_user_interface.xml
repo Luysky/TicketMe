@@ -24,7 +24,7 @@
         app:layout_constraintHorizontal_bias="0.376"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
+<!--
     <TextView
         android:id="@+id/userInterface_titlePassword"
         android:layout_width="wrap_content"
@@ -37,22 +37,9 @@
         app:layout_constraintHorizontal_bias="0.295"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userInterface_editTextTextPersonName" />
+-->
 
-    <TextView
-        android:id="@+id/userInterface_editTextTextPersonName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="@string/userInterface_usernameDisplay"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.373"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userInterface_titleUsername" />
+    <!--
 
     <EditText
         android:id="@+id/userInterface_editTextTextPassword"
@@ -68,20 +55,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userInterface_titlePassword" />
 
+-->
+
+    <TextView
+        android:id="@+id/userInterface_editTextTextPersonName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/userInterface_usernameDisplay"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/userInterface_checkBox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.373"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userInterface_titleUsername"
+        app:layout_constraintVertical_bias="0.102" />
 
     <CheckBox
         android:id="@+id/userInterface_checkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="76dp"
+        android:layout_marginBottom="340dp"
         android:text="@string/userInterface_admin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.465"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userInterface_editTextTextPassword"
         app:layout_constraintVertical_bias="0.023" />
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

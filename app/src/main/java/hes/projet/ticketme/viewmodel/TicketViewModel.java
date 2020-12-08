@@ -30,7 +30,6 @@ public class TicketViewModel extends AndroidViewModel {
                            TicketRepository ticketRepository) {
         super(application);
 
-//        Context applicationContext = application.getApplicationContext();
 
         observableTicket = new MediatorLiveData<>();
 
@@ -85,21 +84,5 @@ public class TicketViewModel extends AndroidViewModel {
         return observableTicket;
     }
 
-    /*
-    public void createTicket(TicketEntity ticket, OnAsyncEventListener callback) {
-        TicketRepository.getInstance()
-                .insert(ticket, callback);
-    }*/
 
-    /*
-    public void updateTicket(TicketEntity ticket, OnAsyncEventListener callback) {
-        TicketRepository.getInstance()
-                .update(ticket, callback);
-    }*/
-
-    /*
-    public void deleteTicket(TicketEntity ticket, OnAsyncEventListener callback) {
-        TicketRepository.getInstance()
-                .delete(ticket, callback);
-    }*/
 }

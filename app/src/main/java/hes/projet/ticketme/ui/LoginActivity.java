@@ -59,8 +59,6 @@ public class LoginActivity extends BaseActivity {
         passwordView.setError(null);
 
         // Store values at the time of the login attempt.
-        //String email = emailView.getText().toString();
-        //String password = passwordView.getText().toString();
         email = emailView.getText().toString();
         password = passwordView.getText().toString();
 

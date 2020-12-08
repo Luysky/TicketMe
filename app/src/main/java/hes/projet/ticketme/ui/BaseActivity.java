@@ -155,8 +155,6 @@ public class BaseActivity extends AppCompatActivity {
             return "";
         }
         return u.getUid();
-//        SharedPreferences settings = getSharedPreferences(Constants.PREF_FILE, 0);
-//        return settings.getString(Constants.PREF_USER_ID, "");
     }
 
     public boolean isAdministrator() {

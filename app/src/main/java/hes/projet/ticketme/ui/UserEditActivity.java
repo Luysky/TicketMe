@@ -22,12 +22,9 @@ import hes.projet.ticketme.viewmodel.UserViewModel;
 public class UserEditActivity extends BaseActivity {
 
     private TextView username;
-    private EditText editTextPassword;
     private CheckBox checkBoxAdmin;
     private UserEntity user;
-    private String password;
     private boolean admin;
-    private String checkPassword;
     private String checkAdmin;
     private UserViewModel viewModel;
 
@@ -41,7 +38,6 @@ public class UserEditActivity extends BaseActivity {
         initReturn();
 
         username = findViewById(R.id.userInterface_editTextTextPersonName);
-        editTextPassword = findViewById(R.id.userInterface_editTextTextPassword);
         checkBoxAdmin = findViewById(R.id.userInterface_checkBox);
 
         Intent intent = getIntent();
@@ -69,11 +65,7 @@ public class UserEditActivity extends BaseActivity {
                 Log.i(TAG, "loaded user " + user.toString());
 
                 username.setText(user.getUsername());
-                editTextPassword.setText(user.getPassword());
                 checkBoxAdmin.setChecked(user.getAdmin());
-
-                checkPassword = editTextPassword.getText().toString();
-                Log.i(TAG, "CheckPassword: " + checkPassword.toString());
 
                 checkAdmin = String.valueOf(checkBoxAdmin.isChecked());
                 Log.i(TAG, "CheckAdmin: " + checkAdmin.toString());
@@ -106,16 +98,10 @@ public class UserEditActivity extends BaseActivity {
 
     public void clickSaveUser(){
 
-        password = editTextPassword.getText().toString();
         admin = checkBoxAdmin.isChecked();
 
         user.setAdmin(admin);
 
-        if(password.equals("")){
-            displayMessage(getString(R.string.toast_passwordInvalid),0);
-            return;
-        }
-        user.setPassword(password);
 
         Log.i(TAG, "Modifier user: " + user.toString());
 
@@ -152,12 +138,9 @@ public class UserEditActivity extends BaseActivity {
         /*
          * Check if form values have changed
          */
-        boolean modifPassword = false;
+
         boolean modifCheck = false;
 
-        if(!checkPassword.equals(editTextPassword.getText().toString())){
-            modifPassword = true;
-        }
 
         if(!checkAdmin.equals(String.valueOf(checkBoxAdmin.isChecked()))){
             modifCheck = true;
@@ -168,7 +151,8 @@ public class UserEditActivity extends BaseActivity {
          * If no changes detected, let user go back
          */
 
-        if (((modifCheck || modifPassword)==false)) {
+
+        if ((modifCheck ==false)) {
             finish();
             return;
         }
